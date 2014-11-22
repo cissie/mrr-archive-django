@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Maximum Rocknroll Record Archive</title>
+    </head>
+
+    <body>
+        <h1>{{ artist_name }}</h1>
+        {% if artist %}
+            {% if titles %}
+            <ul>
+                {% for title in titles %}
+                <li><a href="{{ title.url }}">{{ title.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No titles related to this artist.</strong>
+            {% endif %}
+        {% else %}
+            The specified artists {{ artist_name }} does not exist!
+        {% endif %}
+    </body>
+</html>
