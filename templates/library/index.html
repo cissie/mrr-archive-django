@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-
-{% load static %}
-
 <html>
-
     <head>
-        <title>Maximum Rocknroll Library</title>
+        <title>Maximum Rocknroll Record Archive</title>
     </head>
 
     <body>
-        <h1>Maximum Rocknroll Library</h1>
-        hello world! <strong>{{ boldmessage }}</strong>
-    <img src="{% static "library.jpg" %}" alt="Picture of MRR record library" />
-    </body>
+        <h1>hello world!</h1>
 
+        {% if artists %}
+            <ul>
+                {% for artist in artists %}
+                <li>{{ artist.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no artists present.</strong>
+        {% endif %}
+
+    </body>
 </html>
