@@ -3,24 +3,12 @@ from django.db import models
 
 class Artist(models.Model):
     name = models.CharField(max_length=200)
-    country = models.CharField(max_length=200)
-
-    class Meta:
-        verbose_name_plural = "countries"
 
 
 class RecordTitle(models.Model):
     artist = models.ForeignKey(Artist)
     title = models.CharField(max_length=200)
-
-
-class Format(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
     format = models.CharField(max_length=200)
-
-
-class Year(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
     year = models.IntegerField(default=0)
 
 
@@ -29,42 +17,49 @@ class Year(models.Model):
 #     cover_art = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=200)
 #     url = models.URLField()
 
+class Country(models.Model):
+    name = models.ForeignKey(Artist)
+    country = models.CharField(max_length=200)
 
-class Label(models.Model):
+    class Meta:
+        verbose_name_plural = "countries"
+
+
+class RecordLabel(models.Model):
     record_title = models.ForeignKey(RecordTitle)
-    label = models.CharField(max_length=200)
+    record_label = models.CharField(max_length=200)
 
 
 class CatalogNumber(models.Model):
-    label = models.ForeignKey(Label)
+    record_label = models.ForeignKey(RecordLabel)
     catalog_number = models.CharField(max_length=200)
 
 
 class Discography(models.Model):
     artist = models.ForeignKey(Artist)
-    releases = models.CharField(max_length=200)
+    discography = models.CharField(max_length=200)
 
     class Meta:
         verbose_name_plural = "discographies"
 
 
-class Member(models.Model):
+class BandMember(models.Model):
     artist = models.ForeignKey(Artist)
-    member = models.CharField(max_length=200)
+    band_member = models.CharField(max_length=200)
 
 
-class Review(models.Model):
+class RecordReview(models.Model):
     record_title = models.ForeignKey(RecordTitle)
-    review = models.TextField()
+    record_review = models.TextField()
 
 
 class IssueNumber(models.Model):
-    review = models.ForeignKey(Review)
-    issue = models.IntegerField(default=0)
+    review = models.ForeignKey(RecordReview)
+    issue_number = models.IntegerField(default=0)
 
 
-class Reviewer(models.Model):
+class ReviewerName(models.Model):
     record_title = models.ForeignKey(RecordTitle)
-    reviewer = models.CharField(max_length=200)
+    reviewer_name = models.CharField(max_length=200)
 
 

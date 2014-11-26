@@ -1,21 +1,20 @@
 from django.contrib import admin
-from library.models import Artist, RecordTitle, Format, Country, Year, Label, Discography, \
-    Member, Review, IssueNumber, Reviewer
+from library.models import Artist, RecordTitle, Country, RecordLabel, CatalogNumber, Discography, BandMember, \
+    RecordReview, IssueNumber, ReviewerName
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ["name"]
 
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(RecordTitle)
-admin.site.register(Format)
 admin.site.register(Country)
-admin.site.register(Year)
-admin.site.register(Label)
+admin.site.register(RecordLabel)
+admin.site.register(CatalogNumber)
 admin.site.register(Discography)
-admin.site.register(Member)
-admin.site.register(Review)
+admin.site.register(BandMember)
+admin.site.register(RecordReview)
 admin.site.register(IssueNumber)
-admin.site.register(Reviewer)
+admin.site.register(ReviewerName)
 
 
 

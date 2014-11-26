@@ -6,6 +6,7 @@ from library import views
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
         url(r'^artist/(?P<artist_name_url>\w+)$', views.artist, name='artist'),
+        url(r'^ajax$', views.ajax, name='ajax'),
 
 )
 

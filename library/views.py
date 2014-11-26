@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from library.models import Artist
+from library.models import RecordTitle
+from json import dumps
 
 
 def index(request):
@@ -23,6 +25,24 @@ def index(request):
 
     # Render the response and send it back!
     return render_to_response('library/index.html', context_dict, context)
+
+
+def ajax(request):
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+
+    # Query the database for a list of ALL artists currently stored.
+    # Place the list in our context_dict dictionary which will be passed to the template engine.
+    artist_list = list(Artist.objects.all())
+    ajax_artist_list = []
+    for a in artist_list:
+        ajax_artist_list.append({
+            "artist": a.name
+        })
+
+    return HttpResponse(dumps(ajax_artist_list), content_type="application/json")
+
+
 
 
 def artist(request, artist_name_url):
@@ -46,7 +66,7 @@ def artist(request, artist_name_url):
 
         # Retrieve all of the associated titles.
         # Note that filter returns >= 1 model instance.
-        title = title.objects.filter(artist=artist)
+        title = RecordTitle.objects.filter(artist=artist)
 
         # Adds our results list to the template context under name pages.
         context_dict['title'] = title

@@ -10,12 +10,13 @@
         {% if artists %}
             <ul>
                 {% for artist in artists %}
-                <li>{{ artist.name }}</li>
+                <li><a href="/library/artist/{{ artist.url }}">{{ artist.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no artists present.</strong>
         {% endif %}
 
+        <a href="{{ artist.url }}">{{ artist.name }}</a>
     </body>
 </html>
