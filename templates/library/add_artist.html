@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Record Archive</title>
+    </head>
+
+    <body>
+        <h1>Add an Artist</h1>
+
+        <form id="artist_form" method="post" action="/library/add_artist/">
+
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %}
+
+            <input type="submit" name="submit" value="Create Artist" />
+        </form>
+    </body>

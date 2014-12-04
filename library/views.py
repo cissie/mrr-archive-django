@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from library.models import Artist
 from library.models import RecordTitle
+from library.forms import ArtistForm
 from json import dumps
 
 
@@ -40,9 +41,7 @@ def ajax(request):
             "artist": a.name
         })
 
-    return HttpResponse(dumps(ajax_artist_list), content_type="application/json")
-
-
+    return HttpResponse(dumps(ajax_artist_list, indent=4), content_type="application/json")
 
 
 def artist(request, artist_name_url):
@@ -66,10 +65,10 @@ def artist(request, artist_name_url):
 
         # Retrieve all of the associated titles.
         # Note that filter returns >= 1 model instance.
-        title = RecordTitle.objects.filter(artist=artist)
+        record_title = RecordTitle.objects.filter(artist=artist)
 
         # Adds our results list to the template context under name pages.
-        context_dict['title'] = title
+        context_dict['record_title'] = record_title
         # We also add the artist object from the database to the context dictionary.
         # We'll use this in the template to verify that the artist exists.
         context_dict['artist'] = artist
@@ -81,3 +80,65 @@ def artist(request, artist_name_url):
     # Go render the response and return it to the client.
     return render_to_response('library/artist.html', context_dict, context)
 
+# def record_title(request):
+    # context = RequestContext(request)
+
+    # record_title = record_title_url.replace('_', ' ')
+
+    # context_dict = {'record_title': record_title}
+
+    # try:
+        # record_title = RecordTitle.objects.get(record_title=record_title)
+        # artist = Artist.objects.get(artist=artist_name)
+
+        # context_dict['record_title'] = record_title
+        # context_dict['artist'] = artist
+    # except RecordTitle.DoesNotExist:
+        # pass
+
+    # return render_to_response('library/record_title.html, context_dict, context)
+
+
+# def record_label(request):
+    # context = RequestContext(request)
+
+    # record_label_name = record_label_name_url.replace('_', ' ')
+
+    # context_dict = {'record_label_name': record_label_name}
+
+    # try:
+        # record_label_name = RecordLabel.objects.get(record_label=record_label_name)
+
+        # context_dict['record_label'] = record_label
+    # except RecordLabel.DoesNotExist:
+        # pass
+
+    # return render_to_response('library/record_label.html', context_dict, context)
+
+
+def add_artist(request):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = ArtistForm(request.POST)
+
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            form.save(commit=True)
+
+            # Now call the index() view.
+            # The user will be shown the homepage.
+            return index(request)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = ArtistForm()
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render_to_response('library/add_artist.html', {'form': form}, context)
