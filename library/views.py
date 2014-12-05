@@ -88,39 +88,21 @@ def artist(request, artist_name_url):
     return render_to_response('library/artist.html', context_dict, context)
 
 # def record_title(request):
-    # context = RequestContext(request)
-
     # record_title = record_title_url.replace('_', ' ')
-
-    # context_dict = {'record_title': record_title}
-
-    # try:
-        # record_title = RecordTitle.objects.get(record_title=record_title)
-        # artist = Artist.objects.get(artist=artist_name)
-
-        # context_dict['record_title'] = record_title
-        # context_dict['artist'] = artist
-    # except RecordTitle.DoesNotExist:
-        # pass
-
-    # return render_to_response('library/record_title.html, context_dict, context)
+    # record_title = RecordTitle.objects.get(record_title)
+    # return render(request, 'library/record_title.html', {'record_title': record_title})
 
 
 # def record_label(request):
-    # context = RequestContext(request)
+    # record_label = record_label_url.replace('_', ' ')
+    # record_label = RecordLabel.objects.get(record_label)
+    # return render(request, 'library/record_label.html', {'record_label': record_label})
 
-    # record_label_name = record_label_name_url.replace('_', ' ')
 
-    # context_dict = {'record_label_name': record_label_name}
-
-    # try:
-        # record_label_name = RecordLabel.objects.get(record_label=record_label_name)
-
-        # context_dict['record_label'] = record_label
-    # except RecordLabel.DoesNotExist:
-        # pass
-
-    # return render_to_response('library/record_label.html', context_dict, context)
+#def record_review(request):
+    #record_review = record_review_url.replace('_', ' ')
+    #record_review = RecordReview.objects.get(record_review)
+    #return render(request, 'library/record_review.html', {'record_review': record_review})
 
 
 def add_artist(request):
