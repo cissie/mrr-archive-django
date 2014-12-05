@@ -7,7 +7,7 @@ urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
         url(r'^add_artist/$', views.add_artist, name='add_artist'),
         url(r'^artist/(?P<artist_name_url>\w+)$', views.artist, name='artist'),
-        url(r'^ajax$', views.ajax, name='ajax'),
-
+        url(r'^ajax?$', views.ajax, name='ajax'),
+        url(r'^dom?$', views.dom, name='dom')
 )
 

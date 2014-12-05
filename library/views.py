@@ -44,6 +44,13 @@ def ajax(request):
     return HttpResponse(dumps(ajax_artist_list, indent=4), content_type="application/json")
 
 
+def dom(request):
+    if request.method == "POST":
+        print request.POST
+
+    return render(request, 'library/dom.html')
+
+
 def artist(request, artist_name_url):
     # Request our context from the request passed to us.
     context = RequestContext(request)
