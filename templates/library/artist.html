@@ -7,17 +7,17 @@
     <body>
         <h1>{{ artist_name }}</h1>
         {% if artist %}
-            {% if titles %}
+            {% if record_titles %}
             <ul>
-                {% for title in titles %}
-                <li><a href="{{ title.url }}">{{ title.title }}</a></li>
+                {% for record_title in record_titles %}
+                <li><a href="{{ record_title.url }}">{{ record_title.record_title }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
                 <strong>No titles related to this artist.</strong>
             {% endif %}
         {% else %}
-            The specified artists {{ artist_name }} does not exist!
+            The specified artist {{ artist_name }} does not exist!
         {% endif %}
     </body>
 </html>

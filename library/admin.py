@@ -1,6 +1,6 @@
 from django.contrib import admin
-from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, CatalogNumber, IssueNumber, \
-    Discography, RecordReview, ReviewerName
+from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, CatalogNumber, \
+    IssueNumber, Discography, RecordReview, ReviewerName
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ["name"]

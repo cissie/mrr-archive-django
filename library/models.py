@@ -36,7 +36,7 @@ class ReleaseYear(models.Model):
 
 class RecordLabel(models.Model):
     record_title = models.ForeignKey(RecordTitle)
-    label_name = models.CharField(max_length=200)
+    record_label = models.CharField(max_length=200)
 
 
 class CatalogNumber(models.Model):

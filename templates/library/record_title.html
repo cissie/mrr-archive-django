@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Maximum Rocknroll Record Archive</title>
+    </head>
+
+    <body>
+        <h1>{{ record_title }}</h1>
+        {% if record_titles %}
+            <ul>
+                {% for record_title in record_titles %}
+                <li><a href="/library/record_title/{{ record_title.url }}">{{ record_title.record_title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no titles present.</strong>
+        {% endif %}
+
+        <a href="{{ record_title.url }}">{{ record_title.record_title }}</a>
+    </body>
+</html>

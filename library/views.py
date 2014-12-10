@@ -8,6 +8,8 @@ from json import dumps, loads
 from library.forms import ArtistForm
 from library.models import Artist
 from library.models import RecordTitle
+from library.models import RecordLabel
+from library.models import RecordReview
 
 
 def index(request):
@@ -90,22 +92,19 @@ def artist(request, artist_name_url):
     # Go render the response and return it to the client.
     return render_to_response('library/artist.html', context_dict, context)
 
-# def record_title(request):
-    # record_title = record_title_url.replace('_', ' ')
-    # record_title = RecordTitle.objects.get(record_title)
-    # return render(request, 'library/record_title.html', {'record_title': record_title})
+def record_title(request):
+    record_title = RecordTitle.objects.get
+    return render(request, 'library/record_title.html', {'record_title': record_title})
 
 
-# def record_label(request):
-    # record_label = record_label_url.replace('_', ' ')
-    # record_label = RecordLabel.objects.get(record_label)
-    # return render(request, 'library/record_label.html', {'record_label': record_label})
+def record_label(request):
+    record_label = RecordLabel.objects.get
+    return render(request, 'library/record_label.html', {'record_label': record_label})
 
 
-#def record_review(request):
-    #record_review = record_review_url.replace('_', ' ')
-    #record_review = RecordReview.objects.get(record_review)
-    #return render(request, 'library/record_review.html', {'record_review': record_review})
+def record_review(request):
+    record_review = RecordReview.objects.get
+    return render(request, 'library/record_review.html', {'record_review': record_review})
 
 
 def add_artist(request):
