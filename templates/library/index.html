@@ -2,10 +2,32 @@
 <html>
     <head>
         <title>Maximum Rocknroll Record Archive</title>
+        <link rel="stylesheet" href="/static/style.css">
     </head>
 
     <body>
-        <h1>hello world!</h1>
+        <header>
+            <h1><a href="index.html" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="selected">Home</a></li>
+                    <li><a href="browse.html" class="selected">Browse</a></li>
+                    <li><a href="about.html" class="selected">About</a></li>
+                </ul>
+                <form><input type="search" placeholder="search artist, record, label" id="search"></form>
+            </nav>
+        </header>
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin et dolor sit amet finibus. Maecenas fermentum dignissim urna, nec porttitor leo. Aliquam lobortis, tortor nec tempor suscipit, diam ipsum auctor purus, nec egestas mauris libero ac odio. Cras ornare quam et felis consequat aliquet. Nulla maximus dui ultrices dui finibus ullamcorper. Nunc quam arcu, pharetra vel eros ac, semper condimentum erat.
+        </p>
+        <div id="wrapper">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+         <div class="box"></div>
+         <div class="box"></div>
+        </div>
+        <footer><a href="http://www.maximumrocknroll.com" class="selected">Maximum Rocknroll</a></footer>
 
         {% if artists %}
             <ul>

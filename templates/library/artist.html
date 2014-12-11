@@ -10,7 +10,7 @@
             {% if record_titles %}
             <ul>
                 {% for record_title in record_titles %}
-                <li><a href="{{ record_title.url }}">{{ record_title.record_title }}</a></li>
+                <li><a href="{{ record_title.url }}">{{ record_title }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}

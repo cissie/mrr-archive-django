@@ -2,20 +2,32 @@
 <html>
     <head>
         <title>Maximum Rocknroll Record Archive</title>
+        <link rel="stylesheet" href="/static/style.css">
     </head>
 
     <body>
+        <header>
+            <h1><a href="index.html" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="selected">Home</a></li>
+                    <li><a href="browse.html" class="selected">Browse</a></li>
+                    <li><a href="about.html" class="selected">About</a></li>
+                </ul>
+                <form><input type="search" placeholder="search artist, record, label"></form>
+            </nav>
+        </header>
         <h1>{{ record_label }}</h1>
         {% if record_labels %}
             <ul>
                 {% for record_label in record_labels %}
-                <li><a href="/library/record_label/{{ record_label.url }}">{{ record_label.record_label }}</a></li>
+                <li><a href="/library/record_label/{{ record_label.url }}">{{ record_labell }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no labels present.</strong>
         {% endif %}
 
-        <a href="{{ record_label.url }}">{{ record_label.record_label }}</a>
+        <a href="{{ record_label.url }}">{{ record_label }}</a>
     </body>
 </html>

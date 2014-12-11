@@ -94,17 +94,17 @@ def artist(request, artist_name_url):
 
 def record_title(request):
     record_title = RecordTitle.objects.get
-    return render(request, 'library/record_title.html', {'record_title': record_title})
+    return render(request, 'library/record_title.html')
 
 
 def record_label(request):
     record_label = RecordLabel.objects.get
-    return render(request, 'library/record_label.html', {'record_label': record_label})
+    return render(request, 'library/record_label.html')
 
 
 def record_review(request):
     record_review = RecordReview.objects.get
-    return render(request, 'library/record_review.html', {'record_review': record_review})
+    return render(request, 'library/record_review.html')
 
 
 def add_artist(request):
