@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -28,10 +29,10 @@ class ReleaseYear(models.Model):
     release_year = models.IntegerField(default=0)
 
 
-# class CoverArt(models.Model):
-#     record_title = models.ForeignKey(RecordTitle)
-#     cover_art = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=200)
-#     url = models.URLField()
+class CoverArt(models.Model):
+    record_title = models.ForeignKey(RecordTitle)
+    cover_art = models.ImageField(upload_to='cover_images', blank=True)
+
 
 
 class RecordLabel(models.Model):
@@ -65,5 +66,18 @@ class Discography(models.Model):
 class ReviewerName(models.Model):
     record_title = models.ForeignKey(RecordTitle)
     reviewer_name = models.CharField(max_length=200)
+
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User)
+
+    # The additional attributes we wish to include.
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
 
 

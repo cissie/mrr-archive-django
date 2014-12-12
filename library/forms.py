@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django import forms
-from library.models import Artist, RecordTitle
+from library.models import Artist, RecordTitle, UserProfile
+
 
 class ArtistForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the artist name.")
@@ -9,6 +11,7 @@ class ArtistForm(forms.ModelForm):
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Artist
+
 
 class RecordTitleForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the record title.")
@@ -24,3 +27,16 @@ class RecordTitleForm(forms.ModelForm):
         # Some fields may allow NULL values, so we may not want to include them...
         # Here, we are hiding the foreign key.
         fields = ('title', 'url', 'views')
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture')

@@ -11,6 +11,8 @@ urlpatterns = patterns('',
         url(r'^dom?$', views.dom, name='dom'),
         url(r'^title?$', views.record_title, name="title"),
         url(r'^label?$', views.record_label, name="label"),
-        url(r'^review?$', views.record_review, name="review")
+        url(r'^review?$', views.record_review, name="review"),
+        url(r'^register/$', views.register, name='register'),
+
 )
 
