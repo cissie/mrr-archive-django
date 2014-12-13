@@ -40,8 +40,16 @@
         {% endif %}
 
         <a href="{{ artist.url }}">{{ artist.name }}</a>
+
+        {% if user.is_authenticated %}
+        <a href="/library/restricted/">Restricted Page</a><br />
+        <a href="/library/logout/">Logout</a><br />
+        {% else %}
+        <a href="/library/register/">Register Here</a><br />
+        <a href="/library/login/">Login</a><br />
+        {% endif %}
+
         <a href="/library/add_artist/">Add a New Artist</a>
-        <a href="/library/register/">Register Here</a>
 
     </body>
 </html>

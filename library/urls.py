@@ -13,6 +13,9 @@ urlpatterns = patterns('',
         url(r'^label?$', views.record_label, name="label"),
         url(r'^review?$', views.record_review, name="review"),
         url(r'^register/$', views.register, name='register'),
+        url(r'^login/$', views.user_login, name='login'),
+        url(r'^restricted/', views.restricted, name='restricted'),
+        url(r'^logout/$', views.user_logout, name='logout'),
 
 )
 
