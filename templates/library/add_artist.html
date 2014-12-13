@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Record Archive</title>
-    </head>
+{% extends 'library/base.html' %}
 
-    <body>
-        <h1>Add an Artist</h1>
+{% block title %}{% endblock %}
+
+{% block body_block %}
+        <h1>Add an artist</h1>
 
         <form id="artist_form" method="post" action="/library/add_artist/">
 
@@ -20,6 +18,6 @@
                 {{ field }}
             {% endfor %}
 
-            <input type="submit" name="submit" value="Create Artist" />
+            <input type="submit" name="submit" value="Create Artist"/>
         </form>
-    </body>
+{% endblock %}

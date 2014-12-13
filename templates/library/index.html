@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Maximum Rocknroll Record Archive</title>
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
+{% extends 'library/base.html' %}
 
-    <body>
-        <header>
-            <h1><a href="index.html" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="selected">Home</a></li>
-                    <li><a href="browse.html" class="selected">Browse</a></li>
-                    <li><a href="about.html" class="selected">About</a></li>
-                </ul>
-                <form><input type="search" placeholder="search artist, record, label" id="search"></form>
-            </nav>
-        </header>
+{% block title %}{% endblock %}
+
+{% block body_block %}
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin et dolor sit amet finibus. Maecenas fermentum dignissim urna, nec porttitor leo. Aliquam lobortis, tortor nec tempor suscipit, diam ipsum auctor purus, nec egestas mauris libero ac odio. Cras ornare quam et felis consequat aliquet. Nulla maximus dui ultrices dui finibus ullamcorper. Nunc quam arcu, pharetra vel eros ac, semper condimentum erat.
         </p>
@@ -27,29 +13,23 @@
          <div class="box"></div>
          <div class="box"></div>
         </div>
-        <footer><a href="http://www.maximumrocknroll.com" class="selected">Maximum Rocknroll</a></footer>
 
+        <div class="artist">
         {% if artists %}
             <ul>
                 {% for artist in artists %}
                 <li><a href="/library/artist/{{ artist.url }}">{{ artist.name }}</a></li>
                 {% endfor %}
             </ul>
+        </div>
         {% else %}
             <strong>There are no artists present.</strong>
         {% endif %}
 
         <a href="{{ artist.url }}">{{ artist.name }}</a>
 
-        {% if user.is_authenticated %}
-        <a href="/library/restricted/">Restricted Page</a><br />
-        <a href="/library/logout/">Logout</a><br />
-        {% else %}
-        <a href="/library/register/">Register Here</a><br />
-        <a href="/library/login/">Login</a><br />
-        {% endif %}
-
+        <div id="add">
         <a href="/library/add_artist/">Add a New Artist</a>
+        </div>
 
-    </body>
-</html>
+{% endblock %}

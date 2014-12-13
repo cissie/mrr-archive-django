@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-
+{% load static %}
 <html>
     <head>
         <title>Maximum Rocknroll{% block title %}Record Archive{% endblock %}</title>
+        <link href="{% static 'style.css' %}" rel="stylesheet">
     </head>
 
     <body>
         <div>
-            {% block body_block %}{% endblock %}
+            <header>
+                <h1><a href="index.html" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="selected">Home</a></li>
+                        <li><a href="browse.html" class="selected">Browse</a></li>
+                        <li><a href="about.html" class="selected">About</a></li>
+                    </ul>
+                    <form><input type="search" placeholder="search artist, record, label" id="search"></form>
+                </nav>
+            </header>
         </div>
+        {% block body_block %}
+            this will disappear
+        {% endblock %}
 
         <hr />
 
-        <div>
+        <div id="authentication">
             <ul>
             {% if user.is_authenticated %}
                 <li><a href="/library/restricted/">Restricted Page</a></li>
@@ -23,8 +37,9 @@
                 <li><a href="/library/login/">Login</a></li>
             {% endif %}
 
-                <li><a href="/library/about/">About</a></li>
             </ul>
         </div>
+        <footer><a href="http://www.maximumrocknroll.com" class="selected">Maximum Rocknroll</a></footer>
+
     </body>
 </html>

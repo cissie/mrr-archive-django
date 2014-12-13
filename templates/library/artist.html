@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Maximum Rocknroll Record Archive</title>
-    </head>
+{% extends 'library/base.html' %}
 
-    <body>
+{% block title %}{% endblock %}
+
+{% block body_block %}
         <h1>{{ artist_name }}</h1>
         {% if artist %}
             {% if record_titles %}
@@ -19,5 +17,4 @@
         {% else %}
             The specified artist {{ artist_name }} does not exist!
         {% endif %}
-    </body>
-</html>
+{% endblock %}

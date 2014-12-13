@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Maximum Rocknroll Record Archive</title>
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
+{% extends 'library/base.html' %}
 
-    <body>
-        <header>
-            <h1><a href="index.html" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="selected">Home</a></li>
-                    <li><a href="browse.html" class="selected">Browse</a></li>
-                    <li><a href="about.html" class="selected">About</a></li>
-                </ul>
-                <form><input type="search" placeholder="search artist, record, label"></form>
-            </nav>
-        </header>
+{% block title %}{% endblock %}
+
+{% block body_block %}
         <h1>{{ record_title }}</h1>
         {% if record_titles %}
             <ul>
@@ -29,5 +15,4 @@
         {% endif %}
 
         <a href="{{ record_title.url }}">{{ record_title }}</a>
-    </body>
-</html>
+{% endblock %}

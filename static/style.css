@@ -44,6 +44,17 @@ nav form {
     margin-left: 160px;
 }
 
+#authentication li {
+    list-style: none;
+    text-align: left;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#authentication a:visited {
+    color: lightslategray;
+}
+
 p {
     text-align: left;
     margin-left: 160px;
@@ -78,8 +89,29 @@ footer {
     display: inline-block;
 }
 
+.artist li {
+    list-style: none;
+    text-align: left;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.artist a:visited {
+    color: lightslategray;
+}
+
+#add {
+    text-align: left;
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+#add a:visited {
+    color: lightslategray;
+}
+
 nav a:visited {
-    color: black;
+    color: lightslategray;
 }
 
 .selected {
