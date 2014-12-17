@@ -16,6 +16,5 @@ urlpatterns = patterns('',
         url(r'^login/$', views.user_login, name='login'),
         url(r'^restricted/', views.restricted, name='restricted'),
         url(r'^logout/$', views.user_logout, name='logout'),
-
+        url(r'^load_data?$', views.load_data, name='load_data')
 )
-

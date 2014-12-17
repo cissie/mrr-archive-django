@@ -1,6 +1,6 @@
 from django.contrib import admin
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, CoverArt, RecordLabel, \
-    CatalogNumber, IssueNumber, Discography, RecordReview, ReviewerName, UserProfile
+    CatalogNumber, IssueNumber, Discography, RecordReview, ReviewerName, FileUnder, Notes, UserProfile
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ["name"]
@@ -17,6 +17,8 @@ admin.site.register(IssueNumber)
 admin.site.register(Discography)
 admin.site.register(RecordReview)
 admin.site.register(ReviewerName)
+admin.site.register(FileUnder)
+admin.site.register(Notes)
 admin.site.register(UserProfile)
 
 

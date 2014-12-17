@@ -2,17 +2,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
-from library.forms import ArtistForm
-from library.forms import UserForm, UserProfileForm
-from library.models import Artist
-from library.models import RecordTitle
-from library.models import RecordLabel
-from library.models import RecordReview
-
+from library.forms import ArtistForm, UserForm, UserProfileForm
+from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
+    CatalogNumber, IssueNumber, FileUnder, Notes
+import json
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "library.settings")
 
 
 def index(request):
@@ -251,3 +249,37 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/library/')
+
+
+with open("record_collection.json") as f:
+    json_data = json.load(f)
+    for d in json_data:
+        print d["artist"]
+        # for k, v in d.iteritems():
+            # print k, v
+
+
+def load_data(request):
+    artist = Artist()
+    record_title = RecordTitle()
+    country = Country()
+    format_type = FormatType()
+    release_year = ReleaseYear()
+    record_label = RecordLabel()
+    catalog_number = CatalogNumber()
+    issue_number = IssueNumber()
+    file_under = FileUnder()
+    notes = Notes()
+    return HttpResponse(json_data, content_type='application/json')
+
+
+
+
+
+
+
+
+
+
+
+
