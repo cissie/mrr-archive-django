@@ -251,26 +251,32 @@ def user_logout(request):
     return HttpResponseRedirect('/library/')
 
 
-with open("record_collection.json") as f:
-    json_data = json.load(f)
-    for d in json_data:
-        print d["artist"]
-        # for k, v in d.iteritems():
-            # print k, v
-
-
 def load_data(request):
-    artist = Artist()
-    record_title = RecordTitle()
-    country = Country()
-    format_type = FormatType()
-    release_year = ReleaseYear()
-    record_label = RecordLabel()
-    catalog_number = CatalogNumber()
-    issue_number = IssueNumber()
-    file_under = FileUnder()
-    notes = Notes()
-    return HttpResponse(json_data, content_type='application/json')
+    with open("record_collection.json") as f:
+        json_data = json.load(f)
+        last_artist = ""
+        for d in json_data:
+            if last_artist != d["artist"]:
+                print d["artist"]
+                new_artist = Artist()
+                new_artist.name = d["artist"]
+                new_artist.save()
+                last_artist = d["artist"]
+            #start adding records at same indentation as above
+
+            # for k, v in d.iteritems():
+                # print k, v
+        # artist = Artist()
+        # record_title = RecordTitle()
+        # country = Country()
+        # format_type = FormatType()
+        # release_year = ReleaseYear()
+        # record_label = RecordLabel()
+        # catalog_number = CatalogNumber()
+        # issue_number = IssueNumber()
+        # file_under = FileUnder()
+        # notes = Notes()
+        return HttpResponse(content_type='application/json')
 
 
 
