@@ -2,23 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class Artist(models.Model):
-    name = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.name
-
-
-class RecordTitle(models.Model):
-    artist = models.ForeignKey(Artist)
-    record_title = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.record_title
-
-
 class Country(models.Model):
-    artist = models.ForeignKey(Artist)
     country = models.CharField(max_length=200)
 
     class Meta:
@@ -28,12 +12,28 @@ class Country(models.Model):
         return self.country
 
 
+class Artist(models.Model):
+    name = models.CharField(max_length=200)
+    country = models.ForeignKey(Country, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class FormatType(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
     format_type = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.format_type
+
+
+class RecordTitle(models.Model):
+    artist = models.ForeignKey(Artist)
+    format_type = models.ForeignKey(FormatType)
+    record_title = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.record_title
 
 
 class ReleaseYear(models.Model):

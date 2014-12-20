@@ -153,10 +153,11 @@ def login(request):
         if user is not None:
             # the password verified for the user
             if user.is_active:
+                auth.login(request, user)
                 print("User is valid, active and authenticated")
                 return redirect('index')
             else:
-                print("The password is valid, but the account has been disabled!")
+                print("The password is valid, but the account has been disabled.")
 
         else:
             print("The username and password were incorrect.")
@@ -180,33 +181,23 @@ def user_logout(request):
 def load_data(request):
     with open("record_collection.json") as f:
         json_data = json.load(f)
-        last_artist = ""
+        checked = []
         count = 0
         for d in json_data:
-            if last_artist != d["artist"]:
-                new_artist = Artist()
-                new_artist.name = d["artist"]
-                new_artist.save()
-                # artist_id = new_artist.id
-                sleep(0.05)
-                last_artist = d["artist"]
-                print "adding" + d["artist"]
-            else:
-                print "skipping"
-            count += 1
-            print count
-            #start adding records at same indentation as above
-        # for d in json_data:
-        #     print("else")
-        #     new_title = RecordTitle()
-        #     new_title.record_title = d["record_title"]
-        #     new_title.artist = Artist.objects.get(id=artist_id)
-        #     new_title.save()
-        #     sleep(0.05)
-            # for k, v in d.iteritems():
-                # print k, v
-        # artist = Artist()
-        # record_title = RecordTitle()
+            # if d["artist"] not in checked:
+            new_artist = Artist.objects.get_or_create(name=d["artist"])[0]
+            new_artist.country = Country.objects.get_or_create(country=d["country"])[0]
+            new_artist.save()
+            artist_id = new_artist.id
+            sleep(0.01)
+            checked.append(new_artist)
+            print len(checked)
+            new_title = RecordTitle()
+            new_title.artist = new_artist
+            new_title.record_title = d["record_title"]
+            new_title.format_type = FormatType.objects.get_or_create(format_type=d["format_type"])[0]
+            new_title.save()
+            sleep(0.01)
         # country = Country()
         # format_type = FormatType()
         # release_year = ReleaseYear()
