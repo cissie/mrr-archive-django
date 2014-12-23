@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Country(models.Model):
-    country = models.CharField(max_length=200)
+    country = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "countries"

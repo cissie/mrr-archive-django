@@ -72,7 +72,11 @@ def artist(request, artist_id):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the artist passed by the user.
-    context_dict = {'artist_id': artist_id}
+    context_dict = {
+        "artist_id": artist_id,
+        "artist": artist,
+        "title_list": artist.recordtitle_set
+    }
 
     try:
         # Can we find an artist with the given name?
@@ -98,8 +102,24 @@ def artist(request, artist_id):
     return render_to_response('library/artist.html', context_dict, context)
 
 def record_title(request):
-    record_title = RecordTitle.objects.get
-    return render(request, 'library/record_title.html')
+    context = RequestContext(request)
+    record_title_list = RecordTitle.objects.all()
+    context_dict = {'record_titles': record_title_list}
+    return render_to_response('library/record_title.html', context_dict, context)
+
+def record_title_detail(request):
+    context = RequestContext(request)
+    record_title_id = record_title_id.replace('_', ' ')
+    context_dict = {
+        "record_title_id": record_title_id,
+        "artist": artist,
+    }
+    try:
+        record_title = RecordTitle.objects.get(id=record_title_id)
+        context_dict['record_title'] = record_title
+    except RecordTitle.DoesNotExist:
+        pass
+    return render_to_response(context_dict, context)
 
 
 def record_label(request):
