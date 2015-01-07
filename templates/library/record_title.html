@@ -4,15 +4,17 @@
 
 {% block body_block %}
         <h1>{{ record_title }}</h1>
-        {% if record_titles %}
+        {% if record_title %}
             <ul>
-                {% for record_title in record_titles %}
-                <li><a href="/library/record_title/{{ record_title.url }}">{{ record_title }}</a></li>
+                {% for artist in artist_list %}
+                <li><a href="{{ artist.id }}">{{ artist }}</a></li>
+                <li><a href="{{ format_type }}">{{ format_type }}</a></li>
                 {% endfor %}
             </ul>
+
         {% else %}
-            <strong>There are no titles present.</strong>
+        The specified title {{ record_title }} does not exist!
+
         {% endif %}
 
-        <a href="{{ record_title.url }}">{{ record_title }}</a>
 {% endblock %}

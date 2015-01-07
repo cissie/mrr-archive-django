@@ -65,38 +65,29 @@ def artist(request, artist_id):
     # Request our context from the request passed to us.
     context = RequestContext(request)
 
-    # Change underscores in the artist name to spaces.
-    # URLs don't handle spaces well, so we encode them as underscores.
-    # We can then simply replace the underscores with spaces again to get the name.
-    artist_id = artist_id.replace('_', ' ')
-
-    # Create a context dictionary which we can pass to the template rendering engine.
-    # We start by containing the name of the artist passed by the user.
-    context_dict = {
-        "artist_id": artist_id,
-        "artist": artist,
-        "title_list": artist.recordtitle_set
-    }
-
     try:
         # Can we find an artist with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
         artist = Artist.objects.get(id=artist_id)
-
+        print artist.name
         # Retrieve all of the associated titles.
         # Note that filter returns >= 1 model instance.
-        record_title = RecordTitle.objects.filter(artist=artist)
 
-        # Adds our results list to the template context under name pages.
-        context_dict['record_title'] = record_title
-        # We also add the artist object from the database to the context dictionary.
-        # We'll use this in the template to verify that the artist exists.
-        context_dict['artist'] = artist
     except Artist.DoesNotExist:
         # We get here if we didn't find the specified artist.
         # Don't do anything - the template displays the "no artist" message for us.
         pass
+
+    # Create a context dictionary which we can pass to the template rendering engine.
+    # We start by containing the name of the artist passed by the user.
+    context_dict = {
+        "artist": artist,
+        "record_title_list": RecordTitle.objects.filter(artist=artist),
+        "country": Country.objects.filter(artist=artist)
+    }
+
+
 
     # Go render the response and return it to the client.
     return render_to_response('library/artist.html', context_dict, context)
@@ -104,22 +95,19 @@ def artist(request, artist_id):
 def record_title(request):
     context = RequestContext(request)
     record_title_list = RecordTitle.objects.all()
-    context_dict = {'record_titles': record_title_list}
+    context_dict = {"record_titles": record_title_list}
     return render_to_response('library/record_title.html', context_dict, context)
 
-def record_title_detail(request):
+def record_title_detail(request, record_title_id):
+    print record_title_id
+    record_title = RecordTitle.objects.get(id=record_title_id)
     context = RequestContext(request)
-    record_title_id = record_title_id.replace('_', ' ')
     context_dict = {
-        "record_title_id": record_title_id,
-        "artist": artist,
+        "record_title": record_title,
+        "artist_list": Artist.objects.filter(record_title=record_title),
+        "format_type": FormatType.objects.filter(record_title=record_title)
     }
-    try:
-        record_title = RecordTitle.objects.get(id=record_title_id)
-        context_dict['record_title'] = record_title
-    except RecordTitle.DoesNotExist:
-        pass
-    return render_to_response(context_dict, context)
+    return render_to_response('library/record_title.html', context_dict, context)
 
 
 def record_label(request):
@@ -204,28 +192,30 @@ def load_data(request):
         checked = []
         count = 0
         for d in json_data:
-            # if d["artist"] not in checked:
-            new_artist = Artist.objects.get_or_create(name=d["artist"])[0]
-            new_artist.country = Country.objects.get_or_create(country=d["country"])[0]
-            new_artist.save()
-            artist_id = new_artist.id
-            sleep(0.01)
-            checked.append(new_artist)
-            print len(checked)
+            if d["artist"] not in checked:
+                new_artist = Artist.objects.get_or_create(name=d["artist"])[0]
+                new_artist.country = Country.objects.get_or_create(country=d["country"])[0]
+                new_artist.file_under = FileUnder.objects.get_or_create(file_under=d["file_under"])[0]
+                new_artist.save()
+                artist_id = new_artist.id
+                sleep(0.01)
+                checked.append(new_artist)
+                print len(checked)
             new_title = RecordTitle()
             new_title.artist = new_artist
             new_title.record_title = d["record_title"]
             new_title.format_type = FormatType.objects.get_or_create(format_type=d["format_type"])[0]
+            if d["release_year"] is not None:
+                new_title.release_year = ReleaseYear.objects.get_or_create(release_year=d["release_year"])[0]
+            new_title.record_label = RecordLabel.objects.get_or_create(record_label=d["label_name"])[0]
+            new_title.catalog_number = CatalogNumber.objects.get_or_create(catalog_number=d["catalog_number"])[0]
+            print d["issue_number"]
+            if d["issue_number"] is not None:
+                new_title.issue_number = IssueNumber.objects.get_or_create(issue_number=d["issue_number"])[0]
+            if d["notes"] is not None:
+                new_title.notes = Notes.objects.get_or_create(notes=d["notes"])[0]
             new_title.save()
             sleep(0.01)
-        # country = Country()
-        # format_type = FormatType()
-        # release_year = ReleaseYear()
-        # record_label = RecordLabel()
-        # catalog_number = CatalogNumber()
-        # issue_number = IssueNumber()
-        # file_under = FileUnder()
-        # notes = Notes()
         return HttpResponse(content_type='application/json')
 
 

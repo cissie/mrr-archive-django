@@ -12,9 +12,17 @@ class Country(models.Model):
         return self.country
 
 
+class FileUnder(models.Model):
+    file_under = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.file_under
+
+
 class Artist(models.Model):
     name = models.CharField(max_length=200)
     country = models.ForeignKey(Country, blank=True, null=True)
+    file_under = models.ForeignKey(FileUnder, max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -27,21 +35,56 @@ class FormatType(models.Model):
         return self.format_type
 
 
-class RecordTitle(models.Model):
-    artist = models.ForeignKey(Artist)
-    format_type = models.ForeignKey(FormatType)
-    record_title = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.record_title
-
-
 class ReleaseYear(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
     release_year = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.release_year
+
+
+class RecordLabel(models.Model):
+    record_label = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.record_label
+
+
+class CatalogNumber(models.Model):
+    catalog_number = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.catalog_number
+
+
+class IssueNumber(models.Model):
+    issue_number = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.issue_number
+
+
+class Notes(models.Model):
+    notes = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = "notes"
+
+    def __unicode__(self):
+        return self.notes
+
+
+class RecordTitle(models.Model):
+    artist = models.ForeignKey(Artist)
+    format_type = models.ForeignKey(FormatType)
+    record_title = models.CharField(max_length=200)
+    release_year = models.ForeignKey(ReleaseYear, default=0, null=True)
+    record_label = models.ForeignKey(RecordLabel, max_length=200)
+    catalog_number = models.ForeignKey(CatalogNumber, max_length=200)
+    issue_number = models.ForeignKey(IssueNumber, default=0, null=True)
+    notes = models.ForeignKey(Notes, max_length=200, null=True)
+
+    def __unicode__(self):
+        return self.record_title
 
 
 class CoverArt(models.Model):
@@ -55,36 +98,12 @@ class CoverArt(models.Model):
         return self.cover_art
 
 
-class RecordLabel(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
-    record_label = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.record_label
-
-
-class CatalogNumber(models.Model):
-    record_label = models.ForeignKey(RecordLabel)
-    catalog_number = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.catalog_number
-
-
 class RecordReview(models.Model):
     record_title = models.ForeignKey(RecordTitle)
     record_review = models.TextField()
 
     def __unicode__(self):
         return self.record_review
-
-
-class IssueNumber(models.Model):
-    record_review = models.ForeignKey(RecordReview)
-    issue_number = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.issue_number
 
 
 class Discography(models.Model):
@@ -104,25 +123,6 @@ class ReviewerName(models.Model):
 
     def __unicode__(self):
         return self.reviewer_name
-
-
-class FileUnder(models.Model):
-    artist = models.ForeignKey(Artist)
-    file_under = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return self.file_under
-
-
-class Notes(models.Model):
-    record_title = models.ForeignKey(RecordTitle)
-    notes = models.CharField(max_length=200)
-
-    class Meta:
-        verbose_name_plural = "notes"
-
-    def __unicode__(self):
-        return self.notes
 
 
 class UserProfile(models.Model):

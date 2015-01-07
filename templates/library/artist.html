@@ -3,18 +3,17 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-        <h1>{{ artist_name }}</h1>
+        <h1>{{ artist.name }}</h1>
         {% if artist %}
-            {% if record_titles %}
+
             <ul>
-                {% for record_title in record_titles %}
-                <li><a href="{{ record_title.url }}">{{ record_title }}</a></li>
+                {% for record_title in record_title_list %}
+                <li><a href="{{ record_title.id }}">{{ record_title }}</a></li>
+                <li><a href="{{ country }}">{{ country }}</a></li>
                 {% endfor %}
             </ul>
-            {% else %}
-                <strong>No titles related to this artist.</strong>
-            {% endif %}
+
         {% else %}
-            The specified artist {{ artist_name }} does not exist!
+            The specified artist {{ artist.artist_name }} does not exist!
         {% endif %}
 {% endblock %}
