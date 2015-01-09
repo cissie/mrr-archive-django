@@ -6,14 +6,15 @@
         <h1>{{ record_title }}</h1>
         {% if record_title %}
             <ul>
-                {% for artist in artist_list %}
-                <li><a href="{{ artist.id }}">{{ artist }}</a></li>
+                {% for record_title in record_title %}
+                <li><a href="{{ record_title }}">{{ record_title }}</a></li>
+                <li><a href="{{ artist.name }}">{{ artist }}</a></li>
                 <li><a href="{{ format_type }}">{{ format_type }}</a></li>
                 {% endfor %}
             </ul>
 
         {% else %}
-        The specified title {{ record_title }} does not exist!
+        <p>The specified title {{ record_title }} does not exist!</p>
 
         {% endif %}
 

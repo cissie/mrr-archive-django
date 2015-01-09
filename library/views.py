@@ -95,7 +95,9 @@ def artist(request, artist_id):
 def record_title(request):
     context = RequestContext(request)
     record_title_list = RecordTitle.objects.all()
-    context_dict = {"record_titles": record_title_list}
+    context_dict = {
+        "record_title": record_title_list
+    }
     return render_to_response('library/record_title.html', context_dict, context)
 
 def record_title_detail(request, record_title_id):
