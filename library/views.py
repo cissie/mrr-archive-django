@@ -112,10 +112,6 @@ def record_title_detail(request, record_title_id):
 
     context_dict = {
         "record_title": record_title,
-        # "artist_list": Artist.objects.filter(record_title=record_title),
-        # "format_type": FormatType.objects.filter(record_title=record_title),
-        # "country": Country.objects.filter(artist=artist),
-        # "file_under": FileUnder.objects.filter(artist=artist)
     }
     return render_to_response('library/record_title_detail.html', context_dict, context)
 

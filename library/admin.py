@@ -4,9 +4,13 @@ from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ["name"]
+    search_fields = ["name"]
+
+class RecordTitleAdmin(admin.ModelAdmin):
+    search_fields = ["record_title"]
 
 admin.site.register(Artist, ArtistAdmin)
-admin.site.register(RecordTitle)
+admin.site.register(RecordTitle, RecordTitleAdmin)
 admin.site.register(Country)
 admin.site.register(FormatType)
 admin.site.register(ReleaseYear)
