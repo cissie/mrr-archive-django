@@ -84,7 +84,8 @@ def artist(request, artist_id):
     context_dict = {
         "artist": artist,
         "record_title_list": RecordTitle.objects.filter(artist=artist),
-        "country": Country.objects.filter(artist=artist)
+        "country": Country.objects.filter(artist=artist),
+        "file_under": FileUnder.objects.filter(artist=artist)
     }
 
 
@@ -101,15 +102,22 @@ def record_title(request):
     return render_to_response('library/record_title.html', context_dict, context)
 
 def record_title_detail(request, record_title_id):
-    print record_title_id
-    record_title = RecordTitle.objects.get(id=record_title_id)
     context = RequestContext(request)
+    try:
+        record_title = RecordTitle.objects.get(id=record_title_id)
+        print record_title
+
+    except RecordTitle.DoesNotExist:
+        pass
+
     context_dict = {
         "record_title": record_title,
-        "artist_list": Artist.objects.filter(record_title=record_title),
-        "format_type": FormatType.objects.filter(record_title=record_title)
+        # "artist_list": Artist.objects.filter(record_title=record_title),
+        # "format_type": FormatType.objects.filter(record_title=record_title),
+        # "country": Country.objects.filter(artist=artist),
+        # "file_under": FileUnder.objects.filter(artist=artist)
     }
-    return render_to_response('library/record_title.html', context_dict, context)
+    return render_to_response('library/record_title_detail.html', context_dict, context)
 
 
 def record_label(request):
@@ -218,7 +226,7 @@ def load_data(request):
                 new_title.notes = Notes.objects.get_or_create(notes=d["notes"])[0]
             new_title.save()
             sleep(0.012)
-        return HttpResponse(content_type='application/json')
+    return HttpResponse(content_type='application/json')
 
 
 
