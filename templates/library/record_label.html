@@ -3,11 +3,10 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-        <h1>{{ record_label }}</h1>
         {% if record_labels %}
             <ul>
-                {% for record_label in record_labels %}
-                <li><a href="/library/record_label/{{ record_label.url }}">{{ record_labell }}</a></li>
+                {% for label in record_label %}
+                <li><a href="/library/record_label_detail/{{ record_title.label.id }}">{{ record_title.label.record_label }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
