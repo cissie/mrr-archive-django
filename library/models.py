@@ -21,8 +21,8 @@ class FileUnder(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=200)
-    country = models.ForeignKey(Country, blank=True, null=True)
-    file_under = models.ForeignKey(FileUnder, max_length=200, blank=True, null=True)
+    country = models.ForeignKey(Country, blank=True, null=True, unique=False)
+    file_under = models.ForeignKey(FileUnder, max_length=200, blank=True, null=True, unique=False)
 
     def __unicode__(self):
         return self.name
@@ -64,7 +64,7 @@ class IssueNumber(models.Model):
 
 
 class Notes(models.Model):
-    notes = models.CharField(max_length=200)
+    notes = models.TextField()
 
     class Meta:
         verbose_name_plural = "notes"
@@ -75,13 +75,13 @@ class Notes(models.Model):
 
 class RecordTitle(models.Model):
     artist = models.ForeignKey(Artist)
-    format_type = models.ForeignKey(FormatType)
-    record_title = models.CharField(max_length=200)
-    release_year = models.ForeignKey(ReleaseYear, default=0, null=True)
+    format_type = models.ForeignKey(FormatType, unique=False)
+    record_title = models.CharField(max_length=1000)
+    release_year = models.ForeignKey(ReleaseYear, null=True, unique=False)
     record_label = models.ForeignKey(RecordLabel, max_length=200)
     catalog_number = models.ForeignKey(CatalogNumber, max_length=200)
-    issue_number = models.ForeignKey(IssueNumber, default=0, null=True)
-    notes = models.ForeignKey(Notes, max_length=200, null=True)
+    issue_number = models.ForeignKey(IssueNumber, null=True, unique=False)
+    notes = models.ForeignKey(Notes, null=True)
 
     def __unicode__(self):
         return self.record_title

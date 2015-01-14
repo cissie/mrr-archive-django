@@ -222,7 +222,7 @@ def load_data(request):
                 new_artist.file_under = FileUnder.objects.get_or_create(file_under=d["file_under"])[0]
                 new_artist.save()
                 artist_id = new_artist.id
-                sleep(0.012)
+                sleep(0.015)
                 checked.append(new_artist)
                 print len(checked)
             new_title = RecordTitle()
@@ -239,7 +239,7 @@ def load_data(request):
             if d["notes"] is not None:
                 new_title.notes = Notes.objects.get_or_create(notes=d["notes"])[0]
             new_title.save()
-            sleep(0.012)
+            sleep(0.015)
     return HttpResponse(content_type='application/json')
 
 
