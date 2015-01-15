@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Country(models.Model):
-    country = models.CharField(max_length=200, blank=True, null=True)
+    country = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "countries"
@@ -13,7 +13,7 @@ class Country(models.Model):
 
 
 class FileUnder(models.Model):
-    file_under = models.CharField(max_length=200)
+    file_under = models.TextField()
 
     def __unicode__(self):
         return self.file_under
@@ -21,8 +21,8 @@ class FileUnder(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=200)
-    country = models.ForeignKey(Country, blank=True, null=True, unique=False)
-    file_under = models.ForeignKey(FileUnder, max_length=200, blank=True, null=True, unique=False)
+    country = models.ForeignKey(Country, blank=True, null=True)
+    file_under = models.ForeignKey(FileUnder, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -43,14 +43,14 @@ class ReleaseYear(models.Model):
 
 
 class RecordLabel(models.Model):
-    record_label = models.CharField(max_length=200)
+    record_label = models.TextField(null=True)
 
     def __unicode__(self):
         return self.record_label
 
 
 class CatalogNumber(models.Model):
-    catalog_number = models.CharField(max_length=200)
+    catalog_number = models.TextField(null=True)
 
     def __unicode__(self):
         return self.catalog_number
@@ -74,13 +74,13 @@ class Notes(models.Model):
 
 
 class RecordTitle(models.Model):
-    artist = models.ForeignKey(Artist)
-    format_type = models.ForeignKey(FormatType, unique=False)
+    artist = models.ForeignKey(Artist, null=True)
+    format_type = models.ForeignKey(FormatType, null=True)
     record_title = models.CharField(max_length=1000)
-    release_year = models.ForeignKey(ReleaseYear, null=True, unique=False)
-    record_label = models.ForeignKey(RecordLabel, max_length=200)
-    catalog_number = models.ForeignKey(CatalogNumber, max_length=200)
-    issue_number = models.ForeignKey(IssueNumber, null=True, unique=False)
+    release_year = models.ForeignKey(ReleaseYear, null=True)
+    record_label = models.ForeignKey(RecordLabel, null=True)
+    catalog_number = models.ForeignKey(CatalogNumber, null=True)
+    issue_number = models.ForeignKey(IssueNumber, null=True)
     notes = models.ForeignKey(Notes, null=True)
 
     def __unicode__(self):
