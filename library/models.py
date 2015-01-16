@@ -76,7 +76,7 @@ class Notes(models.Model):
 class RecordTitle(models.Model):
     artist = models.ForeignKey(Artist, null=True)
     format_type = models.ForeignKey(FormatType, null=True)
-    record_title = models.CharField(max_length=1000)
+    record_title = models.TextField()
     release_year = models.ForeignKey(ReleaseYear, null=True)
     record_label = models.ForeignKey(RecordLabel, null=True)
     catalog_number = models.ForeignKey(CatalogNumber, null=True)
