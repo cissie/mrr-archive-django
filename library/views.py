@@ -120,7 +120,7 @@ def record_label(request):
     context = RequestContext(request)
     record_label_list = RecordLabel.objects.all()
     context_dict = {
-        "record_label": record_label_list
+        "record_labels": record_label_list
     }
     return render_to_response('library/record_label.html', context_dict, context)
 
@@ -132,9 +132,13 @@ def record_label_detail(request, record_label_id):
 
     except RecordLabel.DoesNotExist:
         pass
-
+    try:
+        record_title_list = RecordTitle.objects.get(record_label=record_label)
+    except RecordTitle.DoesNotExist:
+        pass
     context_dict = {
         "record_label": record_label,
+        "record_titles": record_title
     }
     return render_to_response('library/record_label_detail.html', context_dict, context)
 
@@ -209,7 +213,6 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/library/')
 
-@login_required
 def load_data(request):
     with open("record_collection.json") as f:
         json_data = json.load(f)

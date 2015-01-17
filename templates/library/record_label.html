@@ -5,13 +5,12 @@
 {% block body_block %}
         {% if record_labels %}
             <ul>
-                {% for label in record_label %}
-                <li><a href="/library/record_label_detail/{{ record_title.label.id }}">{{ record_title.label.record_label }}</a></li>
+                {% for label in record_labels %}
+                <li><a href="/library/record_label_detail/{{ label.id }}">{{ label.record_label }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no labels present.</strong>
         {% endif %}
 
-        <a href="{{ record_label.url }}">{{ record_label }}</a>
 {% endblock %}
