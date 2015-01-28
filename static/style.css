@@ -12,6 +12,14 @@ li {
     list-style: none;
 }
 
+p {
+    text-align: left;
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+/*HEADER AND NAV*/
+
 header {
     text-align: center;
     padding: 20px 0;
@@ -44,6 +52,8 @@ nav a {
     padding: 15px 10px;
 }
 
+/*FORM*/
+
 nav form {
     position: absolute;
     margin-left: 160px;
@@ -60,17 +70,6 @@ nav form {
     color: lightslategray;
 }
 
-p {
-    text-align: left;
-    margin-left: 160px;
-    margin-right: 160px;
-}
-
-footer {
-    position: absolute;
-    margin-left: 160px;
-}
-
 #logo {
     font-size: 2em;
     color: #F5F5F5;
@@ -79,6 +78,8 @@ footer {
 #search {
     position: relative;
 }
+
+/*IMAGES*/
 
 #wrapper {
     position: relative;
@@ -111,6 +112,11 @@ footer {
     margin-right: 160px;
 }
 
+/*LABEL PAGE*/
+
+
+/*LINKS*/
+
 #add a:visited {
     color: lightslategray;
 }
@@ -127,7 +133,11 @@ nav a:hover {
     background-color: #F5F5F5;
 }
 
+/*FOOTER*/
+
 footer {
+    position: absolute;
+    margin-left: 160px;
     font-size: 0.75em;
     text-align: left;
     clear: both;

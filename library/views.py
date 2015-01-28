@@ -133,12 +133,12 @@ def record_label_detail(request, record_label_id):
     except RecordLabel.DoesNotExist:
         pass
     try:
-        record_title_list = RecordTitle.objects.get(record_label=record_label)
+        record_title_list = RecordTitle.objects.filter(record_label=record_label)
     except RecordTitle.DoesNotExist:
         pass
     context_dict = {
         "record_label": record_label,
-        "record_titles": record_title
+        "record_title_list": record_title_list
     }
     return render_to_response('library/record_label_detail.html', context_dict, context)
 
@@ -213,79 +213,79 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/library/')
 
-def load_data(request):
-    with open("record_collection.json") as f:
-        json_data = json.load(f)
-        checked = []
-        count = 0
-        for d in json_data:
-            if d["artist"] not in checked:
-                try:
-                    new_artist = Artist.objects.get(name=d["artist"])
-                except Artist.DoesNotExist:
-                    new_artist = Artist(name=d["artist"])
-                try:
-                    country = Country.objects.get(country=d["country"])
-                except Country.DoesNotExist:
-                    country = Country(country=d["country"])
-                    country.save()
-                new_artist.country = country
-                try:
-                    file_under = FileUnder.objects.get(file_under=d["file_under"])
-                except FileUnder.DoesNotExist:
-                    file_under = FileUnder(file_under=d["file_under"])
-                    file_under.save()
-                new_artist.file_under = file_under
-                new_artist.save()
-                artist_id = new_artist.id
-                sleep(0.015)
-                checked.append(new_artist)
-                print len(checked)
-            new_title = RecordTitle()
-            new_title.artist = new_artist
-            new_title.record_title = d["record_title"]
-            try:
-                format_type = FormatType.objects.get(format_type=d["format_type"])
-            except FormatType.DoesNotExist:
-                format_type = FormatType(format_type=d["format_type"])
-                format_type.save()
-            new_title.format_type = format_type
-            if d["release_year"] is not None:
-                try:
-                    release_year = ReleaseYear.objects.get(release_year=d["release_year"])
-                except ReleaseYear.DoesNotExist:
-                    release_year = ReleaseYear(release_year=d["release_year"])
-                    release_year.save()
-                new_title.release_year = release_year
-            try:
-                record_label = RecordLabel.objects.get(record_label=d["label_name"])
-            except RecordLabel.DoesNotExist:
-                record_label = RecordLabel(record_label=d["label_name"])
-                record_label.save()
-            new_title.record_label = record_label
-            try:
-                catalog_number = CatalogNumber.objects.get(catalog_number=d["catalog_number"])
-            except CatalogNumber.DoesNotExist:
-                catalog_number = CatalogNumber(catalog_number=d["catalog_number"])
-                catalog_number.save()
-            new_title.catalog_number = catalog_number
-            if d["issue_number"] is not None:
-                try:
-                    issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
-                except IssueNumber.DoesNotExist:
-                    issue_number = IssueNumber(issue_number=d["issue_number"])
-                    issue_number.save()
-                new_title.issue_number = issue_number
-                if d["notes"] is not None:
-                    try:
-                        notes = Notes.objects.get(notes=d["notes"])
-                    except Notes.DoesNotExist:
-                        notes = Notes(notes=d["notes"])
-                        notes.save()
-                    new_title.notes = notes
-            new_title.save()
-            sleep(0.015)
-    return HttpResponse(content_type='application/json')
+# def load_data(request):
+#     with open("record_collection.json") as f:
+#         json_data = json.load(f)
+#         checked = []
+#         count = 0
+#         for d in json_data:
+#             if d["artist"] not in checked:
+#                 try:
+#                     new_artist = Artist.objects.get(name=d["artist"])
+#                 except Artist.DoesNotExist:
+#                     new_artist = Artist(name=d["artist"])
+#                 try:
+#                     country = Country.objects.get(country=d["country"])
+#                 except Country.DoesNotExist:
+#                     country = Country(country=d["country"])
+#                     country.save()
+#                 new_artist.country = country
+#                 try:
+#                     file_under = FileUnder.objects.get(file_under=d["file_under"])
+#                 except FileUnder.DoesNotExist:
+#                     file_under = FileUnder(file_under=d["file_under"])
+#                     file_under.save()
+#                 new_artist.file_under = file_under
+#                 new_artist.save()
+#                 artist_id = new_artist.id
+#                 sleep(0.015)
+#                 checked.append(new_artist)
+#                 print len(checked)
+#             new_title = RecordTitle()
+#             new_title.artist = new_artist
+#             new_title.record_title = d["record_title"]
+#             try:
+#                 format_type = FormatType.objects.get(format_type=d["format_type"])
+#             except FormatType.DoesNotExist:
+#                 format_type = FormatType(format_type=d["format_type"])
+#                 format_type.save()
+#             new_title.format_type = format_type
+#             if d["release_year"] is not None:
+#                 try:
+#                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
+#                 except ReleaseYear.DoesNotExist:
+#                     release_year = ReleaseYear(release_year=d["release_year"])
+#                     release_year.save()
+#                 new_title.release_year = release_year
+#             try:
+#                 record_label = RecordLabel.objects.get(record_label=d["label_name"])
+#             except RecordLabel.DoesNotExist:
+#                 record_label = RecordLabel(record_label=d["label_name"])
+#                 record_label.save()
+#             new_title.record_label = record_label
+#             try:
+#                 catalog_number = CatalogNumber.objects.get(catalog_number=d["catalog_number"])
+#             except CatalogNumber.DoesNotExist:
+#                 catalog_number = CatalogNumber(catalog_number=d["catalog_number"])
+#                 catalog_number.save()
+#             new_title.catalog_number = catalog_number
+#             if d["issue_number"] is not None:
+#                 try:
+#                     issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
+#                 except IssueNumber.DoesNotExist:
+#                     issue_number = IssueNumber(issue_number=d["issue_number"])
+#                     issue_number.save()
+#                 new_title.issue_number = issue_number
+#                 if d["notes"] is not None:
+#                     try:
+#                         notes = Notes.objects.get(notes=d["notes"])
+#                     except Notes.DoesNotExist:
+#                         notes = Notes(notes=d["notes"])
+#                         notes.save()
+#                     new_title.notes = notes
+#             new_title.save()
+#             sleep(0.015)
+#     return HttpResponse(content_type='application/json')
 
 
 
