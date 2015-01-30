@@ -77,6 +77,8 @@ nav form {
 
 #search {
     position: relative;
+    height: 20px;
+    width: 250px;
 }
 
 /*IMAGES*/

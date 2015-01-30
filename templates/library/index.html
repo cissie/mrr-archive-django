@@ -6,20 +6,34 @@
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin et dolor sit amet finibus. Maecenas fermentum dignissim urna, nec porttitor leo. Aliquam lobortis, tortor nec tempor suscipit, diam ipsum auctor purus, nec egestas mauris libero ac odio. Cras ornare quam et felis consequat aliquet. Nulla maximus dui ultrices dui finibus ullamcorper. Nunc quam arcu, pharetra vel eros ac, semper condimentum erat.
         </p>
-        <div id="wrapper">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-         <div class="box"></div>
-         <div class="box"></div>
-        </div>
 
         <div class="artist">
         {% if artists %}
             <ul>
                 {% for artist in artists %}
                 <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+                {{ artist.full_name|upper }}<br />
                 {% endfor %}
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if artists.has_previous %}
+                            <a href="?page={{ artists.previous_page_number }}">Previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ artists.number }} of {{ artists.paginator.num_pages }}.
+                        </span>
+
+                        {% if artists.has_next %}
+                            <a href="?page={{ artists.next_page_number }}">Next</a>
+                        {% endif %}
+
+                        <input type="text" id="page_input" placeholder="Go to page...">
+                        <input type="submit" id="page_input_button" value="Submit">
+
+                    </span>
+                </div>
             </ul>
         </div>
         {% else %}
@@ -27,5 +41,21 @@
         {% endif %}
 
         <a href="{{ artist.url }}">{{ artist.name }}</a>
+
+<script>
+    function goToPage () {
+        var pageInput = document.getElementById('page_input');
+        document.location.href = '/?page=' + pageInput.value;
+    }
+
+    var oldEvt = window.onload;
+    window.onload = function () {
+        if (oldEvt) oldEvt();
+
+        var pageButton = document.getElementById('page_input_button');
+        pageButton.addEventListener('click', goToPage, false);
+    }
+
+</script>
 
 {% endblock %}

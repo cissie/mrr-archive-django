@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -24,13 +25,26 @@ def index(request):
     # Query the database for a list of ALL artists currently stored.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
     artist_list = Artist.objects.all()
-    context_dict = {'artists': artist_list}
 
     # The following two lines are new.
     # We loop through each artist returned, and create a URL attribute.
     # This attribute stores an encoded URL (e.g. spaces replaced with underscores).
-    for artist in artist_list:
-        artist.url = artist.name.replace(' ', '_')
+    # for artist in artist_list:
+    #     artist.url = artist.name.replace(' ', '_')
+
+    paginator = Paginator(artist_list, 25)
+
+    page = request.GET.get('page')
+    try:
+        artists = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        artists = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        artists = paginator.page(paginator.num_pages)
+
+    context_dict = {'artists': artists}
 
     # Render the response and send it back!
     return render_to_response('library/index.html', context_dict, context)
@@ -128,7 +142,6 @@ def record_label_detail(request, record_label_id):
     context = RequestContext(request)
     try:
         record_label = RecordLabel.objects.get(id=record_label_id)
-        print record_label
 
     except RecordLabel.DoesNotExist:
         pass
@@ -198,6 +211,18 @@ def login(request):
         else:
             print("The username and password were incorrect.")
     return render(request, 'library/login.html')
+
+# def search(request, text):
+#     if request.method == 'GET':
+#         results = {
+#             record_titles: RecordTitle.objects.filter(record_title__startswith=""),
+#             artists: Artist.objects.filter(artist__startswith=""),
+#             record_labels: RecordLabel.objects.filter(record_label__startswith="")
+#         }
+#
+#
+#     return HttpResponse(results, content_type='application/json')
+
 
 @login_required
 def restricted(request):
