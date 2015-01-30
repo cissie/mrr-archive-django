@@ -32,9 +32,13 @@ def index(request):
     # for artist in artist_list:
     #     artist.url = artist.name.replace(' ', '_')
 
-    paginator = Paginator(artist_list, 25)
-
     page = request.GET.get('page')
+    number_artists = request.GET.get('artists')
+
+    if not number_artists:
+        number_artists = 25
+
+    paginator = Paginator(artist_list, number_artists)
     try:
         artists = paginator.page(page)
     except PageNotAnInteger:
@@ -211,6 +215,7 @@ def login(request):
         else:
             print("The username and password were incorrect.")
     return render(request, 'library/login.html')
+
 
 # def search(request, text):
 #     if request.method == 'GET':

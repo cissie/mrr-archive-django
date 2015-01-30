@@ -28,9 +28,15 @@
                         {% if artists.has_next %}
                             <a href="?page={{ artists.next_page_number }}">Next</a>
                         {% endif %}
-
-                        <input type="text" id="page_input" placeholder="Go to page...">
-                        <input type="submit" id="page_input_button" value="Submit">
+                        <form method="get" id="page_form" action="/">
+                            <input type="text" name="page" id="page_input" placeholder="Go to page...">
+                            <select name="artists" id="num_artists">
+                                <option value="25">25 artists</option>
+                                <option value="100">100 artists</option>
+                                <option value="250">250 artists</option>
+                            </select>
+                            <input type="submit" id="page_input_button" value="Submit">
+                        </form>
 
                     </span>
                 </div>
@@ -48,10 +54,22 @@
         document.location.href = '/?page=' + pageInput.value;
     }
 
+    function setSelect () {
+        var widgetSelect = document.getElementsByName('artists')[0];
+        var curLoc = document.location.href;
+        var re = /.*artists=(\S+).*/;
+        var curSelectedItems = curLoc.match(re)[1];
+        for (var i = 0; i < widgetSelect.length; i++) {
+            if (widgetSelect[i].value == curSelectedItems) {
+                widgetSelect.selectedIndex = i;
+            }
+        }
+    }
+
     var oldEvt = window.onload;
     window.onload = function () {
         if (oldEvt) oldEvt();
-
+        setSelect();
         var pageButton = document.getElementById('page_input_button');
         pageButton.addEventListener('click', goToPage, false);
     }

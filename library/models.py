@@ -82,6 +82,7 @@ class RecordTitle(models.Model):
     catalog_number = models.ForeignKey(CatalogNumber, null=True)
     issue_number = models.ForeignKey(IssueNumber, null=True)
     notes = models.ForeignKey(Notes, null=True)
+    # covers = models.ImageField(upload_to='img/')
 
     def __unicode__(self):
         return self.record_title
