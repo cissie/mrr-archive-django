@@ -1,0 +1,17 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+
+        {% if countries %}
+            <ul>
+                {% for country in countries %}
+                <li><a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no countries present.</strong>
+        {% endif %}
+
+{% endblock %}

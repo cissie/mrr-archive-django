@@ -1,24 +1,31 @@
 {% extends 'library/base.html' %}
 
+{% load static %}
+
 {% block title %}{% endblock %}
 
 {% block body_block %}
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin et dolor sit amet finibus. Maecenas fermentum dignissim urna, nec porttitor leo. Aliquam lobortis, tortor nec tempor suscipit, diam ipsum auctor purus, nec egestas mauris libero ac odio. Cras ornare quam et felis consequat aliquet. Nulla maximus dui ultrices dui finibus ullamcorper. Nunc quam arcu, pharetra vel eros ac, semper condimentum erat.
-        </p>
 
-        <div class="artist">
-        {% if artists %}
-            <ul>
-                {% for artist in artists %}
-                <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
-                {{ artist.full_name|upper }}<br />
-                {% endfor %}
 
-                <div class="pagination">
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin et dolor sit amet finibus.
+    Maecenas fermentum dignissim urna, nec porttitor leo. Aliquam lobortis, tortor nec tempor suscipit, diam ipsum
+    auctor purus, nec egestas mauris libero ac odio. Cras ornare quam et felis consequat aliquet. Nulla maximus dui
+    ultrices dui finibus ullamcorper. Nunc quam arcu, pharetra vel eros ac, semper condimentum erat.
+</p>
+
+<div class="artist">
+    {% if artists %}
+    <ul>
+        {% for artist in artists %}
+        <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+        {{ artist.full_name|upper }}<br/>
+        {% endfor %}
+
+        <div class="pagination">
                     <span class="step-links">
                         {% if artists.has_previous %}
-                            <a href="?page={{ artists.previous_page_number }}">Previous</a>
+                            <a href="{{ prev_page_url }}">Previous</a>
                         {% endif %}
 
                         <span class="current">
@@ -26,7 +33,7 @@
                         </span>
 
                         {% if artists.has_next %}
-                            <a href="?page={{ artists.next_page_number }}">Next</a>
+                            <a href="{{ next_page_url }}">Next</a>
                         {% endif %}
                         <form method="get" id="page_form">
                             <input type="text" name="page" id="page_input" placeholder="Go to page...">
@@ -35,68 +42,36 @@
                                 <option value="100">100 artists</option>
                                 <option value="250">250 artists</option>
                             </select>
-                            <input type="submit" id="page_input_button" value="Submit" onclick="submitPaginationForm('page_form')">
+                            <input type="submit" id="page_input_button" value="Submit"
+                                   onclick="submitPaginationForm('page_form')">
                         </form>
 
                     </span>
-                </div>
-            </ul>
         </div>
-        {% else %}
-            <strong>There are no artists present.</strong>
-        {% endif %}
+    </ul>
+</div>
+{% else %}
+<strong>There are no artists present.</strong>
+{% endif %}
 
-        <a href="{{ artist.url }}">{{ artist.name }}</a>
+<a href="{{ artist.url }}">{{ artist.name }}</a>
+
+<script src="{% static " js/pagination.js" %}"></script>
 
 <script>
-    function goToPage () {
-        var pageInput = document.getElementById('page_input');
-        document.location.href = '/?page=' + pageInput.value;
-    }
 
-    function setSelect () {
-        var widgetSelect = document.getElementsByName('artists')[0];
-        var curLoc = document.location.href;
-        var re = /.*artists=(\S+).*/;
-        var curSelectedItems = curLoc.match(re)[1];
-        for (var i = 0; i < widgetSelect.length; i++) {
-            if (widgetSelect[i].value == curSelectedItems) {
-                widgetSelect.selectedIndex = i;
-            }
-        }
-    }
-
-    function submitPaginationForm(formId) {
-	// Hijacks the page form submission and manually submits all values.
-	// Otherwise, if the user doesn't explicitly change the select widget
-	// (i.e. if it's changed in a previous query), the value is not submitted
-	// at all in the new request.
-	// TODO: This doesn't preserve any existing GET keywords...
-	var formPagination = document.getElementById(formId);
-	var strQuery = [];
-	for (var i = 0; i < formPagination.length; i++) {
-		var element = formPagination.elements[i];
-		if (element.name == 'page' && !element.value) {
-			strQuery.push(encodeURIComponent(element.name) + "=1")
-		} else if (!element.name && !element.value) {
-			continue;
-		} else {
-			strQuery.push(encodeURIComponent(element.name) + "=" + encodeURIComponent(element.value));
-		}
-	}
-
-	strQuery = strQuery.join("&");
-	var curLoc = document.location.href.split('?')[0];
-	document.location.href = curLoc + "?" + strQuery;
+function preventDef(event) {
+    event.preventDefault();
 }
 
-    var oldEvt = window.onload;
-    window.onload = function () {
-        if (oldEvt) oldEvt();
-        setSelect();
-        var pageButton = document.getElementById('page_input_button');
-        pageButton.addEventListener('click', goToPage, false);
-    }
+var oldEvt = window.onload;
+window.onload = function () {
+    if (oldEvt) oldEvt();
+    setSelect('num_artists');
+    var pageButton = document.getElementById('page_input_button');
+    pageButton.addEventListener('click', submitPaginationForm('page_form'), false);
+    document.getElementById('page_form').addEventListener('click', preventDef, false);
+}
 
 </script>
 

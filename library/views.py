@@ -15,6 +15,7 @@ from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear
 from time import sleep
 import json
 import os
+import re
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "library.settings")
 
 
@@ -37,6 +38,8 @@ def index(request):
 
     if not number_artists:
         number_artists = 25
+    if not page:
+        page = 1
 
     paginator = Paginator(artist_list, number_artists)
     try:
@@ -49,6 +52,20 @@ def index(request):
         artists = paginator.page(paginator.num_pages)
 
     context_dict = {'artists': artists}
+
+    # Preserve all GET params
+    params = []
+    for key, value in request.GET.iteritems():
+        params.append("&{}={}".format(key, value))
+
+    # The first char is a &, which we replace with a ?
+    params = '?' + ''.join(params)[1:]
+
+    # Only change the page number
+    if artists.has_previous():
+        context_dict['prev_page_url'] = re.sub('page=(\d+)', 'page=' + str(artists.previous_page_number()), params)
+    if artists.has_next():
+        context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(artists.next_page_number()), params)
 
     # Render the response and send it back!
     return render_to_response('library/index.html', context_dict, context)
@@ -146,7 +163,6 @@ def record_label_detail(request, record_label_id):
     context = RequestContext(request)
     try:
         record_label = RecordLabel.objects.get(id=record_label_id)
-
     except RecordLabel.DoesNotExist:
         pass
     try:
@@ -158,6 +174,31 @@ def record_label_detail(request, record_label_id):
         "record_title_list": record_title_list
     }
     return render_to_response('library/record_label_detail.html', context_dict, context)
+
+def country(request):
+    context = RequestContext(request)
+    country_list = Country.objects.all()
+    context_dict = {
+        "countries": country_list
+    }
+    return render_to_response('library/country.html', context_dict, context)
+
+def country_detail(request, country_id):
+    context = RequestContext(request)
+    try:
+        country = Country.objects.get(id=country_id)
+    except Country.DoesNotExist:
+        pass
+    try:
+        artist_list = Artist.objects.filter(country=country)
+    except Artist.DoesNotExist:
+        pass
+    context_dict = {
+        "country": country,
+        "artist_list": artist_list,
+        "record_title": record_title
+    }
+    return render_to_response('library/country_detail.html', context_dict, context)
 
 
 def record_review(request):
