@@ -11,7 +11,7 @@
                 <li>Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
 
                 {% if forloop.last %}
-                <li>Artist Country: <a href="{{ artist.country.country }}">{{ artist.country.country }}</a></li>
+                <li>Artist Country: <a href="/library/country_detail/{{ artist.country.id }}">{{ artist.country.country }}</a></li>
                 <li>File Under: {{ artist.file_under.file_under }}</li>
                 {% endif %}
                 {% endfor %}

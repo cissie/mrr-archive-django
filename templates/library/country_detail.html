@@ -4,14 +4,15 @@
 
 {% block body_block %}
 <h1>{{ country.country }}</h1>
+<h2>Artists</h2>
         <!--{% if country %}-->
             {% for artist in artist_list %}
             <ul>
                 <div id="country">
-                <li>Artist: <a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
-                    {% for title in artist.recordtitle_set.all %}
-                        <li>Title: <a href="/library/record_title_detail/{{ title.id }}">{{ title.record_title }}</a></li>
-                    {% endfor %}
+                <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+                    <!--{% for title in artist.recordtitle_set.all %}-->
+                        <!--<li>Title: <a href="/library/record_title_detail/{{ title.id }}">{{ title.record_title }}</a></li>-->
+                    <!--{% endfor %}-->
                 </div>
             </ul>
             {% endfor %}
