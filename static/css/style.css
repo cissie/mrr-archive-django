@@ -104,10 +104,6 @@ nav form {
     margin-right: 120px;
 }
 
-.artist a:visited {
-    color: lightslategray;
-}
-
 #add {
     text-align: left;
     margin-left: 160px;
@@ -124,7 +120,7 @@ nav form {
 }
 
 nav a:visited {
-    color: lightslategray;
+    color: #c4d4de;
 }
 
 .selected {
@@ -132,7 +128,16 @@ nav a:visited {
 }
 
 nav a:hover {
-    background-color: #F5F5F5;
+    background-color: #859199;
+}
+
+#artist_list a:visited {
+    color: lightslategray;
+}
+
+
+#artist_list a {
+    color: black;
 }
 
 /*FOOTER*/

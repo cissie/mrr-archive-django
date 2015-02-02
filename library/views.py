@@ -124,12 +124,47 @@ def artist(request, artist_id):
     # Go render the response and return it to the client.
     return render_to_response('library/artist.html', context_dict, context)
 
+
 def record_title(request):
     context = RequestContext(request)
     record_title_list = RecordTitle.objects.all()
+
+    page = request.GET.get('page')
+    number_titles = request.GET.get('record_title_list')
+
+    if not number_titles:
+        number_titles = 25
+    if not page:
+        page = 1
+
+    paginator = Paginator(record_title_list, number_titles)
+    try:
+        record_title_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        record_title_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        record_title_list = paginator.page(paginator.num_pages)
+
     context_dict = {
         "record_title": record_title_list
     }
+
+    # Preserve all GET params
+    params = []
+    for key, value in request.GET.iteritems():
+        params.append("&{}={}".format(key, value))
+
+    # The first char is a &, which we replace with a ?
+    params = '?' + ''.join(params)[1:]
+
+    # Only change the page number
+    if record_title_list.has_previous():
+        context_dict['prev_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_title_list.previous_page_number()), params)
+    if record_title_list.has_next():
+        context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_title_list.next_page_number()), params)
+
     return render_to_response('library/record_title.html', context_dict, context)
 
 def record_title_detail(request, record_title_id):

@@ -18,35 +18,36 @@
     {% if artists %}
     <ul>
         {% for artist in artists %}
-        <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+            <div id="artist_list">
+                <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+            </div>
         {{ artist.full_name|upper }}<br/>
         {% endfor %}
 
         <div class="pagination">
-                    <span class="step-links">
-                        {% if artists.has_previous %}
-                            <a href="{{ prev_page_url }}">Previous</a>
-                        {% endif %}
+            <span class="step-links">
+                {% if artists.has_previous %}
+                    <a href="{{ prev_page_url }}">Previous</a>
+                {% endif %}
+                <span class="current">
+                    Page {{ artists.number }} of {{ artists.paginator.num_pages }}
+                </span>
 
-                        <span class="current">
-                            Page {{ artists.number }} of {{ artists.paginator.num_pages }}
-                        </span>
+                {% if artists.has_next %}
+                <a href="{{ next_page_url }}">Next</a>
+                {% endif %}
+                <form method="get" id="page_form">
+                    <input type="text" name="page" id="page_input" placeholder="Go to page...">
+                    <select name="artists" id="num_artists">
+                        <option value="25">25 artists</option>
+                        <option value="100">100 artists</option>
+                        <option value="250">250 artists</option>
+                    </select>
+                    <input type="submit" id="page_input_button" value="Submit"
+                           onclick="submitPaginationForm('page_form')">
+                </form>
 
-                        {% if artists.has_next %}
-                            <a href="{{ next_page_url }}">Next</a>
-                        {% endif %}
-                        <form method="get" id="page_form">
-                            <input type="text" name="page" id="page_input" placeholder="Go to page...">
-                            <select name="artists" id="num_artists">
-                                <option value="25">25 artists</option>
-                                <option value="100">100 artists</option>
-                                <option value="250">250 artists</option>
-                            </select>
-                            <input type="submit" id="page_input_button" value="Submit"
-                                   onclick="submitPaginationForm('page_form')">
-                        </form>
-
-                    </span>
+            </span>
         </div>
     </ul>
 </div>
