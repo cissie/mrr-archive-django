@@ -1,0 +1,148 @@
+body {
+    font-family: sans-serif;
+    background-color: #F5F5F5;
+    color: dimgray;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    text-align: left;
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+/*HEADER AND NAV*/
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 0;
+    width: 100%;
+    background-color: #556E7A;
+}
+
+nav {
+    text-align: center;
+    padding: 20px 0;
+    margin: 20px 0 0;
+    color: black;
+    font-size: 1.75em;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0 10px;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+nav a {
+    font-weight: 800;
+    padding: 15px 10px;
+}
+
+/*FORM*/
+
+nav form {
+    position: absolute;
+    margin-left: 160px;
+}
+
+#authentication li {
+    list-style: none;
+    text-align: left;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#authentication a:visited {
+    color: lightslategray;
+}
+
+#logo {
+    font-size: 2em;
+    color: #F5F5F5;
+}
+
+#search {
+    position: relative;
+    height: 20px;
+    width: 250px;
+}
+
+/*IMAGES*/
+
+#wrapper {
+    position: relative;
+    text-align: center;
+}
+
+.box {
+    border: 1px solid black;
+    height: 100px;
+    width: 100px;
+    padding: 50px;
+    margin: 0 10px 0 10px;
+    display: inline-block;
+}
+
+.artist li {
+    list-style: none;
+    text-align: left;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.artist a:visited {
+    color: lightslategray;
+}
+
+#add {
+    text-align: left;
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+/*LABEL PAGE*/
+
+
+/*LINKS*/
+
+#add a:visited {
+    color: lightslategray;
+}
+
+nav a:visited {
+    color: lightslategray;
+}
+
+.selected {
+   color: #3BD6C6;
+}
+
+nav a:hover {
+    background-color: #F5F5F5;
+}
+
+/*FOOTER*/
+
+footer {
+    position: absolute;
+    margin-left: 160px;
+    font-size: 0.75em;
+    text-align: left;
+    clear: both;
+    padding-top: 50px;
+    color: #ccc;
+}

@@ -17,12 +17,6 @@ function setSelect(selectId) {
 }
 
 function submitPaginationForm(formId) {
-	// Hijacks the page form submission and manually submits all values.
-	// Otherwise, if the user doesn't explicitly change the select widget
-	// (i.e. if it's changed in a previous query), the value is not submitted
-	// at all in the new request.
-	// First, though, we get all the existing GET params and pass them on too
-
 	// Get url params
 	var urlParamRegEx = /.*\?(.+)$/;
 	var urlParams = document.location.href.match(urlParamRegEx)[1];

@@ -27,7 +27,6 @@ def index(request):
     # Place the list in our context_dict dictionary which will be passed to the template engine.
     artist_list = Artist.objects.all()
 
-    # The following two lines are new.
     # We loop through each artist returned, and create a URL attribute.
     # This attribute stores an encoded URL (e.g. spaces replaced with underscores).
     # for artist in artist_list:
@@ -111,7 +110,6 @@ def artist(request, artist_id):
 
     except Artist.DoesNotExist:
         # We get here if we didn't find the specified artist.
-        # Don't do anything - the template displays the "no artist" message for us.
         pass
 
     # Create a context dictionary which we can pass to the template rendering engine.
@@ -122,8 +120,6 @@ def artist(request, artist_id):
         "country": Country.objects.filter(artist=artist),
         "file_under": FileUnder.objects.filter(artist=artist)
     }
-
-
 
     # Go render the response and return it to the client.
     return render_to_response('library/artist.html', context_dict, context)

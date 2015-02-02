@@ -1,4 +1,4 @@
-# Django settings for mysite project.
+
 import os
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
