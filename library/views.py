@@ -57,6 +57,9 @@ def index(request):
     for key, value in request.GET.iteritems():
         params.append("&{}={}".format(key, value))
 
+    if not params:
+        params = ["&page=1&"]
+
     # The first char is a &, which we replace with a ?
     params = '?' + ''.join(params)[1:]
 
@@ -147,14 +150,15 @@ def record_title(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         record_title_list = paginator.page(paginator.num_pages)
 
-    context_dict = {
-        "record_title": record_title_list
-    }
+    context_dict = {}
 
     # Preserve all GET params
     params = []
     for key, value in request.GET.iteritems():
         params.append("&{}={}".format(key, value))
+
+    if not params:
+        params = ["&page=1&"]
 
     # The first char is a &, which we replace with a ?
     params = '?' + ''.join(params)[1:]
@@ -164,6 +168,8 @@ def record_title(request):
         context_dict['prev_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_title_list.previous_page_number()), params)
     if record_title_list.has_next():
         context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_title_list.next_page_number()), params)
+
+    context_dict["record_title"] = record_title_list
 
     return render_to_response('library/record_title.html', context_dict, context)
 
@@ -185,9 +191,45 @@ def record_title_detail(request, record_title_id):
 def record_label(request):
     context = RequestContext(request)
     record_label_list = RecordLabel.objects.all()
+
+    page = request.GET.get('page')
+    number_labels = request.GET.get('record_label_list')
+
+    if not number_labels:
+        number_labels = 25
+    if not page:
+        page = 1
+
+    paginator = Paginator(record_label_list, number_labels)
+    try:
+        record_label_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        record_label_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        record_label_list = paginator.page(paginator.num_pages)
+
     context_dict = {
         "record_labels": record_label_list
     }
+
+    params = []
+    for key, value in request.GET.iteritems():
+        params.append("&{}={}".format(key, value))
+
+    if not params:
+        params = ["&page=1&"]
+
+    # The first char is a &, which we replace with a ?
+    params = '?' + ''.join(params)[1:]
+
+    # Only change the page number
+    if record_label_list.has_previous():
+        context_dict['prev_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_label_list.previous_page_number()), params)
+    if record_label_list.has_next():
+        context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_label_list.next_page_number()), params)
+
     return render_to_response('library/record_label.html', context_dict, context)
 
 def record_label_detail(request, record_label_id):

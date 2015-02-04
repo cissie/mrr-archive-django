@@ -1,5 +1,7 @@
 {% extends 'library/base.html' %}
 
+{% load static %}
+
 {% block title %}{% endblock %}
 
 {% block body_block %}
@@ -7,10 +9,56 @@
             <ul>
                 {% for label in record_labels %}
                 <li><a href="/library/record_label_detail/{{ label.id }}">{{ label.record_label }}</a></li>
+                {{ record_labels.full_name|upper }}<br/>
                 {% endfor %}
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if record_labels.has_previous %}
+                            <a href="{{ prev_page_url }}">Previous</a>
+                        {% endif %}
+                        <span class="current">
+                            Page {{ record_labels.number }} of {{ record_labels.paginator.num_pages }}
+                        </span>
+
+                        {% if record_labels.has_next %}
+                            <a href="{{ next_page_url }}">Next</a>
+                        {% endif %}
+                        <form method="get" id="page_form">
+                            <input type="text" name="page" id="page_input" placeholder="Go to page...">
+                            <select name="labels" id="num_labels">
+                                <option value="25">25 titles</option>
+                                <option value="100">100 titles</option>
+                                <option value="250">250 titles</option>
+                            </select>
+                            <input type="submit" id="page_input_button" value="Submit"
+                                   onclick="submitPaginationForm('page_form')">
+                        </form>
+
+                    </span>
+                </div>
             </ul>
         {% else %}
             <strong>There are no labels present.</strong>
         {% endif %}
+
+<script src="{% static 'js/pagination.js' %}"></script>
+
+<script>
+
+function preventDef(event) {
+    event.preventDefault();
+}
+
+var oldEvt = window.onload;
+window.onload = function () {
+    if (oldEvt) oldEvt();
+    setSelect("num_labels");
+    var pageButton = document.getElementById('page_input_button');
+    pageButton.addEventListener('click', submitPaginationForm('page_form'), false);
+    document.getElementById('page_form').addEventListener('click', preventDef, false);
+}
+
+</script>
 
 {% endblock %}

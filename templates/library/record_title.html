@@ -15,15 +15,15 @@
 
                 <div class="pagination">
                     <span class="step-links">
-                        {% if record_title_list.has_previous %}
+                        {% if record_title.has_previous %}
                             <a href="{{ prev_page_url }}">Previous</a>
                         {% endif %}
                         <span class="current">
-                            Page {{ record_title_list.number }} of {{ record_title_list.paginator.num_pages }}
+                            Page {{ record_title.number }} of {{ record_title.paginator.num_pages }}
                         </span>
 
-                        {% if record_title_list.has_next %}
-                        <a href="{{ next_page_url }}">Next</a>
+                        {% if record_title.has_next %}
+                            <a href="{{ next_page_url }}">Next</a>
                         {% endif %}
                         <form method="get" id="page_form">
                             <input type="text" name="page" id="page_input" placeholder="Go to page...">
