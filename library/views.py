@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
-from library.forms import ArtistForm, UserForm, UserProfileForm
+from library.forms import ReviewForm, UserForm, UserProfileForm
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
     CatalogNumber, IssueNumber, FileUnder, Notes
 from time import sleep
@@ -279,13 +279,13 @@ def record_review(request):
     return render(request, 'library/record_review.html')
 
 
-def add_artist(request):
+def add_review(request):
     # Get the context from the request.
     context = RequestContext(request)
 
     # A HTTP POST?
     if request.method == 'POST':
-        form = ArtistForm(request.POST)
+        form = ReviewForm(request.POST)
 
         # Have we been provided with a valid form?
         if form.is_valid():
@@ -300,11 +300,11 @@ def add_artist(request):
             print form.errors
     else:
         # If the request was not a POST, display the form to enter details.
-        form = ArtistForm()
+        form = ReviewForm()
 
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
-    return render_to_response('library/add_artist.html', {'form': form}, context)
+    return render_to_response('library/add_review.html', {'form': form}, context)
 
 
 def register(request):

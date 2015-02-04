@@ -1,16 +1,16 @@
 from django.contrib.auth.models import User
 from django import forms
-from library.models import Artist, RecordTitle, UserProfile
+from library.models import Artist, RecordTitle, UserProfile, RecordReview
 
 
-class ArtistForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the artist name.")
+class ReviewForm(forms.ModelForm):
+    name = forms.CharField(help_text="Please enter the review.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
-        model = Artist
+        model = RecordReview
 
 
 class RecordTitleForm(forms.ModelForm):
