@@ -7,11 +7,14 @@
 {% block body_block %}
         {% if record_labels %}
             <ul>
+                <!--Loops through the label id and displays the all of the record labels.-->
+                <!--Label names link to a more detailed view with every release from the label.-->
                 {% for label in record_labels %}
                 <li><a href="/library/record_label_detail/{{ label.id }}">{{ label.record_label }}</a></li>
                 {{ record_labels.full_name|upper }}<br/>
                 {% endfor %}
 
+                <!--Pagination-->
                 <div class="pagination">
                     <span class="step-links">
                         {% if record_labels.has_previous %}
@@ -46,6 +49,8 @@
 
 <script>
 
+
+//Adds better functionality to pagination
 function preventDef(event) {
     event.preventDefault();
 }

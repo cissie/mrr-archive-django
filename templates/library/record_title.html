@@ -8,11 +8,14 @@
 
         {% if record_title %}
             <ul>
+                <!--Loops through titles by id and displays all the titles on the page-->
+                <!--Link takes visitor to a more detailed view with all of the corresponding info to that title-->
                 {% for r in record_title %}
                 <li><a href="/library/record_title_detail/{{ r.id }}">{{ r.record_title }}</a></li>
                 {{ record_title.full_name|upper }}<br/>
                 {% endfor %}
 
+                <!--Pagination-->
                 <div class="pagination">
                     <span class="step-links">
                         {% if record_title.has_previous %}
@@ -49,6 +52,7 @@
 
 <script>
 
+//Adds better functionality to pagination
 function preventDef(event) {
     event.preventDefault();
 }

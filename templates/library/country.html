@@ -6,6 +6,8 @@
 
         {% if countries %}
             <ul>
+                <!--If country exists loop through and display results.-->
+                <!--Countries link to a more detailed view with every artist from the country.-->
                 {% for country in countries %}
                 <li><a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>
                 {% endfor %}
