@@ -19,6 +19,7 @@ import re
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "library.settings")
 
 
+# Loads all of the artists and routes them to be listed in the index template.
 def index(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
@@ -32,6 +33,7 @@ def index(request):
     # for artist in artist_list:
     #     artist.url = artist.name.replace(' ', '_')
 
+    # adding pagination
     page = request.GET.get('page')
     number_artists = request.GET.get('artists')
 
@@ -39,7 +41,7 @@ def index(request):
         number_artists = 25
     if not page:
         page = 1
-
+    # passing the artist_list and number_artists to paginator
     paginator = Paginator(artist_list, number_artists)
     try:
         artists = paginator.page(page)
@@ -57,6 +59,8 @@ def index(request):
     for key, value in request.GET.iteritems():
         params.append("&{}={}".format(key, value))
 
+    # if page is not in params this will be appended
+    # added because pagination wasn't working at page 0
     if not params:
         params = ["&page=1&"]
 
@@ -72,6 +76,8 @@ def index(request):
     # Render the response and send it back!
     return render_to_response('library/index.html', context_dict, context)
 
+
+# AJAX practice. Not meant to be a permanent part of the project
 @csrf_exempt
 def ajax(request):
     if request.method == "POST":
@@ -91,6 +97,7 @@ def ajax(request):
     return HttpResponse(dumps(ajax_artist_list, indent=4), content_type="application/json")
 
 
+# Related to the AJAX practice above. Not meant to be a permanent part of the project
 def dom(request):
     if request.method == "POST":
         print request.POST
@@ -98,6 +105,8 @@ def dom(request):
     return render(request, 'library/dom.html')
 
 
+# Artist detail view. Loops through artists, record titles, country, and file under
+# Routes fields to be displayed on artist template
 def artist(request, artist_id):
     # Request our context from the request passed to us.
     context = RequestContext(request)
@@ -106,10 +115,9 @@ def artist(request, artist_id):
         # Can we find an artist with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
+        # Pass id attribute to Artist model
         artist = Artist.objects.get(id=artist_id)
         print artist.name
-        # Retrieve all of the associated titles.
-        # Note that filter returns >= 1 model instance.
 
     except Artist.DoesNotExist:
         # We get here if we didn't find the specified artist.
@@ -117,6 +125,7 @@ def artist(request, artist_id):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the artist passed by the user.
+    # The artist detail view will also display the title, country and file_under fields.
     context_dict = {
         "artist": artist,
         "record_title_list": RecordTitle.objects.filter(artist=artist),
@@ -128,10 +137,12 @@ def artist(request, artist_id):
     return render_to_response('library/artist.html', context_dict, context)
 
 
+# Loads all of the record titles and routes them to be listed on the record_title template
 def record_title(request):
     context = RequestContext(request)
     record_title_list = RecordTitle.objects.all()
 
+    # adding pagination
     page = request.GET.get('page')
     number_titles = request.GET.get('record_title_list')
 
@@ -150,6 +161,7 @@ def record_title(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         record_title_list = paginator.page(paginator.num_pages)
 
+    # Empty context dict
     context_dict = {}
 
     # Preserve all GET params
@@ -157,6 +169,8 @@ def record_title(request):
     for key, value in request.GET.iteritems():
         params.append("&{}={}".format(key, value))
 
+    # If page is not in params this will be appended
+    # Added because pagination wasn't working at page 0
     if not params:
         params = ["&page=1&"]
 
@@ -169,13 +183,19 @@ def record_title(request):
     if record_title_list.has_next():
         context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(record_title_list.next_page_number()), params)
 
+    # Populates the context dict
     context_dict["record_title"] = record_title_list
 
     return render_to_response('library/record_title.html', context_dict, context)
 
+
+# Record title detail view. Loops through record titles and corresponding foreign key fields.
+# Fields will be displayed on record_title_detail template
 def record_title_detail(request, record_title_id):
     context = RequestContext(request)
     try:
+        # The .get() method returns one model instance or raises an exception.
+        # Pass id attribute to RecordTitle model
         record_title = RecordTitle.objects.get(id=record_title_id)
         print record_title
 
@@ -188,10 +208,12 @@ def record_title_detail(request, record_title_id):
     return render_to_response('library/record_title_detail.html', context_dict, context)
 
 
+# Loads all of the record labels and routes them to be listed on the record_label template
 def record_label(request):
     context = RequestContext(request)
     record_label_list = RecordLabel.objects.all()
 
+    # adding pagination
     page = request.GET.get('page')
     number_labels = request.GET.get('record_label_list')
 
@@ -218,6 +240,8 @@ def record_label(request):
     for key, value in request.GET.iteritems():
         params.append("&{}={}".format(key, value))
 
+    # if page is not in params this will be appended
+    # added because pagination wasn't working at page 0
     if not params:
         params = ["&page=1&"]
 
@@ -232,22 +256,34 @@ def record_label(request):
 
     return render_to_response('library/record_label.html', context_dict, context)
 
+
+# Record label detail view. Loops through record labels and corresponding titles.
+# Associated titles will be displayed through the record_label_detail template.
 def record_label_detail(request, record_label_id):
     context = RequestContext(request)
+
     try:
+        # The .get() method returns one model instance or raises an exception.
+        # Pass id attribute to RecordLabel model
         record_label = RecordLabel.objects.get(id=record_label_id)
     except RecordLabel.DoesNotExist:
         pass
+
     try:
+        # filters record title data to appropriate record label
         record_title_list = RecordTitle.objects.filter(record_label=record_label)
     except RecordTitle.DoesNotExist:
         pass
+
+    # The record label detail view will also display all the titles for a particular label
     context_dict = {
         "record_label": record_label,
         "record_title_list": record_title_list
     }
     return render_to_response('library/record_label_detail.html', context_dict, context)
 
+
+# Loads all of the countries and routes them to be listed on the country template.
 def country(request):
     context = RequestContext(request)
     country_list = Country.objects.all()
@@ -256,16 +292,24 @@ def country(request):
     }
     return render_to_response('library/country.html', context_dict, context)
 
+
+# Country detail view. Loops through countries and corresponding artists and titles.
+# Associated artists and titles will be displayed through the country template.
 def country_detail(request, country_id):
     context = RequestContext(request)
     try:
+        # The .get() method returns one model instance or raises an exception.
+        # Pass id attribute to Country model
         country = Country.objects.get(id=country_id)
     except Country.DoesNotExist:
         pass
     try:
+        # filters artist data to corresponding country
         artist_list = Artist.objects.filter(country=country)
     except Artist.DoesNotExist:
         pass
+
+    # The country detail view will display the country along with corresponding artists and record titles
     context_dict = {
         "country": country,
         "artist_list": artist_list,
@@ -274,11 +318,14 @@ def country_detail(request, country_id):
     return render_to_response('library/country_detail.html', context_dict, context)
 
 
+# To do. Still need to add more of a UI and a form to upload record reviews.
 def record_review(request):
     record_review = RecordReview.objects.get
     return render(request, 'library/record_review.html')
 
 
+# Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.
+# Will probably switch to django crispy forms.
 def add_review(request):
     # Get the context from the request.
     context = RequestContext(request)
@@ -307,12 +354,14 @@ def add_review(request):
     return render_to_response('library/add_review.html', {'form': form}, context)
 
 
+# User registration. Still undeveloped.
 def register(request):
     if request.method == "POST":
         User.objects.create_user(request.POST["username"], None, request.POST["password"])
     return render(request, 'library/register.html')
 
 
+# User login
 def login(request):
     if request.method == "POST":
         user =auth.authenticate(username=request.POST["username"],
@@ -331,6 +380,7 @@ def login(request):
     return render(request, 'library/login.html')
 
 
+# One day this will route to a live type search form with AJAX functionality
 # def search(request, text):
 #     if request.method == 'GET':
 #         results = {
@@ -357,11 +407,15 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/library/')
 
+
+# leaving function commented out so that the url is accessible only when the data needs to be loaded
 # def load_data(request):
 #     with open("record_collection.json") as f:
 #         json_data = json.load(f)
+          # creating an empty list so that artists are only loaded once
 #         checked = []
 #         count = 0
+          # looping through each data set in json_data to join the fields to the corresponding model
 #         for d in json_data:
 #             if d["artist"] not in checked:
 #                 try:
@@ -380,10 +434,14 @@ def user_logout(request):
 #                     file_under = FileUnder(file_under=d["file_under"])
 #                     file_under.save()
 #                 new_artist.file_under = file_under
+                  # save the artist after the models that have a foreign key to it
 #                 new_artist.save()
 #                 artist_id = new_artist.id
+                  # using sleep to slow rate of the loading data
 #                 sleep(0.015)
+                  # appends an artist if they have not yet been added to the checked list
 #                 checked.append(new_artist)
+                  # using print to monitor the data in the console as it loads
 #                 print len(checked)
 #             new_title = RecordTitle()
 #             new_title.artist = new_artist
@@ -394,6 +452,7 @@ def user_logout(request):
 #                 format_type = FormatType(format_type=d["format_type"])
 #                 format_type.save()
 #             new_title.format_type = format_type
+              # allows the same release year for multiple titles/artists
 #             if d["release_year"] is not None:
 #                 try:
 #                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
@@ -427,7 +486,9 @@ def user_logout(request):
 #                         notes = Notes(notes=d["notes"])
 #                         notes.save()
 #                     new_title.notes = notes
+              # save the titles after the models that have a foreign key to it
 #             new_title.save()
+              # using sleep to slow rate of the loading data
 #             sleep(0.015)
 #     return HttpResponse(content_type='application/json')
 
