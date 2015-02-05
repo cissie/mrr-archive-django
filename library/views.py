@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
-from library.forms import ReviewForm, UserForm, UserProfileForm
+from library.forms import EditForm, UserForm, UserProfileForm
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
     CatalogNumber, IssueNumber, FileUnder, Notes
 from time import sleep
@@ -115,7 +115,7 @@ def artist(request, artist_id):
         # Can we find an artist with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
-        # Pass id attribute to Artist model
+        # Pass artist_id argument to Artist model
         artist = Artist.objects.get(id=artist_id)
         print artist.name
 
@@ -195,7 +195,7 @@ def record_title_detail(request, record_title_id):
     context = RequestContext(request)
     try:
         # The .get() method returns one model instance or raises an exception.
-        # Pass id attribute to RecordTitle model
+        # Pass record_title_id argument to RecordTitle model
         record_title = RecordTitle.objects.get(id=record_title_id)
         print record_title
 
@@ -264,7 +264,7 @@ def record_label_detail(request, record_label_id):
 
     try:
         # The .get() method returns one model instance or raises an exception.
-        # Pass id attribute to RecordLabel model
+        # Pass record_label_id argument to RecordLabel model
         record_label = RecordLabel.objects.get(id=record_label_id)
     except RecordLabel.DoesNotExist:
         pass
@@ -299,7 +299,7 @@ def country_detail(request, country_id):
     context = RequestContext(request)
     try:
         # The .get() method returns one model instance or raises an exception.
-        # Pass id attribute to Country model
+        # Pass country id argument to Country model
         country = Country.objects.get(id=country_id)
     except Country.DoesNotExist:
         pass
@@ -323,35 +323,39 @@ def record_review(request):
     record_review = RecordReview.objects.get
     return render(request, 'library/record_review.html')
 
+def edit_form(request):
+    edit_form = EditForm()
+    return render_to_response('library/edit_form.html', {'edit_form': edit_form}, context_instance=RequestContext(request))
+
 
 # Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.
 # Will probably switch to django crispy forms.
-def add_review(request):
-    # Get the context from the request.
-    context = RequestContext(request)
-
-    # A HTTP POST?
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            form.save(commit=True)
-
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            return index(request)
-        else:
-            # The supplied form contained errors - just print them to the terminal.
-            print form.errors
-    else:
-        # If the request was not a POST, display the form to enter details.
-        form = ReviewForm()
-
-    # Bad form (or form details), no form supplied...
-    # Render the form with error messages (if any).
-    return render_to_response('library/add_review.html', {'form': form}, context)
+# def add_review(request):
+#     # Get the context from the request.
+#     context = RequestContext(request)
+#
+#     # A HTTP POST?
+#     if request.method == 'POST':
+#         form = ReviewForm(request.POST)
+#
+#         # Have we been provided with a valid form?
+#         if form.is_valid():
+#             # Save the new category to the database.
+#             form.save(commit=True)
+#
+#             # Now call the index() view.
+#             # The user will be shown the homepage.
+#             return index(request)
+#         else:
+#             # The supplied form contained errors - just print them to the terminal.
+#             print form.errors
+#     else:
+#         # If the request was not a POST, display the form to enter details.
+#         form = ReviewForm()
+#
+#     # Bad form (or form details), no form supplied...
+#     # Render the form with error messages (if any).
+#     return render_to_response('library/add_review.html', {'form': form}, context)
 
 
 # User registration. Still undeveloped.

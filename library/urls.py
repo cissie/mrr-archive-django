@@ -5,7 +5,7 @@ from library import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
-        url(r'^add_review/$', views.add_review, name='add_review'),
+        # url(r'^add_review/$', views.add_review, name='add_review'),
         url(r'^artist/(?P<artist_id>\w*)$', views.artist, name='artist'),
         url(r'^ajax?$', views.ajax, name='ajax'),
         url(r'^dom?$', views.dom, name='dom'),
@@ -21,4 +21,5 @@ urlpatterns = patterns('',
         url(r'^restricted/', views.restricted, name='restricted'),
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^search/$', include('haystack.urls')),
+        url(r'^edit_form?$', views.edit_form, include('library.urls'))
 )

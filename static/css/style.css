@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    font-family: Montserrat, sans-serif;
     background-color: #F5F5F5;
     color: dimgray;
 }
@@ -33,6 +33,7 @@ nav {
     padding: 20px 0;
     margin: 20px 0 0;
     color: black;
+    font-family: Montserrat;
     font-size: 1.75em;
 }
 
@@ -97,11 +98,11 @@ nav form {
     display: inline-block;
 }
 
-.artist li {
+.display_list {
+    margin-top: 20px;
     list-style: none;
     text-align: left;
-    margin-left: 120px;
-    margin-right: 120px;
+    font-family: Lato;
 }
 
 #add {

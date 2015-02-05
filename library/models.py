@@ -79,9 +79,10 @@ class RecordTitle(models.Model):
     record_title = models.TextField()
     release_year = models.ForeignKey(ReleaseYear, null=True)
     record_label = models.ForeignKey(RecordLabel, null=True)
-    catalog_number = models.ForeignKey(CatalogNumber, null=True)
-    issue_number = models.ForeignKey(IssueNumber, null=True)
-    notes = models.ForeignKey(Notes, null=True)
+    catalog_number = models.ForeignKey(CatalogNumber, null=True, blank=True)
+    issue_number = models.ForeignKey(IssueNumber, null=True, blank=True)
+    notes = models.ForeignKey(Notes, null=True, blank=True)
+    # last_edited_by = models.ForeignKey(User)
     # covers = models.ImageField(upload_to='img/')
 
     def __unicode__(self):
@@ -102,6 +103,7 @@ class CoverArt(models.Model):
 class RecordReview(models.Model):
     record_title = models.ForeignKey(RecordTitle)
     record_review = models.TextField()
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.record_review

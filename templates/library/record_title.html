@@ -6,47 +6,48 @@
 
 {% block body_block %}
 
-        {% if record_title %}
-            <ul>
-                <!--Loops through titles by id and displays all the titles on the page-->
-                <!--Link takes visitor to a more detailed view with all of the corresponding info to that title-->
-                {% for r in record_title %}
-                <li><a href="/library/record_title_detail/{{ r.id }}">{{ r.record_title }}</a></li>
-                {{ record_title.full_name|upper }}<br/>
-                {% endfor %}
+    {% if record_title %}
+    <div class="display_list">
+        <ul>
+            <!--Loops through titles by id and displays all the titles on the page-->
+            <!--Link takes visitor to a more detailed view with all of the corresponding info to that title-->
+            {% for r in record_title %}
+            <li><a href="/library/record_title_detail/{{ r.id }}">{{ r.record_title }}</a></li>
+            {{ record_title.full_name|upper }}<br/>
+            {% endfor %}
 
-                <!--Pagination-->
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if record_title.has_previous %}
-                            <a href="{{ prev_page_url }}">Previous</a>
-                        {% endif %}
-                        <span class="current">
-                            Page {{ record_title.number }} of {{ record_title.paginator.num_pages }}
-                        </span>
-
-                        {% if record_title.has_next %}
-                            <a href="{{ next_page_url }}">Next</a>
-                        {% endif %}
-                        <form method="get" id="page_form">
-                            <input type="text" name="page" id="page_input" placeholder="Go to page...">
-                            <select name="titles" id="num_titles">
-                                <option value="25">25 titles</option>
-                                <option value="100">100 titles</option>
-                                <option value="250">250 titles</option>
-                            </select>
-                            <input type="submit" id="page_input_button" value="Submit"
-                                   onclick="submitPaginationForm('page_form')">
-                        </form>
-
+            <!--Pagination-->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if record_title.has_previous %}
+                    <a href="{{ prev_page_url }}">Previous</a>
+                    {% endif %}
+                    <span class="current">
+                        Page {{ record_title.number }} of {{ record_title.paginator.num_pages }}
                     </span>
-                </div>
-            </ul>
+                    {% if record_title.has_next %}
+                        <a href="{{ next_page_url }}">Next</a>
+                    {% endif %}
+                    <form method="get" id="page_form">
+                        <input type="text" name="page" id="page_input" placeholder="Go to page...">
+                        <select name="titles" id="num_titles">
+                            <option value="25">25 titles</option>
+                            <option value="100">100 titles</option>
+                            <option value="250">250 titles</option>
+                        </select>
+                        <input type="submit" id="page_input_button" value="Submit"
+                               onclick="submitPaginationForm('page_form')">
+                    </form>
 
-        {% else %}
-        <p>The specified title {{ record_title }} does not exist!</p>
+                </span>
+            </div>
+        </ul>
+     </div>
 
-        {% endif %}
+    {% else %}
+    <p>The specified title {{ record_title }} does not exist!</p>
+
+    {% endif %}
 
 <script src="{% static "js/pagination.js" %}"></script>
 

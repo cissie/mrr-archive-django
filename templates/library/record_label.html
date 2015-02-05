@@ -6,6 +6,7 @@
 
 {% block body_block %}
         {% if record_labels %}
+        <div class="display_list">
             <ul>
                 <!--Loops through the label id and displays the all of the record labels.-->
                 <!--Label names link to a more detailed view with every release from the label.-->
@@ -41,9 +42,11 @@
                     </span>
                 </div>
             </ul>
+        </div>
         {% else %}
             <strong>There are no labels present.</strong>
         {% endif %}
+
 
 <script src="{% static 'js/pagination.js' %}"></script>
 
