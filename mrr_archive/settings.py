@@ -175,3 +175,5 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False

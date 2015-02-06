@@ -19,6 +19,7 @@
                 <li>Notes: {{ record_title.notes.notes }}</li>
                 <li>File Under: {{ record_title.artist.file_under.file_under }}</li>
             </ul>
+            <a href="/library/edit_form/{{ record_title.id }}">Edit this title</a>
 
         {% else %}
         <p>The specified title {{ record_title }} does not exist!</p>

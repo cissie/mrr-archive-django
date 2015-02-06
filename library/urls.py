@@ -21,5 +21,5 @@ urlpatterns = patterns('',
         url(r'^restricted/', views.restricted, name='restricted'),
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^search/$', include('haystack.urls')),
-        url(r'^edit_form?$', views.edit_form, include('library.urls'))
+        url(r'^edit_form/(?P<record_title_id>\w*)$', views.edit_form, name='edit_form')
 )

@@ -323,9 +323,20 @@ def record_review(request):
     record_review = RecordReview.objects.get
     return render(request, 'library/record_review.html')
 
-def edit_form(request):
-    edit_form = EditForm()
-    return render_to_response('library/edit_form.html', {'edit_form': edit_form}, context_instance=RequestContext(request))
+
+def edit_form(request, record_title_id):
+    record_title = RecordTitle.objects.get(id=record_title_id)
+    if request.method == 'POST':
+        form = EditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/') # name of view stated in urls
+        else:
+            form = EditForm(record_title)
+
+    return render_to_response("library/edit_form.html",
+                              {'form': EditForm()},
+                              context_instance=RequestContext(request))
 
 
 # Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from django.core.urlresolvers import reverse
 from library.models import *
 
 from crispy_forms.helper import FormHelper
@@ -14,25 +15,41 @@ class EditForm(forms.ModelForm):
     release_year = forms.IntegerField(label="Release Year")
     issue_number = forms.IntegerField(label="Issue Number")
     reviewer_name = forms.CharField(label="Reviewer Name")
-    record_review = forms.CharField(label="Add MRR Review")
+    record_review = forms.CharField(label="Add MRR Review", widget=forms.Textarea())
 
     helper = FormHelper()
     helper.form_method = 'POST'
     helper.form_class = 'form-horizontal'
     helper.label_class = 'col-sm-2'
     helper.field_class = 'col-sm-4'
+    # helper.form_action = reverse('record_title_detail')
     helper.layout = Layout(
         Field('record_label', css_class='input-sm'),
         Field('catalog_number', css_class='input-sm'),
-        Field('release_year', css_class='input-sm'),
-        Field('issue_number', css_class='input-sm'),
+        Field('release_year', css_class='input-sm', max_length=4),
+        Field('issue_number', css_class='input-sm', max_length=3),
         Field('reviewer_name', css_class='input-sm'),
         Field('record_review', css_class='input-sm'),
         FormActions(Submit('Save Changes', 'Save Changes', css_class='btn-primary'))
     )
 
     class Meta:
-        model = User
+        model = RecordTitle
+        fields = (
+            'record_label',
+            'catalog_number',
+            'release_year',
+            'issue_number',
+            'reviewer_name',
+            'record_review',
+        )
+
+        def __init__(self, *args, **kwargs):
+            super(EditForm, self).__init__(*args, **kwargs)
+            self.helper = FormHelper(self)
+            # self.helper.form_action = reverse('record_title_detail', args=['record_title.id'])
+
+            return super(EditForm, self).__init__(*args, **kwargs)
 
 class RecordTitleForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the record title.")
