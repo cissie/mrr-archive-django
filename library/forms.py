@@ -4,13 +4,13 @@ from django.core.urlresolvers import reverse
 from library.models import *
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import (
     PrependedText, PrependedAppendedText, FormActions)
 
-
+# Crispy form to allow users to edit certain fields
 class EditForm(forms.ModelForm):
-    record_label = forms.CharField(label="Label Name")
+    record_label = forms.ModelChoiceField(queryset=RecordLabel.objects.all(), label="Label Name")
     catalog_number = forms.CharField(label="Catalog Number")
     release_year = forms.IntegerField(label="Release Year")
     issue_number = forms.IntegerField(label="Issue Number")
@@ -24,6 +24,7 @@ class EditForm(forms.ModelForm):
     helper.field_class = 'col-sm-4'
     # helper.form_action = reverse('record_title_detail')
     helper.layout = Layout(
+        # Div('record_label', 'catalog_number', 'release_year', 'issue_number', 'reviewer_name', 'record_review'),
         Field('record_label', css_class='input-sm'),
         Field('catalog_number', css_class='input-sm'),
         Field('release_year', css_class='input-sm', max_length=4),
@@ -50,6 +51,7 @@ class EditForm(forms.ModelForm):
             # self.helper.form_action = reverse('record_title_detail', args=['record_title.id'])
 
             return super(EditForm, self).__init__(*args, **kwargs)
+
 
 class RecordTitleForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the record title.")
@@ -79,6 +81,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
+
+
+# class ImageUploadForm(forms.Form):
+#     """Image upload form."""
+#     image = forms.ImageField()
 
 
 

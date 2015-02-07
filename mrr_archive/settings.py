@@ -132,6 +132,8 @@ INSTALLED_APPS = (
     'library',
     'haystack',
     'crispy_forms',
+    'django_select2',
+    'dajax',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

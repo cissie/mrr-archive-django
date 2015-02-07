@@ -52,7 +52,9 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         artists = paginator.page(paginator.num_pages)
 
-    context_dict = {'artists': artists}
+    context_dict = {
+        'artists': artists,
+    }
 
     # Preserve all GET params
     params = []
@@ -325,18 +327,22 @@ def record_review(request):
 
 
 def edit_form(request, record_title_id):
+    # Grab the right title to be edited
     record_title = RecordTitle.objects.get(id=record_title_id)
+    # Load the record title to display on page
+    context_dict = {
+        'record_title': record_title,
+        'form': EditForm(instance=record_title)
+        }
     if request.method == 'POST':
         form = EditForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/') # name of view stated in urls
+            return redirect('edit_form') # name of view stated in urls
         else:
             form = EditForm(record_title)
 
-    return render_to_response("library/edit_form.html",
-                              {'form': EditForm()},
-                              context_instance=RequestContext(request))
+    return render_to_response("library/edit_form.html", context_dict, context_instance=RequestContext(request))
 
 
 # Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.

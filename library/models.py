@@ -91,7 +91,7 @@ class RecordTitle(models.Model):
 
 class CoverArt(models.Model):
     record_title = models.ForeignKey(RecordTitle)
-    cover_art = models.ImageField(upload_to='cover_images', blank=True)
+    cover_art = models.ImageField(upload_to='media/img/cover_images', blank=True)
 
     class Meta:
         verbose_name_plural = "cover art"
