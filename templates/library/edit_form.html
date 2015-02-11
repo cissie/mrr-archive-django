@@ -2,7 +2,10 @@
 
 {% extends 'library/base.html' %}
 
+% load static %}
+
 {% load crispy_forms_tags %}
+{% crispy edit_form edit_form.helper %}
 
 {% block title %}{% endblock %}
 
@@ -13,14 +16,13 @@
 
     <div class="container">
       <div class="row">
-
-        <select class="crispy_form">{% crispy form %}</select>
-
+          <select>{% crispy form %}</select>
       </div>
     </div>
 
+<script type="text/javascript">
+  $('select').select2();
+</script>
+
 {% endblock %}
 
-<script type="text/javascript">
-  $("crispy_form").select2({});
-</script>

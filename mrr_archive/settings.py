@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     'haystack',
     'crispy_forms',
     'django_select2',
-    'dajax',
+    'south',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

@@ -13,9 +13,7 @@
             <!--Loops through the artist id and displays the all of the artist names.-->
             <!--Artist names link to a more detailed view that displays all the corresponding titles and the artist's country-->
             {% for artist in artists %}
-                <div id="artist_list">
                     <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
-                </div>
             {{ artist.full_name|upper }}<br/>
             {% endfor %}
 

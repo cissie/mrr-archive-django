@@ -8,9 +8,10 @@ from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import (
     PrependedText, PrependedAppendedText, FormActions)
 
+
 # Crispy form to allow users to edit certain fields
 class EditForm(forms.ModelForm):
-    record_label = forms.ModelChoiceField(queryset=RecordLabel.objects.all(), label="Label Name")
+    record_label = forms.ModelChoiceField(RecordLabel.objects.all(), label="Label Name")
     catalog_number = forms.CharField(label="Catalog Number")
     release_year = forms.IntegerField(label="Release Year")
     issue_number = forms.IntegerField(label="Issue Number")

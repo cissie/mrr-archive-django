@@ -52,8 +52,11 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         artists = paginator.page(paginator.num_pages)
 
+# Create a context dictionary which we can pass to the template rendering engine.
+    # We start by containing the name of the artist passed by the user.
+    # The artist detail view will also display the title, country and file_under fields.
     context_dict = {
-        'artists': artists,
+        "artists": artists
     }
 
     # Preserve all GET params
@@ -146,7 +149,7 @@ def record_title(request):
 
     # adding pagination
     page = request.GET.get('page')
-    number_titles = request.GET.get('record_title_list')
+    number_titles = request.GET.get('titles')
 
     if not number_titles:
         number_titles = 25
@@ -217,7 +220,7 @@ def record_label(request):
 
     # adding pagination
     page = request.GET.get('page')
-    number_labels = request.GET.get('record_label_list')
+    number_labels = request.GET.get('labels')
 
     if not number_labels:
         number_labels = 25
@@ -325,7 +328,7 @@ def record_review(request):
     record_review = RecordReview.objects.get
     return render(request, 'library/record_review.html')
 
-
+@login_required
 def edit_form(request, record_title_id):
     # Grab the right title to be edited
     record_title = RecordTitle.objects.get(id=record_title_id)
@@ -336,7 +339,10 @@ def edit_form(request, record_title_id):
         }
     if request.method == 'POST':
         form = EditForm(request.POST)
+        rl = request.POST['record_label']
         if form.is_valid():
+            form.record_label = rl
+            form.RecordLabel.objects.get_or_create(rl)
             form.save()
             return redirect('edit_form') # name of view stated in urls
         else:
@@ -433,10 +439,10 @@ def user_logout(request):
 # def load_data(request):
 #     with open("record_collection.json") as f:
 #         json_data = json.load(f)
-          # creating an empty list so that artists are only loaded once
+#           # creating an empty list so that artists are only loaded once
 #         checked = []
 #         count = 0
-          # looping through each data set in json_data to join the fields to the corresponding model
+#           # looping through each data set in json_data to join the fields to the corresponding model
 #         for d in json_data:
 #             if d["artist"] not in checked:
 #                 try:
@@ -455,14 +461,14 @@ def user_logout(request):
 #                     file_under = FileUnder(file_under=d["file_under"])
 #                     file_under.save()
 #                 new_artist.file_under = file_under
-                  # save the artist after the models that have a foreign key to it
+#                   # save the artist after the models that have a foreign key to it
 #                 new_artist.save()
 #                 artist_id = new_artist.id
-                  # using sleep to slow rate of the loading data
+#                   # using sleep to slow rate of the loading data
 #                 sleep(0.015)
-                  # appends an artist if they have not yet been added to the checked list
+#                   # appends an artist if they have not yet been added to the checked list
 #                 checked.append(new_artist)
-                  # using print to monitor the data in the console as it loads
+#                   # using print to monitor the data in the console as it loads
 #                 print len(checked)
 #             new_title = RecordTitle()
 #             new_title.artist = new_artist
@@ -473,7 +479,7 @@ def user_logout(request):
 #                 format_type = FormatType(format_type=d["format_type"])
 #                 format_type.save()
 #             new_title.format_type = format_type
-              # allows the same release year for multiple titles/artists
+#               # allows the same release year for multiple titles/artists
 #             if d["release_year"] is not None:
 #                 try:
 #                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
@@ -507,9 +513,9 @@ def user_logout(request):
 #                         notes = Notes(notes=d["notes"])
 #                         notes.save()
 #                     new_title.notes = notes
-              # save the titles after the models that have a foreign key to it
+#               # save the titles after the models that have a foreign key to it
 #             new_title.save()
-              # using sleep to slow rate of the loading data
+#               # using sleep to slow rate of the loading data
 #             sleep(0.015)
 #     return HttpResponse(content_type='application/json')
 

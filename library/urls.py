@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from library import views
 # from django.conf import settings
@@ -22,4 +23,12 @@ urlpatterns = patterns('',
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^search/$', include('haystack.urls')),
         url(r'^edit_form/(?P<record_title_id>\w*)$', views.edit_form, name='edit_form'),
+        # url(r'^load_data?$', views.load_data, name='load_data')
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns(
+        'django.views.static',
+        (r'media/(?P<path>.*)',
+        'serve',
+        {'document_root': settings.MEDIA_ROOT}), )
