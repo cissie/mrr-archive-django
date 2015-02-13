@@ -13,7 +13,13 @@
             <!--Loops through the artist id and displays the all of the artist names.-->
             <!--Artist names link to a more detailed view that displays all the corresponding titles and the artist's country-->
             {% for artist in artists %}
-                    <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+                    <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a>
+                    <ul>
+                   {% for record_title in artist.recordtitle_set.all %}
+                       <li>{{ record_title }}</li>
+                   {% endfor %}
+                   </ul>
+                    </li>
             {{ artist.full_name|upper }}<br/>
             {% endfor %}
 

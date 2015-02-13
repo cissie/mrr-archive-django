@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django import forms
 from django.core.urlresolvers import reverse
 from library.models import *
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field, Div
 from crispy_forms.bootstrap import (
@@ -12,11 +11,9 @@ from crispy_forms.bootstrap import (
 # Crispy form to allow users to edit certain fields
 class EditForm(forms.ModelForm):
     record_label = forms.ModelChoiceField(RecordLabel.objects.all(), label="Label Name")
-    catalog_number = forms.CharField(label="Catalog Number")
-    release_year = forms.IntegerField(label="Release Year")
-    issue_number = forms.IntegerField(label="Issue Number")
-    reviewer_name = forms.CharField(label="Reviewer Name")
-    record_review = forms.CharField(label="Add MRR Review", widget=forms.Textarea())
+    catalog_number = forms.ModelChoiceField(CatalogNumber.objects.all(), label="Catalog Number")
+    release_year = forms.ModelChoiceField(ReleaseYear.objects.all(), label="Release Year")
+    issue_number = forms.ModelChoiceField(IssueNumber.objects.all(), label="Issue Number")
 
     helper = FormHelper()
     helper.form_method = 'POST'
@@ -30,8 +27,6 @@ class EditForm(forms.ModelForm):
         Field('catalog_number', css_class='input-sm'),
         Field('release_year', css_class='input-sm', max_length=4),
         Field('issue_number', css_class='input-sm', max_length=3),
-        Field('reviewer_name', css_class='input-sm'),
-        Field('record_review', css_class='input-sm'),
         FormActions(Submit('Save Changes', 'Save Changes', css_class='btn-primary'))
     )
 
@@ -42,8 +37,6 @@ class EditForm(forms.ModelForm):
             'catalog_number',
             'release_year',
             'issue_number',
-            'reviewer_name',
-            'record_review',
         )
 
         def __init__(self, *args, **kwargs):
@@ -87,6 +80,5 @@ class UserProfileForm(forms.ModelForm):
 # class ImageUploadForm(forms.Form):
 #     """Image upload form."""
 #     image = forms.ImageField()
-
 
 

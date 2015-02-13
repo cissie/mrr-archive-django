@@ -98,7 +98,7 @@ class ReviewerName(models.Model):
 
 
 class RecordTitle(models.Model):
-    artist = models.ForeignKey(Artist, null=True)
+    artist = models.ForeignKey(Artist, blank=True, null=True)
     format_type = models.ForeignKey(FormatType, null=True)
     record_title = models.TextField()
     release_year = models.ForeignKey(ReleaseYear, null=True)

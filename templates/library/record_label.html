@@ -8,7 +8,7 @@
 
 
     {% if record_labels %}
-    <div class="display_list_labels">
+    <div class="display_list">
         <ul>
             <!--Loops through the label id and displays the all of the record labels.-->
             <!--Label names link to a more detailed view with every release from the label.-->
@@ -31,9 +31,9 @@
                     <form method="get" id="page_form">
                         <input type="text" name="page" id="page_input" placeholder="Go to page...">
                         <select name="labels" id="num_labels">
-                            <option value="25">25 titles</option>
-                            <option value="100">100 titles</option>
-                            <option value="250">250 titles</option>
+                            <option value="25">25 labels</option>
+                            <option value="100">100 labels</option>
+                            <option value="250">250 labels</option>
                         </select>
                         <input type="submit" id="page_input_button" value="Submit"
                                onclick="submitPaginationForm('page_form')">

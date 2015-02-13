@@ -3,17 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render, render_to_response
 from django.template import RequestContext
-from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
 from library.forms import EditForm, UserForm, UserProfileForm
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
-    CatalogNumber, IssueNumber, FileUnder, Notes
-from time import sleep
+    CatalogNumber, IssueNumber, FileUnder, Notes, ReviewerName
 import json
+from time import sleep
 import os
 import re
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "library.settings")
@@ -328,6 +327,7 @@ def record_review(request):
     record_review = RecordReview.objects.get
     return render(request, 'library/record_review.html')
 
+
 @login_required
 def edit_form(request, record_title_id):
     # Grab the right title to be edited
@@ -338,13 +338,10 @@ def edit_form(request, record_title_id):
         'form': EditForm(instance=record_title)
         }
     if request.method == 'POST':
-        form = EditForm(request.POST)
-        rl = request.POST['record_label']
+        form = EditForm(request.POST, instance=record_title)
         if form.is_valid():
-            form.record_label = rl
-            form.RecordLabel.objects.get_or_create(rl)
             form.save()
-            return redirect('edit_form') # name of view stated in urls
+            return redirect('/') # name of view stated in urls
         else:
             form = EditForm(record_title)
 
@@ -518,6 +515,9 @@ def user_logout(request):
 #               # using sleep to slow rate of the loading data
 #             sleep(0.015)
 #     return HttpResponse(content_type='application/json')
+
+
+
 
 
 
