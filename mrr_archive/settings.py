@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'django_select2',
     'south',
+    'tastypie'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

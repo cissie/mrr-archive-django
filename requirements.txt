@@ -1,9 +1,15 @@
 Django==1.5.4
+django-crispy-forms==1.4.0
 django-haystack==2.0.0
+Django-Select2==4.2.2
+django-tastypie==0.12.1
 Pillow==2.7.0
 psycopg2==2.5.4
+python-dateutil==2.4.0
+python-memcached==1.53
+python-mimeparse==0.1.4
 requests==1.2.3
 simplejson==3.6.5
 six==1.9.0
+South==1.0.2
 Whoosh==2.4.0
-django-crispy-forms==1.4.0
