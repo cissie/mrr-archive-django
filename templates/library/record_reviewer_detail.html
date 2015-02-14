@@ -3,22 +3,18 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<h1>{{ record_label.record_label }}</h1>
-        {% if record_label %}
+<h1>{{ record_reviewer.record_reviewer }}</h1>
+        {% if record_reviewer %}
             <!--Loops through the titles and displays the following fields.-->
             <!--Links take visitors to the corresponding detail views for artist and title.-->
             {% for record_title in record_title_list %}
             <ul>
                 <li>Artist: <a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a></li>
                 <li>Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
-                <li>Format: {{ record_title.format_type.format_type }}</li>
-                <li>Catalog Number: {{ record_title.catalog_number.catalog_number }}</li>
-                <li>Year: {{ record_title.release_year.release_year }}</li>
-                </div>
             </ul>
             {% endfor %}
         {% else %}
-        <p>The specified title {{ record_title }} does not exist!</p>
+        <p>The specified title {{ record_reviewer }} does not exist!</p>
 
         {% endif %}
 

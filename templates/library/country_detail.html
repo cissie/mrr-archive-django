@@ -4,8 +4,8 @@
 
 {% block body_block %}
 <h1>{{ country.country }}</h1>
-<h2>Artists</h2>
-        <!--{% if country %}-->
+<h3>Artists: </h3>
+        {% if country %}
             <!--Loop through artists and display all the artists from a particular country.-->
             <!--Links allow visitors to drill into the country detail view which lists all the artists from that country.-->
             {% for artist in artist_list %}
@@ -18,9 +18,9 @@
                 </div>
             </ul>
             {% endfor %}
-        <!--{% else %}-->
+        {% else %}
         <p>The specified country {{ country }} does not exist!</p>
 
-        <!--{% endif %}-->
+        {% endif %}
 
 {% endblock %}

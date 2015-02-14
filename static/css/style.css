@@ -18,9 +18,8 @@ p {
     margin-right: 160px;
 }
 
-h2 {
-    margin: 30px;
-    border-radius: 3px;
+h1, h2, h3 {
+    margin: 40px;
 }
 
 /*HEADER AND NAV*/
@@ -104,7 +103,7 @@ nav form {
 }
 
 .display_list {
-    margin-top: 20px;
+    margin: 20px;
     list-style: none;
     text-align: left;
     font-family: Lato;
@@ -118,6 +117,24 @@ nav form {
     text-align: left;
     margin-left: 160px;
     margin-right: 160px;
+}
+
+#title_detail {
+    margin: 20px 40px 0;
+}
+
+#record_review, #reviewer_name {
+    text_align: left;
+    font-family: Lato;
+    margin: 0 80px;
+}
+
+#record_review {
+    width: 60%;
+}
+
+.cover_art_link {
+    margin: 0 65px;
 }
 
 /*LABEL PAGE*/

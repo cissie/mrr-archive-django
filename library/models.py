@@ -72,29 +72,19 @@ class Notes(models.Model):
     def __unicode__(self):
         return self.notes
 
-class CoverArt(models.Model):
-    cover_art = models.ImageField(upload_to='media/img/cover_images', blank=True, null=True, default='static/img/cover_images/vinyl.tif')
-
-    class Meta:
-        verbose_name_plural = "cover art"
-
-    def __unicode__(self):
-        return self.cover_art
-
-
-class RecordReview(models.Model):
-    record_review = models.TextField()
-    user = models.ForeignKey(User)
-
-    def __unicode__(self):
-        return self.record_review
-
 
 class ReviewerName(models.Model):
     reviewer_name = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.reviewer_name
+
+
+class RecordReview(models.Model):
+    record_review = models.TextField()
+
+    def __unicode__(self):
+        return self.record_review
 
 
 class RecordTitle(models.Model):
@@ -106,11 +96,10 @@ class RecordTitle(models.Model):
     catalog_number = models.ForeignKey(CatalogNumber, null=True, blank=True)
     issue_number = models.ForeignKey(IssueNumber, null=True, blank=True)
     notes = models.ForeignKey(Notes, null=True, blank=True)
-    # last_edited_by = models.ForeignKey(User)
-    # covers = models.ForeignKey(CoverArt, default='static/img/cover_images/vinyl.tif',
-    #                               blank=True, null=True)
     record_review = models.ForeignKey(RecordReview, null=True, blank=True)
     reviewer_name = models.ForeignKey(ReviewerName, null=True, blank=True)
+    cover_art = models.ImageField(upload_to='img/cover_images/', default='static/img/vinyl.tif', blank=True, null=True)
+    # last_edited_by = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.record_title

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+{% extends 'library/base.html' %}
+
+% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+    <form id="cover_art_form" method="post" action="">
+        {% csrf_token %}
+        {{ form }}
+        <input id="id_image" type="file" class="" name="image">
+        <input type="submit" name="submit" value="Add Cover Image"/>
+    </form>
+{% endblock %}

@@ -81,4 +81,18 @@ class UserProfileForm(forms.ModelForm):
 #     """Image upload form."""
 #     image = forms.ImageField()
 
+class CoverArtForm(forms.Form):
+    cover_art = forms.ImageField(required=False)
+
+    class Meta:
+        model = RecordTitle
+
+
+class RecordReviewForm(forms.Form):
+    record_review = forms.CharField(widget=forms.Textarea, label="Record Review")
+
+    class Meta:
+        model = RecordReview
+        fields = ('record_review')
+
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, CoverArt, RecordLabel, \
+from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, \
     CatalogNumber, IssueNumber, RecordReview, ReviewerName, FileUnder, Notes, UserProfile
 
 class ArtistAdmin(admin.ModelAdmin):
@@ -17,7 +17,6 @@ admin.site.register(RecordTitle, RecordTitleAdmin)
 admin.site.register(Country)
 admin.site.register(FormatType)
 admin.site.register(ReleaseYear)
-admin.site.register(CoverArt)
 admin.site.register(RecordLabel, RecordLabelAdmin)
 admin.site.register(CatalogNumber)
 admin.site.register(IssueNumber)

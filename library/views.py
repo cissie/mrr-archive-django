@@ -3,14 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import redirect, render, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
-from library.forms import EditForm, UserForm, UserProfileForm
+from library.forms import EditForm, UserForm, UserProfileForm, CoverArtForm, RecordReviewForm
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
-    CatalogNumber, IssueNumber, FileUnder, Notes, ReviewerName
+    CatalogNumber, IssueNumber, FileUnder, Notes, ReviewerName, ReviewerName
 import json
 from time import sleep
 import os
@@ -322,6 +322,27 @@ def country_detail(request, country_id):
     return render_to_response('library/country_detail.html', context_dict, context)
 
 
+def record_reviewer_detail(request, record_reviewer_id):
+    context = RequestContext(request)
+    try:
+        # The .get() method returns one model instance or raises an exception.
+        # Pass country id argument to Country model
+        reviewer_name = ReviewerName.objects.get(id=record_reviewer_id)
+    except ReviewerName.DoesNotExist:
+        pass
+    try:
+        # filters artist data to corresponding country
+        record_title_list = RecordTitle.objects.filter(reviewer_name=reviewer_name)
+    except RecordTitle.DoesNotExist:
+        pass
+
+    # The country detail view will display the country along with corresponding artists and record titles
+    context_dict = {
+        "record_title_list": record_title_list
+    }
+    return render_to_response('library/record_reviewer_detail.html', context_dict, context)
+
+
 # To do. Still need to add more of a UI and a form to upload record reviews.
 def record_review(request):
     record_review = RecordReview.objects.get
@@ -346,6 +367,42 @@ def edit_form(request, record_title_id):
             form = EditForm(record_title)
 
     return render_to_response("library/edit_form.html", context_dict, context_instance=RequestContext(request))
+
+
+@login_required
+def upload_art(request, record_title_id):
+    if request.method == 'POST':
+        print "We got to post"
+        img_form = CoverArtForm(request.POST, request.FILES)
+        if img_form.is_valid():
+            print "Form is valid"
+            img = RecordTitle.objects.get(pk=record_title_id)
+            img.cover_art = img_form.cleaned_data['cover_art']
+            img.save()
+            return HttpResponse('image upload success')
+        else:
+            print "Form is not valid"
+            print img_form.errors
+    return render_to_response("library/cover_art_form.html", context_instance=RequestContext(request))
+
+
+@login_required
+def add_review(request, record_title_id):
+    # Grab the right title to be edited
+    record_title = RecordTitle.objects.get(id=record_title_id)
+    # Load the record title to display on page
+    context_dict = {
+        'record_title': record_title,
+        }
+    if request.method == 'POST':
+        review_form = RecordReviewForm(request.POST)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect('/') # name of view stated in urls
+        else:
+            form = RecordReviewForm(record_title)
+
+    return render_to_response("library/record_review_form.html", context_dict, context_instance=RequestContext(request))
 
 
 # Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.
