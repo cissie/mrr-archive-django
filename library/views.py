@@ -322,21 +322,22 @@ def country_detail(request, country_id):
     return render_to_response('library/country_detail.html', context_dict, context)
 
 
-def record_reviewer_detail(request, record_reviewer_id):
+# Displays all the titles that a reviewer has reviewed
+def record_reviewer_detail(request, reviewer_name_id):
     context = RequestContext(request)
     try:
         # The .get() method returns one model instance or raises an exception.
-        # Pass country id argument to Country model
-        reviewer_name = ReviewerName.objects.get(id=record_reviewer_id)
+        # Pass reviewer_name_id argument to ReviewerName model
+        reviewer_name = ReviewerName.objects.get(id=reviewer_name_id)
     except ReviewerName.DoesNotExist:
         pass
     try:
-        # filters artist data to corresponding country
+        # filters record title data to corresponding Reviewer
         record_title_list = RecordTitle.objects.filter(reviewer_name=reviewer_name)
     except RecordTitle.DoesNotExist:
         pass
 
-    # The country detail view will display the country along with corresponding artists and record titles
+    # The record reviewer detail view will display the reviewer along with corresponding titles they've reviewed
     context_dict = {
         "record_title_list": record_title_list
     }
@@ -368,7 +369,7 @@ def edit_form(request, record_title_id):
 
     return render_to_response("library/edit_form.html", context_dict, context_instance=RequestContext(request))
 
-
+# View for cover art upload form
 @login_required
 def upload_art(request, record_title_id):
     if request.method == 'POST':

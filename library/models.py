@@ -74,7 +74,7 @@ class Notes(models.Model):
 
 
 class ReviewerName(models.Model):
-    reviewer_name = models.CharField(max_length=200)
+    reviewer_name = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.reviewer_name
