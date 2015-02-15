@@ -3,13 +3,15 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<h1>{{ reviewer_name.reviewer_name }}</h1>
+<h2 class="page_header">{{ reviewer_name.reviewer_name }}</h2>
         {% if reviewer_name %}
             <!--Display titles the reviewer has reviewed-->
+            {% for record_title in record_title_list %}
             <ul>
-                <li>Artist: <a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a></li>
-                <li>Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
+                <li><a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a> -
+                <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
             </ul>
+            {% endfor %}
         {% else %}
         <p>The specified reviewer {{ reviewer_name }} does not exist!</p>
 

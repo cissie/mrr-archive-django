@@ -107,13 +107,13 @@ nav form {
 }
 
 #title_detail {
-    margin: 10px 0 10px 25px;
+    margin: 10px 0 10px 35px;
 }
 
 #record_review, #reviewer_name {
     text_align: left;
     font-family: Lato;
-    margin: 0 65px;
+    margin: 0 0 0 35px;
 }
 
 #record_review {
@@ -121,7 +121,7 @@ nav form {
 }
 
 .cover_art_link {
-    margin: 0 50px;
+    margin: 0 35px;
 }
 
 /*LABEL PAGE*/

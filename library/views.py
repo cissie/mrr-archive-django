@@ -25,7 +25,7 @@ def index(request):
 
     # Query the database for a list of ALL artists currently stored.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
-    artist_list = Artist.objects.order_by('file_under')
+    artist_list = Artist.objects.all()
 
     # We loop through each artist returned, and create a URL attribute.
     # This attribute stores an encoded URL (e.g. spaces replaced with underscores).
@@ -338,6 +338,7 @@ def record_reviewer_detail(request, reviewer_name_id):
 
     # The record reviewer detail view will display the reviewer along with corresponding titles they've reviewed
     context_dict = {
+        "reviewer_name": reviewer_name,
         "record_title_list": record_title_list
     }
     return render_to_response('library/record_reviewer_detail.html', context_dict, context)

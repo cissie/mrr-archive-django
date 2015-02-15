@@ -57,7 +57,7 @@ class CatalogNumber(models.Model):
 
 
 class IssueNumber(models.Model):
-    issue_number = models.CharField(default=0, max_length=3)
+    issue_number = models.CharField(default=0, max_length=7)
 
     def __unicode__(self):
         return self.issue_number
@@ -102,6 +102,7 @@ class RecordTitle(models.Model):
     in_collection = models.BooleanField(default=True)
     stolen = models.BooleanField(default=False)
     wanted = models.BooleanField(default=False)
+
     # last_edited_by = models.ForeignKey(User)
 
     def __unicode__(self):
