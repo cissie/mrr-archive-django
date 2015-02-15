@@ -1,3 +1,2 @@
 {{ object.record_title }}
-{{ object.artist }}
 

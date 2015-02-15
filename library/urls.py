@@ -26,7 +26,7 @@ urlpatterns = patterns('',
         url(r'^edit_form/(?P<record_title_id>\w*)$', views.edit_form, name='edit_form'),
         url(r'^cover_art_form/(?P<record_title_id>\w*)$', views.upload_art, name='cover_art_form'),
         url(r'^record_review_form/(?P<record_title_id>\w*)$', views.add_review, name='record_review_form'),
-        # url(r'^load_data?$', views.load_data, name='load_data')
+        # url(r'^load_data?$', views.load_data, name='load_data'),
 )
 
 if settings.DEBUG:

@@ -54,9 +54,7 @@ def index(request):
 # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the artist passed by the user.
     # The artist detail view will also display the title, country and file_under fields.
-    context_dict = {
-        "artists": artists
-    }
+    context_dict = {}
 
     # Preserve all GET params
     params = []
@@ -76,6 +74,8 @@ def index(request):
         context_dict['prev_page_url'] = re.sub('page=(\d+)', 'page=' + str(artists.previous_page_number()), params)
     if artists.has_next():
         context_dict['next_page_url'] = re.sub('page=(\d+)', 'page=' + str(artists.next_page_number()), params)
+
+    context_dict["artists"] = artists
 
     # Render the response and send it back!
     return render_to_response('library/index.html', context_dict, context)
@@ -208,6 +208,7 @@ def record_title_detail(request, record_title_id):
 
     context_dict = {
         "record_title": record_title,
+        "cover_art": "cover_art"
     }
     return render_to_response('library/record_title_detail.html', context_dict, context)
 
@@ -497,7 +498,7 @@ def user_logout(request):
 #           # creating an empty list so that artists are only loaded once
 #         checked = []
 #         count = 0
-#           # looping through each data set in json_data to join the fields to the corresponding model
+# #           # looping through each data set in json_data to join the fields to the corresponding model
 #         for d in json_data:
 #             if d["artist"] not in checked:
 #                 try:
@@ -521,9 +522,9 @@ def user_logout(request):
 #                 artist_id = new_artist.id
 #                   # using sleep to slow rate of the loading data
 #                 sleep(0.015)
-#                   # appends an artist if they have not yet been added to the checked list
+# #                   # appends an artist if they have not yet been added to the checked list
 #                 checked.append(new_artist)
-#                   # using print to monitor the data in the console as it loads
+# #                   # using print to monitor the data in the console as it loads
 #                 print len(checked)
 #             new_title = RecordTitle()
 #             new_title.artist = new_artist
@@ -534,7 +535,7 @@ def user_logout(request):
 #                 format_type = FormatType(format_type=d["format_type"])
 #                 format_type.save()
 #             new_title.format_type = format_type
-#               # allows the same release year for multiple titles/artists
+# #               # allows the same release year for multiple titles/artists
 #             if d["release_year"] is not None:
 #                 try:
 #                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
@@ -568,7 +569,7 @@ def user_logout(request):
 #                         notes = Notes(notes=d["notes"])
 #                         notes.save()
 #                     new_title.notes = notes
-#               # save the titles after the models that have a foreign key to it
+# #               # save the titles after the models that have a foreign key to it
 #             new_title.save()
 #               # using sleep to slow rate of the loading data
 #             sleep(0.015)

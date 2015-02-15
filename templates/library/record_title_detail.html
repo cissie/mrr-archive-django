@@ -12,7 +12,7 @@
         {% for record_title in record_titles %}
             <p>{{ record_title.record_title }}</p>
 
-            {% for cover_art in record_title.cover_art %}
+            {% for cover_art in cover_art %}
                  <img src="{{ cover_art.url }}">
             {% endfor %}
             {% endfor %}
