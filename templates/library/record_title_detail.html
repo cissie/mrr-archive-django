@@ -6,15 +6,21 @@
 
 {% block body_block %}
 
-        {% if record_title %}
-            <!--If title exists display the corresponding data-->
-            <!--Links filter to the detail views of artist, label, and country.-->
-        <img src="{{ record_title.cover_art }}">
+<!--If title exists display the corresponding data-->
+<!--Links filter to the detail views of artist, label, and country.-->
+    {% if record_title %}
+        {% for record_title in record_titles %}
+            <p>{{ record_title.record_title }}</p>
+
+            {% for cover_art in record_title.cover_art %}
+                 <img src="{{ cover_art.url }}">
+            {% endfor %}
+            {% endfor %}
+
         <div id="title_detail">
             <div class="row">
                 <ul class="span4">
-                    <li>Artist: <a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a></li>
-                    <li>Title: <a href="{{ record_title.id }}">{{ record_title.record_title }}</a></li>
+                    <h3><a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }} </a> - {{ record_title.record_title }}</h3>
                     <li>Year: {{ record_title.release_year.release_year }}</li>
                     <li>Format: {{ record_title.format_type.format_type }}</li>
                     <li>Record Label: <a href="/library/record_label_detail/{{ record_title.record_label.id }}">{{ record_title.record_label.record_label }}</a></li>
@@ -44,5 +50,6 @@
         <p>The specified title {{ record_title }} does not exist!</p>
 
         {% endif %}
+
 
 {% endblock %}

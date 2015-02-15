@@ -12,15 +12,11 @@ li {
     list-style: none;
 }
 
-p {
-    text-align: left;
-    margin-left: 160px;
-    margin-right: 160px;
+.page_header {
+    font-size: 2em;
+    margin: 20px 0 0 40px;
 }
 
-h1, h2, h3 {
-    margin: 40px;
-}
 
 /*HEADER AND NAV*/
 
@@ -88,22 +84,8 @@ nav form {
 
 /*IMAGES*/
 
-#wrapper {
-    position: relative;
-    text-align: center;
-}
-
-.box {
-    border: 1px solid black;
-    height: 100px;
-    width: 100px;
-    padding: 50px;
-    margin: 0 10px 0 10px;
-    display: inline-block;
-}
-
 .display_list {
-    margin: 20px;
+    margin: 20px 0 0 10px;
     list-style: none;
     text-align: left;
     font-family: Lato;
@@ -115,18 +97,17 @@ nav form {
 
 #add {
     text-align: left;
-    margin-left: 160px;
-    margin-right: 160px;
+    margin-left: 20px;
 }
 
 #title_detail {
-    margin: 20px 40px 0;
+    margin: 10px 0 10px 25px;
 }
 
 #record_review, #reviewer_name {
     text_align: left;
     font-family: Lato;
-    margin: 0 80px;
+    margin: 0 65px;
 }
 
 #record_review {
@@ -134,7 +115,7 @@ nav form {
 }
 
 .cover_art_link {
-    margin: 0 65px;
+    margin: 0 50px;
 }
 
 /*LABEL PAGE*/
@@ -155,7 +136,7 @@ nav a:visited {
 }
 
 .search_form {
-    margin: 30px;
+    margin: 40px;
 }
 
 .btn {
@@ -171,7 +152,7 @@ nav a:hover {
 
 footer {
     position: absolute;
-    margin-left: 160px;
+    margin-left: 40px;
     font-size: 0.75em;
     text-align: left;
     clear: both;

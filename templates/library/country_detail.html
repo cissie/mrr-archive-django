@@ -3,8 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<h1>{{ country.country }}</h1>
-<h3>Artists: </h3>
+<h2 class="page_header">{{ country.country }}</h2>
         {% if country %}
             <!--Loop through artists and display all the artists from a particular country.-->
             <!--Links allow visitors to drill into the country detail view which lists all the artists from that country.-->

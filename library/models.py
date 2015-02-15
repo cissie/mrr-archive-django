@@ -57,7 +57,7 @@ class CatalogNumber(models.Model):
 
 
 class IssueNumber(models.Model):
-    issue_number = models.IntegerField(default=0)
+    issue_number = models.CharField(default=0, max_length=3)
 
     def __unicode__(self):
         return self.issue_number
@@ -98,7 +98,7 @@ class RecordTitle(models.Model):
     notes = models.ForeignKey(Notes, null=True, blank=True)
     record_review = models.ForeignKey(RecordReview, null=True, blank=True)
     reviewer_name = models.ForeignKey(ReviewerName, null=True, blank=True)
-    cover_art = models.ImageField(upload_to='img/cover_images/', default='static/img/vinyl.tif', blank=True, null=True)
+    cover_art = models.ImageField(upload_to='/img/cover_images/', default='static/img/cover_images/vinyl.tif', blank=True, null=True)
     # last_edited_by = models.ForeignKey(User)
 
     def __unicode__(self):
