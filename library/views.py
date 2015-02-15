@@ -25,7 +25,7 @@ def index(request):
 
     # Query the database for a list of ALL artists currently stored.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
-    artist_list = Artist.objects.all()
+    artist_list = Artist.objects.order_by('file_under')
 
     # We loop through each artist returned, and create a URL attribute.
     # This attribute stores an encoded URL (e.g. spaces replaced with underscores).
@@ -317,7 +317,6 @@ def country_detail(request, country_id):
     context_dict = {
         "country": country,
         "artist_list": artist_list,
-        "record_title": record_title
     }
     return render_to_response('library/country_detail.html', context_dict, context)
 

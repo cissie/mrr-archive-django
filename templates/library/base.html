@@ -14,13 +14,18 @@
     <body>
         <div>
             <header>
-                <h1><a href="/" class="selected" id="logo">Maximum Rocknroll Record Archive</a></h1>
+                <div id="header_logo">
+                    <img src="{% static "img/mrr_logo.png" %}">
+                </div>
+                <div id="subtitle">
+                    <h3>Vinyl and Record Review Archive</h3>
+                </div>
                 <nav>
                     <ul>
-                        <li><a href="/" class="selected">Artists</a></li>
-                        <li><a href="/library/titles" class="selected">Titles</a></li>
-                        <li><a href="/library/labels" class="selected">Labels</a></li>
-                        <li><a href="/library/search" class="selected">Search</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/library/labels">Labels</a></li>
+                        <li><a href="/library/countries">Countries</a></li>
+                        <li><a href="/library/search">Search</a></li>
                     </ul>
                     <!--<form><input type="search" placeholder="search artist, record, label" id="search"></form>-->
                 </nav>

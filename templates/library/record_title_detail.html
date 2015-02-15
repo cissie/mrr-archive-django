@@ -29,6 +29,7 @@
                     <li>Artist country: <a href="/library/country_detail/{{ record_title.artist.country.id }}">{{ record_title.artist.country.country }}</a></li>
                     <li>Notes: {{ record_title.notes.notes }}</li>
                     <li>File Under: {{ record_title.artist.file_under.file_under }}</li>
+                    <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
                 </ul>
             </div>
         </div>

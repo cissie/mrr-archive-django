@@ -36,7 +36,7 @@ class FormatType(models.Model):
 
 
 class ReleaseYear(models.Model):
-    release_year = models.IntegerField(default=0)
+    release_year = models.CharField(default=0, max_length=4)
 
     def __unicode__(self):
         return self.release_year
@@ -99,6 +99,9 @@ class RecordTitle(models.Model):
     record_review = models.ForeignKey(RecordReview, null=True, blank=True)
     reviewer_name = models.ForeignKey(ReviewerName, null=True, blank=True)
     cover_art = models.ImageField(upload_to='/img/cover_images/', default='static/img/cover_images/vinyl.tif', blank=True, null=True)
+    in_collection = models.BooleanField(default=True)
+    stolen = models.BooleanField(default=False)
+    wanted = models.BooleanField(default=False)
     # last_edited_by = models.ForeignKey(User)
 
     def __unicode__(self):
