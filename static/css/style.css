@@ -124,9 +124,9 @@ nav form {
     margin: 0 35px;
 }
 
-.cover_art {
-    margin: 30px;
-    max-width: 25px;
+.cover_art img {
+    margin: 30px 30px 0 35px;
+    max-width: 250px;
     height: auto;
 }
 /*LABEL PAGE*/

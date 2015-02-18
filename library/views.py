@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from json import dumps, loads
-from library.forms import EditForm, UserForm, UserProfileForm, CoverArtForm, RecordReviewForm
+from library.forms import EditForm, UserForm, UserProfileForm, CoverArtForm, RecordReviewForm, RecordTitleForm
 from library.models import Artist, RecordTitle, Country, FormatType, ReleaseYear, RecordLabel, RecordReview, \
     CatalogNumber, IssueNumber, FileUnder, Notes, ReviewerName, ReviewerName
 import json
@@ -373,17 +373,24 @@ def edit_form(request, record_title_id):
 # View for cover art upload form
 @login_required
 def upload_art(request, record_title_id):
+    context = RequestContext(request)
+    form = CoverArtForm(request.POST, request.FILES)
+    context['form'] = form
+    title = RecordTitle.objects.filter(id=record_title_id)[0]
+    print title
     if request.method == 'POST':
         print "We got to post"
-        img_form = CoverArtForm(request.POST, request.FILES)
-        if img_form.is_valid():
+
+        if form.is_valid():
             print "Form is valid"
-            img_form.save()
+            # form.save()
+            title.cover_art = request.FILES['cover_art']
+            title.save()
             return HttpResponse('image upload success')
         else:
             print "Form is not valid"
-            print img_form.errors
-    return render_to_response("library/cover_art_form.html", context_instance=RequestContext(request))
+            print form.errors
+    return render_to_response("library/cover_art_form.html", context)
 
 
 @login_required

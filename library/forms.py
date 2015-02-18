@@ -86,7 +86,7 @@ class CoverArtForm(forms.ModelForm):
 
     class Meta:
         model = RecordTitle
-        fields = ('cover_art',)
+        fields = ['cover_art']
 
 
 class RecordReviewForm(forms.Form):

@@ -20,7 +20,7 @@ class FileUnder(models.Model):
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, blank=True, null=True)
     country = models.ForeignKey(Country, blank=True, null=True)
     file_under = models.ForeignKey(FileUnder, blank=True, null=True)
 
