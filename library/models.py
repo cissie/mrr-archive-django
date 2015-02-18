@@ -98,7 +98,7 @@ class RecordTitle(models.Model):
     notes = models.ForeignKey(Notes, null=True, blank=True)
     record_review = models.ForeignKey(RecordReview, null=True, blank=True)
     reviewer_name = models.ForeignKey(ReviewerName, null=True, blank=True)
-    cover_art = models.ImageField(upload_to='media/img/cover_images/', default='static/img/cover_images/vinyl.tif', blank=True, null=True)
+    cover_art = models.ImageField(upload_to='media/img/cover_images/', default='static/img/vinyl.tif', blank=True, null=True)
     in_collection = models.BooleanField(default=True)
     stolen = models.BooleanField(default=False)
     wanted = models.BooleanField(default=False)

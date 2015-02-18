@@ -7,7 +7,7 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-    <form id="cover_art_form" method="post" action="">
+    <form enctype='multipart/form-data' method="post" id="cover_art_form" action="">
         {% csrf_token %}
         {{ form }}
         <input id="id_image" type="file" class="" name="image">

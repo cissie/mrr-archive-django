@@ -378,9 +378,7 @@ def upload_art(request, record_title_id):
         img_form = CoverArtForm(request.POST, request.FILES)
         if img_form.is_valid():
             print "Form is valid"
-            img = RecordTitle.objects.get(pk=record_title_id)
-            img.cover_art = img_form.cleaned_data['cover_art']
-            img.save()
+            img_form.save()
             return HttpResponse('image upload success')
         else:
             print "Form is not valid"

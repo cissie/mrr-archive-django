@@ -9,14 +9,11 @@
 <!--If title exists display the corresponding data-->
 <!--Links filter to the detail views of artist, label, and country.-->
     {% if record_title %}
-        {% for record_title in record_titles %}
-            <p>{{ record_title.record_title }}</p>
-
-            {% for cover_art in cover_art %}
-                 <img src="{{ cover_art.url }}">
-            {% endfor %}
-            {% endfor %}
-
+        {% if record_title.cover_art %}
+            <div class="cover_art" width="25" height="25">
+                 <img src="{{ record_title.cover_art.url }}">
+            </div>
+        {% endif %}
             <div id="title_detail">
                     <h3><a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }} </a> - {{ record_title.record_title }}</h3>
                     <li>Year: {{ record_title.release_year.release_year }}</li>

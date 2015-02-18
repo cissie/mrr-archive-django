@@ -81,11 +81,12 @@ class UserProfileForm(forms.ModelForm):
 #     """Image upload form."""
 #     image = forms.ImageField()
 
-class CoverArtForm(forms.Form):
-    cover_art = forms.ImageField(required=False)
+class CoverArtForm(forms.ModelForm):
+    cover_art = forms.ImageField(required=True)
 
     class Meta:
         model = RecordTitle
+        fields = ('cover_art',)
 
 
 class RecordReviewForm(forms.Form):
