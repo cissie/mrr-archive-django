@@ -9,10 +9,14 @@
             <!--Links take visitors to the corresponding detail views for artist and title.-->
             {% for record_title in record_title_list %}
             <ul>
-                <li>Artist: <a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a></li>
+                {% for artist in record_title.artists.all %}
+                <li>Artist: <a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+                {% endfor %}
                 <li>Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
                 <li>Format: {{ record_title.format_type.format_type }}</li>
-                <li>Catalog Number: {{ record_title.catalog_number.catalog_number }}</li>
+                {% for catalog_number in record_title.catalog_numbers.all %}
+                    <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
+                {% endfor %}
                 <li>Year: {{ record_title.release_year.release_year }}</li>
                 </div>
             </ul>

@@ -8,8 +8,9 @@
             <!--Display titles the reviewer has reviewed-->
             {% for record_title in record_title_list %}
             <ul>
-                <li><a href="/library/artist/{{ record_title.artist.id }}">{{ record_title.artist.name }}</a> -
-                <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
+                {% for artist in record_title.artists.all %}
+                   <a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a> - <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title.record_title }}</a></li>
+                {% endfor %}
             </ul>
             {% endfor %}
         {% else %}

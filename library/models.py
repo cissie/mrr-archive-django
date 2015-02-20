@@ -19,13 +19,25 @@ class FileUnder(models.Model):
         return self.file_under
 
 
+class BandMember(models.Model):
+    band_member = models.CharField(max_length=1000, blank=True, null=True)
+
+
+    def __unicode__(self):
+        return self.band_member
+
+
 class Artist(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     country = models.ForeignKey(Country, blank=True, null=True)
     file_under = models.ForeignKey(FileUnder, blank=True, null=True)
+    band_members = models.ManyToManyField(BandMember, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        ordering = ['file_under']
 
 
 class FormatType(models.Model):
@@ -79,35 +91,37 @@ class ReviewerName(models.Model):
     def __unicode__(self):
         return self.reviewer_name
 
-
 class RecordReview(models.Model):
     record_review = models.TextField()
 
+
+class TrackName(models.Model):
+    track_name = models.TextField(blank=True, null=True)
+
     def __unicode__(self):
-        return self.record_review
+        return self.track_name
 
 
 class RecordTitle(models.Model):
-    artist = models.ForeignKey(Artist)
+    artists = models.ManyToManyField(Artist)
     format_type = models.ForeignKey(FormatType, null=True)
     record_title = models.TextField()
     release_year = models.ForeignKey(ReleaseYear, null=True)
-    record_label = models.ForeignKey(RecordLabel, null=True)
-    catalog_number = models.ForeignKey(CatalogNumber, null=True, blank=True)
+    record_labels = models.ManyToManyField(RecordLabel, null=True)
+    catalog_numbers = models.ManyToManyField(CatalogNumber, null=True, blank=True)
+    countries = models.ManyToManyField(Country, null=True, blank=True)
     issue_number = models.ForeignKey(IssueNumber, null=True, blank=True)
     notes = models.ForeignKey(Notes, null=True, blank=True)
-    record_review = models.ForeignKey(RecordReview, null=True, blank=True)
-    reviewer_name = models.ForeignKey(ReviewerName, null=True, blank=True)
-    cover_art = models.ImageField(upload_to='media/img/cover_images/', default='static/img/vinyl.tif', blank=True, null=True)
+    cover_art = models.ImageField(upload_to='media/img/cover_images/', default='static/img/vinyl.png', blank=True, null=True)
+    record_review = models.ForeignKey(RecordReview, blank=True, null=True)
+    reviewer_names = models.ManyToManyField(ReviewerName, blank=True, null=True)
+    track_names = models.ManyToManyField(TrackName, blank=True, null=True)
     in_collection = models.BooleanField(default=True)
     stolen = models.BooleanField(default=False)
     wanted = models.BooleanField(default=False)
 
-    # last_edited_by = models.ForeignKey(User)
-
     def __unicode__(self):
         return self.record_title
-
 
 
 class UserProfile(models.Model):

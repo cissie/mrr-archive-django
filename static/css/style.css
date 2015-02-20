@@ -17,6 +17,11 @@ li {
     margin: 20px 0 10px 40px;
 }
 
+.page_subtitle {
+    font-size: 1.3em;
+    margin: 20px 0 10px 40px;
+}
+
 
 /*HEADER AND NAV*/
 
@@ -55,7 +60,7 @@ nav a {
 }
 
 #subtitle {
-    margin: -20px 0 0 25px;
+    margin: -20px 0 0 35px;
     color: #428bca;
 }
 
@@ -69,12 +74,19 @@ nav form {
 #authentication li {
     list-style: none;
     text-align: left;
-    margin-left: 120px;
-    margin-right: 120px;
+    margin-bottom: 20px;
 }
 
 #authentication a:visited {
     color: lightslategray;
+}
+
+#log_in {
+    margin: 20px;
+}
+
+#register_form {
+    margin: 20px;
 }
 
 #logo {

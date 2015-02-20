@@ -17,7 +17,7 @@
 
             {% for result in page.object_list %}
                 <p>
-                    <li><a href="/library/artist/{{ result.object.artist.id }}">{{ result.object.artist.name }}</a></li>
+                    <li><a href="/library/artist/{{ result.object.artist.id }}">{{ result.object.artist }}</a></li>
                     <li><a href="/library/artist/{{ result.object.id }}">{{ result.object.record_title }}</a></li>
                 </p>
             {% empty %}

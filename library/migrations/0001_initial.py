@@ -16,7 +16,17 @@ class Migration(migrations.Migration):
             name='Artist',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=200)),
+                ('name', models.CharField(max_length=200, null=True, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='BandMember',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('band_member', models.CharField(max_length=1000, null=True, blank=True)),
             ],
             options={
             },
@@ -109,18 +119,18 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('record_title', models.TextField()),
-                ('cover_art', models.ImageField(default=b'static/img/cover_images/vinyl.tif', null=True, upload_to=b'media/img/cover_images/', blank=True)),
+                ('cover_art', models.ImageField(default=b'static/img/vinyl.tif', null=True, upload_to=b'media/img/cover_images/', blank=True)),
                 ('in_collection', models.BooleanField(default=True)),
                 ('stolen', models.BooleanField(default=False)),
                 ('wanted', models.BooleanField(default=False)),
-                ('artist', models.ManyToManyField(to='library.Artist')),
-                ('catalog_number', models.ForeignKey(blank=True, to='library.CatalogNumber', null=True)),
-                ('country', models.ManyToManyField(to='library.Country', null=True, blank=True)),
+                ('artists', models.ManyToManyField(to='library.Artist')),
+                ('catalog_numbers', models.ManyToManyField(to='library.CatalogNumber', null=True, blank=True)),
+                ('countries', models.ManyToManyField(to='library.Country', null=True, blank=True)),
                 ('format_type', models.ForeignKey(to='library.FormatType', null=True)),
                 ('issue_number', models.ForeignKey(blank=True, to='library.IssueNumber', null=True)),
                 ('notes', models.ForeignKey(blank=True, to='library.Notes', null=True)),
-                ('record_label', models.ManyToManyField(to='library.RecordLabel', null=True)),
-                ('record_review', models.ManyToManyField(to='library.RecordReview', null=True, blank=True)),
+                ('record_labels', models.ManyToManyField(to='library.RecordLabel', null=True)),
+                ('record_review', models.ForeignKey(blank=True, to='library.RecordReview', null=True)),
             ],
             options={
             },
@@ -147,6 +157,16 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='TrackName',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('track_name', models.TextField(null=True, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -166,8 +186,20 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='recordtitle',
-            name='reviewer_name',
+            name='reviewer_names',
             field=models.ManyToManyField(to='library.ReviewerName', null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='recordtitle',
+            name='track_names',
+            field=models.ManyToManyField(to='library.TrackName', null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='artist',
+            name='band_members',
+            field=models.ManyToManyField(to='library.BandMember', null=True, blank=True),
             preserve_default=True,
         ),
         migrations.AddField(
