@@ -18,6 +18,7 @@ urlpatterns = patterns('',
         url(r'^country_detail/(?P<country_id>\w*)$', views.country_detail, name='country'),
         url(r'record_reviewer_detail/(?P<reviewer_name_id>\w*)$', views.record_reviewer_detail, name='record_reviewer'),
         url(r'issue_number_detail/(?P<issue_number_id>\w*)$', views.issue_number_detail, name='issue_number'),
+        url(r'band_member_detail/(?P<band_member_id>\w*)$', views.band_member_detail, name='band_member'),
         url(r'^review?$', views.record_review, name='review'),
         # url(r'^register/$', views.register, name='register'),
         url(r'^login/$', views.login, name='login'),
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
         url(r'^edit_form/(?P<record_title_id>\w*)$', views.edit_form, name='edit_form'),
         url(r'^cover_art_form/(?P<record_title_id>\w*)$', views.upload_art, name='cover_art_form'),
         url(r'^record_review_form/(?P<record_title_id>\w*)$', views.add_review, name='record_review_form'),
-        url(r'^load_data?$', views.load_data, name='load_data'),
+        # url(r'^load_data?$', views.load_data, name='load_data'),
 )
 
 if settings.DEBUG:

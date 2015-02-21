@@ -14,7 +14,7 @@ li {
 
 .page_header {
     font-size: 2em;
-    margin: 20px 0 10px 40px;
+    margin: 20px 0px 10px 40px;
 }
 
 .page_subtitle {
@@ -122,6 +122,14 @@ nav form {
     margin: 10px 0 10px 35px;
 }
 
+#song_titles {
+    margin: 10px 0 10px 35px;
+}
+
+#band_members {
+    margin: 10px 0 10px 40px;
+}
+
 #record_review, #reviewer_name {
     text_align: left;
     font-family: Lato;
@@ -131,6 +139,7 @@ nav form {
 #record_review {
     width: 60%;
 }
+
 
 .cover_art_link {
     margin: 0 35px;

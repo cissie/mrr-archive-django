@@ -38,6 +38,13 @@
                 </ul>
             </div>
 
+            <div id="song_titles">
+                <h4>Song Titles:</h4>
+                {% for track_name in record_title.track_names.all %}
+                    <li> {{ track_name.track_name }}</li>
+                {% endfor %}
+            </div>
+
             <div id="record_review">
                 <h4>Review:</h4>
                 <p>{{ record_title.record_review.record_review }}</p>

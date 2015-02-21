@@ -19,7 +19,7 @@ class ArtistIndex(indexes.SearchIndex, indexes.Indexable):
 
 class TitleIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    title = indexes.CharField(model_attr='record_title')
+    record_title = indexes.CharField(model_attr='record_title')
 
     def get_model(self):
         return RecordTitle
@@ -30,7 +30,7 @@ class TitleIndex(indexes.SearchIndex, indexes.Indexable):
 
 class LabelIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    label = indexes.CharField(model_attr='record_label')
+    record_label = indexes.CharField(model_attr='record_label')
 
     def get_model(self):
         return RecordLabel

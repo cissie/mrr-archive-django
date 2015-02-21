@@ -36,9 +36,6 @@ class Artist(models.Model):
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        ordering = ['file_under']
-
 
 class FormatType(models.Model):
     format_type = models.CharField(max_length=200)
@@ -116,6 +113,7 @@ class RecordTitle(models.Model):
     record_review = models.ForeignKey(RecordReview, blank=True, null=True)
     reviewer_names = models.ManyToManyField(ReviewerName, blank=True, null=True)
     track_names = models.ManyToManyField(TrackName, blank=True, null=True)
+    band_members = models.ManyToManyField(BandMember, blank=True, null=True)
     in_collection = models.BooleanField(default=True)
     stolen = models.BooleanField(default=False)
     wanted = models.BooleanField(default=False)
