@@ -119,11 +119,11 @@ nav form {
 }
 
 #title_detail {
-    margin: 10px 0 10px 35px;
+    margin: 10px 0 10px 80px;
 }
 
 #song_titles {
-    margin: 10px 0 10px 35px;
+    margin: 10px 0 10px 80px;
 }
 
 #band_members {
@@ -137,16 +137,17 @@ nav form {
 }
 
 #record_review {
-    width: 60%;
+    padding: 10px;
+    width: 80%;
 }
 
 
 .cover_art_link {
-    margin: 0 35px;
+    margin: 0 80px;
 }
 
 .cover_art img {
-    margin: 30px 30px 0 35px;
+    margin: 30px 30px 0 80px;
     max-width: 250px;
     height: auto;
 }

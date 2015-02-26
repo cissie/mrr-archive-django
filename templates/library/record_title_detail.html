@@ -10,59 +10,66 @@
 <!--Links filter to the detail views of artist, label, and country.-->
     {% if record_title %}
         {% if record_title.cover_art %}
-            <div class="cover_art" width="25" height="25">
-                 <img src="{{ record_title.cover_art.url }}">
-            </div>
-        {% endif %}
-            <div id="title_detail">
-                {% for artist in record_title.artists.all %}
-                    <h3><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a> - {{ record_title.record_title }}</h3>
-                {% endfor %}
-                    <li>Year: {{ record_title.release_year.release_year }}</li>
-                    <li>Format: {{ record_title.format_type.format_type }}</li>
-                {% for record_label in record_title.record_labels.all %}
-                    <li>Record Label: <a href="/library/record_label_detail/{{ record_label.id }}">{{ record_label.record_label }}</a></li>
-                {% endfor %}
-                {% for catalog_number in record_title.catalog_numbers.all %}
-                    <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
-                {% endfor %}
-                    <li>Reviewed in Issue: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></li>
-                {% for country in record_title.artists.all %}
-                    <li>Artist country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>
-                {% endfor %}
-                    <li>Notes: {{ record_title.notes.notes }}</li>
-                {% for file_under in record_title.artists.all %}
-                    <li>File Under: {{ file_under.file_under }}</li>
-                {% endfor %}
-                    <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
-                </ul>
-            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="cover_art" width="25" height="25">
+                             <img src="{{ record_title.cover_art.url }}">
+                        </span>
+         {% endif %}
+                        <div id="title_detail">
+                                <li>Year: {{ record_title.release_year.release_year }}</li>
+                                <li>Format: {{ record_title.format_type.format_type }}</li>
+                            {% for record_label in record_title.record_labels.all %}
+                                <li>Record Label: <a href="/library/record_label_detail/{{ record_label.id }}">{{ record_label.record_label }}</a></li>
+                            {% endfor %}
+                            {% for catalog_number in record_title.catalog_numbers.all %}
+                                <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
+                            {% endfor %}
+                                <li>Reviewed in issue: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></li>
+                            {% for country in record_title.artists.all %}
+                                <li>Country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>
+                            {% endfor %}
+                                <li>Notes: {{ record_title.notes.notes }}</li>
+                            {% for file_under in record_title.artists.all %}
+                                <li>File Under: {{ file_under.file_under }}</li>
+                            {% endfor %}
+                                <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
+                            </ul>
+                        </div>
 
-            <div id="song_titles">
-                <h4>Song Titles:</h4>
-                {% for track_name in record_title.track_names.all %}
-                    <li> {{ track_name.track_name }}</li>
-                {% endfor %}
-            </div>
-
-            <div id="record_review">
-                <h4>Review:</h4>
-                <p>{{ record_title.record_review.record_review }}</p>
-            {% for reviewer_name in record_title.reviewer_names.all %}
-                <h4>Reviewed by:</h4>
-                <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
-            {% endfor %}
-            </div>
-            <!--<a href="/library/edit_form/{{ record_title.id }}">Edit this title</a>-->
-            <div class="cover_art_link">
-                <a href="/library/cover_art_form/{{ record_title.id }}">Add cover art</a>
-
-            <!--<a href="/library/record_review_form/{{ record_title.id }}">Add this title's Maximum Rocknroll review</a>-->
-
-        {% else %}
-        <p>The specified title {{ record_title }} does not exist!</p>
-
-        {% endif %}
+                        <div id="song_titles">
+                            <h4>Song Titles:</h4>
+                            {% for track_name in record_title.track_names.all %}
+                                <li> {{ track_name.track_name }}</li>
+                            {% endfor %}
+                        </div>
+                        <div class="cover_art_link">
+                            <a href="/library/cover_art_form/{{ record_title.id }}">Add cover art</a>
+                        </div>
+                    </div>
 
 
+                    <div class="col-md-8">
+                        <div id="record_review">
+                            {% for artist in record_title.artists.all %}
+                                <h3><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a> - {{ record_title.record_title }}</h3>
+                            {% endfor %}
+                            <h4>Review:</h4>
+                            <p>{{ record_title.record_review.record_review }}</p>
+                        {% for reviewer_name in record_title.reviewer_names.all %}
+                            <h4>Reviewed by:</h4>
+                            <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
+                        {% endfor %}
+                        </div>
+                    <!--<a href="/library/edit_form/{{ record_title.id }}">Edit this title</a>-->
+                    </div>
+                </div>
+
+                <!--<a href="/library/record_review_form/{{ record_title.id }}">Add this title's Maximum Rocknroll review</a>-->
+
+         {% else %}
+            <p>The specified title {{ record_title }} does not exist!</p>
+         {% endif %}
+           </div>
 {% endblock %}
