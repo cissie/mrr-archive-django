@@ -103,7 +103,7 @@ nav form {
 /*IMAGES*/
 
 .display_list {
-    margin: 20px 0 0 10px;
+    margin: 20px 0 0 50px;
     list-style: none;
     text-align: left;
     font-family: Lato;
@@ -123,7 +123,7 @@ nav form {
 }
 
 #song_titles {
-    margin: 10px 0 10px 80px;
+    margin: -15px 0 10px 45px;
 }
 
 #band_members {

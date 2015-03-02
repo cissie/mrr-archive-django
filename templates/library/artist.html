@@ -3,6 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
+    <div class="display_list">
         <h2 class="page_header">{{ artist.name }}</h2>
         {% if artist %}
 
@@ -29,4 +30,5 @@
         {% else %}
             The specified artist {{ artist.artist_name }} does not exist!
         {% endif %}
+    </div>
 {% endblock %}
