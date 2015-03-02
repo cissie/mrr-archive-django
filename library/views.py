@@ -539,7 +539,7 @@ def user_logout(request):
 
 # leaving function commented out so that the url is accessible only when the data needs to be loaded
 def load_data(request):
-    with open("record_collection.json") as f:
+    with open("/home/ubuntu/mrr-archive-django/record_collection.json") as f:
         json_data = json.load(f)
           # creating an empty list so that artists are only loaded once
         checked = []
