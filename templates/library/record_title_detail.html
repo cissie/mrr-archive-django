@@ -37,13 +37,6 @@
                                 <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
                             </ul>
                         </div>
-
-                        <div id="song_titles">
-                            <h4>Song Titles:</h4>
-                            {% for track_name in record_title.track_names.all %}
-                                <li> {{ track_name.track_name }}</li>
-                            {% endfor %}
-                        </div>
                         <div class="cover_art_link">
                             <a href="/library/cover_art_form/{{ record_title.id }}">Add cover art</a>
                         </div>
@@ -61,6 +54,12 @@
                             <h4>Reviewed by:</h4>
                             <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
                         {% endfor %}
+                        </div>
+                        <div id="song_titles">
+                            <h4>Song Titles:</h4>
+                            {% for track_name in record_title.track_names.all %}
+                                <li> {{ track_name.track_name }}</li>
+                            {% endfor %}
                         </div>
                     <!--<a href="/library/edit_form/{{ record_title.id }}">Edit this title</a>-->
                     </div>
