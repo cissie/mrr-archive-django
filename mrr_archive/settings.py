@@ -8,7 +8,7 @@ STATIC_PATH = os.path.join(PROJECT_PATH,'static')
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'library')
 LOGIN_URL = '/library/login/'
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
