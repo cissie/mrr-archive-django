@@ -21,8 +21,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'library',
-        'USER': 'cissiescurlock',
-        'PASSWORD': '',
+        'USER': 'www-data',
+        'PASSWORD': 'S715513db#',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -68,7 +68,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/ubuntu/static'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
