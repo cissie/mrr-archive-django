@@ -18,7 +18,7 @@
                         </span>
          {% endif %}
                         <div id="title_detail">
-                                <li>Year: {{ record_title.release_year.release_year }}</li>
+                                <li>Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year.release_year }}</a></li>
                                 <li>Format: {{ record_title.format_type.format_type }}</li>
                             {% for record_label in record_title.record_labels.all %}
                                 <li>Record Label: <a href="/library/record_label_detail/{{ record_label.id }}">{{ record_label.record_label }}</a></li>
@@ -37,9 +37,9 @@
                                 <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
                             </ul>
                         </div>
-                        <div class="cover_art_link">
-                            <a href="/library/cover_art_form/{{ record_title.id }}">Add cover art</a>
-                        </div>
+                        <!--<div class="cover_art_link">-->
+                            <!--<a href="/library/cover_art_form/{{ record_title.id }}">Add cover art</a>-->
+                        <!--</div>-->
                     </div>
 
 

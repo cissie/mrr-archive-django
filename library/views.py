@@ -366,6 +366,24 @@ def issue_number_detail(request, issue_number_id):
     return render_to_response('library/issue_number_detail.html', context_dict, context)
 
 
+def year_detail(request, release_year_id):
+    context = RequestContext(request)
+    try:
+        release_year = ReleaseYear.objects.get(id=release_year_id)
+    except IssueNumber.DoesNotExist:
+        pass
+    try:
+        record_title_list = RecordTitle.objects.filter(release_year=release_year)
+    except:
+        pass
+
+    context_dict = {
+        "release_year": release_year,
+        "record_title_list": record_title_list,
+    }
+    return render_to_response('library/year_detail.html', context_dict, context)
+
+
 def band_member_detail(request, band_member_id):
     context = RequestContext(request)
     try:
