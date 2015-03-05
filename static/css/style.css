@@ -14,7 +14,12 @@ li {
 
 .page_header {
     font-size: 2em;
-    margin: 20px 0px 10px 40px;
+    margin: 20px 0px 10px 45px;
+}
+
+.page_header_label {
+    font-size: 2em;
+    margin: 20px 0px 10px 90px;
 }
 
 .page_subtitle {

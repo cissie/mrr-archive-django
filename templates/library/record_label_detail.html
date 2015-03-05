@@ -3,7 +3,8 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<p class="page_header">{{ record_label.record_label }}</p>
+<p class="page_header_label">{{ record_label.record_label }}</p>
+    <div class="display_list">
         {% if record_label %}
             <!--Loops through the titles and displays the following fields.-->
             <!--Links take visitors to the corresponding detail views for artist and title.-->
@@ -24,5 +25,6 @@
         <p>The specified title {{ record_title }} does not exist!</p>
 
         {% endif %}
+    </div>
 
 {% endblock %}

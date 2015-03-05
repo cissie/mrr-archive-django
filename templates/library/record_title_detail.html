@@ -27,9 +27,9 @@
                                 <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
                             {% endfor %}
                                 <li>Reviewed in issue: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></li>
-                            {% for country in record_title.artists.all %}
-                                <li>Country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>
-                            {% endfor %}
+                            <!--{% for country in record_title.artists.all %}-->
+                                <!--<li>Country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>-->
+                            <!--{% endfor %}-->
                                 <li>Notes: {{ record_title.notes.notes }}</li>
                             {% for file_under in record_title.artists.all %}
                                 <li>File Under: {{ file_under.file_under }}</li>

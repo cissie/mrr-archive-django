@@ -20,12 +20,12 @@
                 {% endfor %}
             </ul>
 
-            <div id="band_members">
-                <h4>Band Members:</h4>
-                {% for band_member in artist.band_members.all %}
-                    <li><a href="/library/band_member_detail/{{ band_member.id }}">{{ band_member.band_member }}</a></li>
-                {% endfor %}
-            </div>
+            <!--<div id="band_members">-->
+                <!--<h4>Band Members:</h4>-->
+                <!--{% for band_member in artist.band_members.all %}-->
+                    <!--<li><a href="/library/band_member_detail/{{ band_member.id }}">{{ band_member.band_member }}</a></li>-->
+                <!--{% endfor %}-->
+            <!--</div>-->
 
         {% else %}
             The specified artist {{ artist.artist_name }} does not exist!

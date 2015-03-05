@@ -5,7 +5,8 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<h2 class="page_header">{{ country.country }}</h2>
+    <div class="display_list">
+        <h2 class="page_header">{{ country.country }}</h2>
         {% if country %}
             <!--Loop through artists and display all the artists from a particular country.-->
             <!--Links allow visitors to drill into the country detail view which lists all the artists from that country.-->
@@ -23,6 +24,7 @@
         <p>The specified country {{ country }} does not exist!</p>
 
         {% endif %}
+    </div>
 
 
 {% endblock %}

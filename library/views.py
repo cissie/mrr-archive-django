@@ -82,31 +82,31 @@ def index(request):
 
 
 # AJAX practice. Not meant to be a permanent part of the project
-@csrf_exempt
-def ajax(request):
-    if request.method == "POST":
-        new_artist = Artist()
-        new_artist.name = request.POST["artist"]
-        new_artist.save()
-
-    # Query the database for a list of ALL artists currently stored.
-    # Place the list in our context_dict dictionary which will be passed to the template engine.
-    artist_list = list(Artist.objects.all())
-    ajax_artist_list = []
-    for a in artist_list:
-        ajax_artist_list.append({
-            "artist": a.name
-        })
-
-    return HttpResponse(dumps(ajax_artist_list, indent=4), content_type="application/json")
-
-
-# Related to the AJAX practice above. Not meant to be a permanent part of the project
-def dom(request):
-    if request.method == "POST":
-        print request.POST
-
-    return render(request, 'library/dom.html')
+# @csrf_exempt
+# def ajax(request):
+#     if request.method == "POST":
+#         new_artist = Artist()
+#         new_artist.name = request.POST["artist"]
+#         new_artist.save()
+#
+#     # Query the database for a list of ALL artists currently stored.
+#     # Place the list in our context_dict dictionary which will be passed to the template engine.
+#     artist_list = list(Artist.objects.all())
+#     ajax_artist_list = []
+#     for a in artist_list:
+#         ajax_artist_list.append({
+#             "artist": a.name
+#         })
+#
+#     return HttpResponse(dumps(ajax_artist_list, indent=4), content_type="application/json")
+#
+#
+# # Related to the AJAX practice above. Not meant to be a permanent part of the project
+# def dom(request):
+#     if request.method == "POST":
+#         print request.POST
+#
+#     return render(request, 'library/dom.html')
 
 
 # Artist detail view. Loops through artists, record titles, country, and file under
@@ -291,9 +291,11 @@ def record_label_detail(request, record_label_id):
 def country(request):
     context = RequestContext(request)
     country_list = Country.objects.all()
+
     context_dict = {
         "countries": country_list
     }
+
     return render_to_response('library/country.html', context_dict, context)
 
 
@@ -313,11 +315,12 @@ def country_detail(request, country_id):
     except Artist.DoesNotExist:
         pass
 
-    # The country detail view will display the country along with corresponding artists and record titles
+        # The country detail view will display the country along with corresponding artists and record titles
     context_dict = {
         "country": country,
         "artist_list": artist_list,
     }
+
     return render_to_response('library/country_detail.html', context_dict, context)
 
 
@@ -392,65 +395,65 @@ def record_review(request):
     return render(request, 'library/record_review.html')
 
 
-@login_required
-def edit_form(request, record_title_id):
-    # Grab the right title to be edited
-    record_title = RecordTitle.objects.get(id=record_title_id)
-    # Load the record title to display on page
-    context_dict = {
-        'record_title': record_title,
-        'form': EditForm(instance=record_title)
-        }
-    if request.method == 'POST':
-        form = EditForm(request.POST, instance=record_title)
-        if form.is_valid():
-            form.save()
-            return redirect('/') # name of view stated in urls
-        else:
-            form = EditForm(record_title)
-
-    return render_to_response("library/edit_form.html", context_dict, context_instance=RequestContext(request))
+# @login_required
+# def edit_form(request, record_title_id):
+#     # Grab the right title to be edited
+#     record_title = RecordTitle.objects.get(id=record_title_id)
+#     # Load the record title to display on page
+#     context_dict = {
+#         'record_title': record_title,
+#         'form': EditForm(instance=record_title)
+#         }
+#     if request.method == 'POST':
+#         form = EditForm(request.POST, instance=record_title)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('/') # name of view stated in urls
+#         else:
+#             form = EditForm(record_title)
+#
+#     return render_to_response("library/edit_form.html", context_dict, context_instance=RequestContext(request))
 
 # View for cover art upload form
-@login_required
-def upload_art(request, record_title_id):
-    context = RequestContext(request)
-    form = CoverArtForm(request.POST, request.FILES)
-    context['form'] = form
-    title = RecordTitle.objects.filter(id=record_title_id)[0]
-    print title
-    if request.method == 'POST':
-        print "We got to post"
+# @login_required
+# def upload_art(request, record_title_id):
+#     context = RequestContext(request)
+#     form = CoverArtForm(request.POST, request.FILES)
+#     context['form'] = form
+#     title = RecordTitle.objects.filter(id=record_title_id)[0]
+#     print title
+#     if request.method == 'POST':
+#         print "We got to post"
+#
+#         if form.is_valid():
+#             print "Form is valid"
+#             # form.save()
+#             title.cover_art = request.FILES['cover_art']
+#             title.save()
+#             return HttpResponse('image upload success')
+#         else:
+#             print "Form is not valid"
+#             print form.errors
+#     return render_to_response("library/cover_art_form.html", context)
 
-        if form.is_valid():
-            print "Form is valid"
-            # form.save()
-            title.cover_art = request.FILES['cover_art']
-            title.save()
-            return HttpResponse('image upload success')
-        else:
-            print "Form is not valid"
-            print form.errors
-    return render_to_response("library/cover_art_form.html", context)
 
-
-@login_required
-def add_review(request, record_title_id):
-    # Grab the right title to be edited
-    record_title = RecordTitle.objects.get(id=record_title_id)
-    # Load the record title to display on page
-    context_dict = {
-        'record_title': record_title,
-        }
-    if request.method == 'POST':
-        review_form = RecordReviewForm(request.POST)
-        if review_form.is_valid():
-            review_form.save()
-            return redirect('/') # name of view stated in urls
-        else:
-            form = RecordReviewForm(record_title)
-
-    return render_to_response("library/record_review_form.html", context_dict, context_instance=RequestContext(request))
+# @login_required
+# def add_review(request, record_title_id):
+#     # Grab the right title to be edited
+#     record_title = RecordTitle.objects.get(id=record_title_id)
+#     # Load the record title to display on page
+#     context_dict = {
+#         'record_title': record_title,
+#         }
+#     if request.method == 'POST':
+#         review_form = RecordReviewForm(request.POST)
+#         if review_form.is_valid():
+#             review_form.save()
+#             return redirect('/') # name of view stated in urls
+#         else:
+#             form = RecordReviewForm(record_title)
+#
+#     return render_to_response("library/record_review_form.html", context_dict, context_instance=RequestContext(request))
 
 
 # Corresponds to form and template to add a review. Not very savvy. Needs a lot of work.
@@ -491,22 +494,22 @@ def add_review(request, record_title_id):
 
 
 # User login
-def login(request):
-    if request.method == "POST":
-        user =auth.authenticate(username=request.POST["username"],
-                                password=request.POST["password"])
-        if user is not None:
-            # the password verified for the user
-            if user.is_active:
-                auth.login(request, user)
-                print("User is valid, active and authenticated")
-                return redirect('index')
-            else:
-                print("The password is valid, but the account has been disabled.")
-
-        else:
-            print("The username and password were incorrect.")
-    return render(request, 'library/login.html')
+# def login(request):
+#     if request.method == "POST":
+#         user =auth.authenticate(username=request.POST["username"],
+#                                 password=request.POST["password"])
+#         if user is not None:
+#             # the password verified for the user
+#             if user.is_active:
+#                 auth.login(request, user)
+#                 print("User is valid, active and authenticated")
+#                 return redirect('index')
+#             else:
+#                 print("The password is valid, but the account has been disabled.")
+#
+#         else:
+#             print("The username and password were incorrect.")
+#     return render(request, 'library/login.html')
 
 
 # One day this will route to a live type search form with AJAX functionality
@@ -522,122 +525,122 @@ def login(request):
 #     return HttpResponse(results, content_type='application/json')
 
 
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+# @login_required
+# def restricted(request):
+#     return HttpResponse("Since you're logged in, you can see this text!")
 
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
-@login_required
-def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
-    logout(request)
-
-    # Take the user back to the homepage.
-    return HttpResponseRedirect('/library/')
-
-
-# leaving function commented out so that the url is accessible only when the data needs to be loaded
-def load_data(request):
-    with open("/home/ubuntu/mrr-archive-django/record_collection.json") as f:
-        json_data = json.load(f)
-          # creating an empty list so that artists are only loaded once
-        checked = []
-        count = 0
-           # looping through each data set in json_data to join the fields to the corresponding model
-        for d in json_data:
-            new_title = RecordTitle()
-            new_title.record_title = d["record_title"]
-            new_title.save()
-            artists = Artist.objects.filter(name=d['artist'])
-            artists = list(artists)
-            if not len(artists) == 0:
-                artist = artists[0]
-            else:
-                artist = Artist()
-                artist.name = d['artist']
-                artist.save()
-            new_title.artists.add(artist)
-            new_title.save()
-
-            try:
-                new_artist = Artist.objects.get(name=d["artist"])
-            except Artist.DoesNotExist:
-                new_artist = Artist(name=d["artist"])
-            try:
-                country = Country.objects.get(country=d["country"])
-            except Country.DoesNotExist:
-                country = Country(country=d["country"])
-                country.save()
-            new_artist.country = country
-            try:
-                file_under = FileUnder.objects.get(file_under=d["file_under"])
-            except FileUnder.DoesNotExist:
-                file_under = FileUnder(file_under=d["file_under"])
-                file_under.save()
-            new_artist.file_under = file_under
-              # save the artist after the models that have a foreign key to it
-            new_artist.save()
-            artist_id = new_artist.id
-              # using sleep to slow rate of the loading data
-            sleep(0.015)
-              # appends an artist if they have not yet been added to the checked list
-            checked.append(new_artist)
-               # using print to monitor the data in the console as it loads
-            print len(checked)
-            try:
-                format_type = FormatType.objects.get(format_type=d["format_type"])
-            except FormatType.DoesNotExist:
-                format_type = FormatType(format_type=d["format_type"])
-                format_type.save()
-            new_title.format_type = format_type
-               # allows the same release year for multiple titles/artists
-            if d["release_year"] is not None:
-                try:
-                    release_year = ReleaseYear.objects.get(release_year=d["release_year"])
-                except ReleaseYear.DoesNotExist:
-                    release_year = ReleaseYear(release_year=d["release_year"])
-                    release_year.save()
-                new_title.release_year = release_year
-            record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
-            record_labels = list(record_labels)
-            if not len(record_labels) == 0:
-                record_label = record_labels[0]
-            else:
-                record_label = RecordLabel()
-                record_label.record_label = d['label_name']
-                record_label.save()
-            new_title.record_labels.add(record_label)
-            new_title.save()
-            catalog_numbers = CatalogNumber.objects.filter(catalog_number=d['catalog_number'])
-            catalog_numbers = list(catalog_numbers)
-            if not len(catalog_numbers) == 0:
-                catalog_number = catalog_numbers[0]
-            else:
-                catalog_number = CatalogNumber()
-                catalog_number.catalog_number = d['catalog_number']
-                catalog_number.save()
-            new_title.catalog_numbers.add(catalog_number)
-            new_title.save()
-            if d["issue_number"] is not None:
-                try:
-                    issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
-                except IssueNumber.DoesNotExist:
-                    issue_number = IssueNumber(issue_number=d["issue_number"])
-                    issue_number.save()
-                new_title.issue_number = issue_number
-                if d["notes"] is not None:
-                    try:
-                        notes = Notes.objects.get(notes=d["notes"])
-                    except Notes.DoesNotExist:
-                        notes = Notes(notes=d["notes"])
-                        notes.save()
-                    new_title.notes = notes
-               # save the titles after the models that have a foreign key to it
-            new_title.save()
+# @login_required
+# def user_logout(request):
+#     # Since we know the user is logged in, we can now just log them out.
+#     logout(request)
+#
+#     # Take the user back to the homepage.
+#     return HttpResponseRedirect('/library/')
+#
+#
+# # leaving function commented out so that the url is accessible only when the data needs to be loaded
+# def load_data(request):
+#     with open("/home/ubuntu/mrr-archive-django/record_collection.json") as f:
+#         json_data = json.load(f)
+#           # creating an empty list so that artists are only loaded once
+#         checked = []
+#         count = 0
+#            # looping through each data set in json_data to join the fields to the corresponding model
+#         for d in json_data:
+#             new_title = RecordTitle()
+#             new_title.record_title = d["record_title"]
+#             new_title.save()
+#             artists = Artist.objects.filter(name=d['artist'])
+#             artists = list(artists)
+#             if not len(artists) == 0:
+#                 artist = artists[0]
+#             else:
+#                 artist = Artist()
+#                 artist.name = d['artist']
+#                 artist.save()
+#             new_title.artists.add(artist)
+#             new_title.save()
+#
+#             try:
+#                 new_artist = Artist.objects.get(name=d["artist"])
+#             except Artist.DoesNotExist:
+#                 new_artist = Artist(name=d["artist"])
+#             try:
+#                 country = Country.objects.get(country=d["country"])
+#             except Country.DoesNotExist:
+#                 country = Country(country=d["country"])
+#                 country.save()
+#             new_artist.country = country
+#             try:
+#                 file_under = FileUnder.objects.get(file_under=d["file_under"])
+#             except FileUnder.DoesNotExist:
+#                 file_under = FileUnder(file_under=d["file_under"])
+#                 file_under.save()
+#             new_artist.file_under = file_under
+#               # save the artist after the models that have a foreign key to it
+#             new_artist.save()
+#             artist_id = new_artist.id
 #               # using sleep to slow rate of the loading data
-            sleep(0.015)
-    return HttpResponse(content_type='application/json')
+#             sleep(0.015)
+#               # appends an artist if they have not yet been added to the checked list
+#             checked.append(new_artist)
+#                # using print to monitor the data in the console as it loads
+#             print len(checked)
+#             try:
+#                 format_type = FormatType.objects.get(format_type=d["format_type"])
+#             except FormatType.DoesNotExist:
+#                 format_type = FormatType(format_type=d["format_type"])
+#                 format_type.save()
+#             new_title.format_type = format_type
+#                # allows the same release year for multiple titles/artists
+#             if d["release_year"] is not None:
+#                 try:
+#                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
+#                 except ReleaseYear.DoesNotExist:
+#                     release_year = ReleaseYear(release_year=d["release_year"])
+#                     release_year.save()
+#                 new_title.release_year = release_year
+#             record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
+#             record_labels = list(record_labels)
+#             if not len(record_labels) == 0:
+#                 record_label = record_labels[0]
+#             else:
+#                 record_label = RecordLabel()
+#                 record_label.record_label = d['label_name']
+#                 record_label.save()
+#             new_title.record_labels.add(record_label)
+#             new_title.save()
+#             catalog_numbers = CatalogNumber.objects.filter(catalog_number=d['catalog_number'])
+#             catalog_numbers = list(catalog_numbers)
+#             if not len(catalog_numbers) == 0:
+#                 catalog_number = catalog_numbers[0]
+#             else:
+#                 catalog_number = CatalogNumber()
+#                 catalog_number.catalog_number = d['catalog_number']
+#                 catalog_number.save()
+#             new_title.catalog_numbers.add(catalog_number)
+#             new_title.save()
+#             if d["issue_number"] is not None:
+#                 try:
+#                     issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
+#                 except IssueNumber.DoesNotExist:
+#                     issue_number = IssueNumber(issue_number=d["issue_number"])
+#                     issue_number.save()
+#                 new_title.issue_number = issue_number
+#                 if d["notes"] is not None:
+#                     try:
+#                         notes = Notes.objects.get(notes=d["notes"])
+#                     except Notes.DoesNotExist:
+#                         notes = Notes(notes=d["notes"])
+#                         notes.save()
+#                     new_title.notes = notes
+#                # save the titles after the models that have a foreign key to it
+#             new_title.save()
+# #               # using sleep to slow rate of the loading data
+#             sleep(0.015)
+#     return HttpResponse(content_type='application/json')
 
 
 
