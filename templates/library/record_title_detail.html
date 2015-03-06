@@ -18,6 +18,7 @@
                         </span>
          {% endif %}
                         <div id="title_detail">
+                            <ul>
                                 <li>Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year.release_year }}</a></li>
                                 <li>Format: {{ record_title.format_type.format_type }}</li>
                             {% for record_label in record_title.record_labels.all %}
@@ -26,7 +27,6 @@
                             {% for catalog_number in record_title.catalog_numbers.all %}
                                 <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
                             {% endfor %}
-                                <li>Reviewed in issue: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></li>
                             <!--{% for country in record_title.artists.all %}-->
                                 <!--<li>Country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>-->
                             <!--{% endfor %}-->
@@ -53,6 +53,7 @@
                         {% for reviewer_name in record_title.reviewer_names.all %}
                             <h4>Reviewed by:</h4>
                             <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
+                            <p>In Maximum Rocknroll: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></p>
                         {% endfor %}
                         </div>
                         <div id="song_titles">

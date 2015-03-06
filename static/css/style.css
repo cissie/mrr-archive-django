@@ -15,11 +15,13 @@ li {
 .page_header {
     font-size: 2em;
     margin: 20px 0px 10px 45px;
+    font-weight: bold;
 }
 
 .page_header_label {
     font-size: 2em;
     margin: 20px 0px 10px 90px;
+    font-weight: bold;
 }
 
 .page_subtitle {
@@ -108,7 +110,7 @@ nav form {
 /*IMAGES*/
 
 .display_list {
-    margin: 20px 0 0 50px;
+    margin: 20px 0 30px 52px;
     list-style: none;
     text-align: left;
     font-family: Lato;
@@ -124,11 +126,11 @@ nav form {
 }
 
 #title_detail {
-    margin: 10px 0 10px 80px;
+    margin: 10px 0 40px 40px;
 }
 
 #song_titles {
-    margin: -15px 0 10px 45px;
+    margin: -5px 0 40px 45px;
 }
 
 #band_members {

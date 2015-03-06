@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<h2 class="page_header">{{ reviewer_name.reviewer_name }}</h2>
+<h2 class="page_header">Reviews By {{ reviewer_name.reviewer_name }}:</h2>
         {% if reviewer_name %}
             <!--Display titles the reviewer has reviewed-->
             {% for record_title in record_title_list %}

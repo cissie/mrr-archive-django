@@ -8,6 +8,7 @@ class ArtistAdmin(admin.ModelAdmin):
 
 class RecordTitleAdmin(admin.ModelAdmin):
     search_fields = ["record_title"]
+    ordering = ["artists"]
 
 class RecordLabelAdmin(admin.ModelAdmin):
     search_fields = ["record_label"]

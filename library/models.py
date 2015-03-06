@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+import datetime
+
 
 
 class Country(models.Model):
@@ -117,6 +119,8 @@ class RecordTitle(models.Model):
     in_collection = models.BooleanField(default=True)
     stolen = models.BooleanField(default=False)
     wanted = models.BooleanField(default=False)
+    reviewed = models.BooleanField(default=True)
+    updated = models.DateTimeField(auto_now_add=True, null=True)
 
     def __unicode__(self):
         return self.record_title

@@ -357,11 +357,15 @@ def issue_number_detail(request, issue_number_id):
         record_title_list = RecordTitle.objects.filter(issue_number=issue_number)
     except:
         pass
+    try:
+        reviewer_name_list = ReviewerName.objects.distinct()
+    except:
+        pass
 
     context_dict = {
         "issue_number": issue_number,
         "record_title_list": record_title_list,
-        "record_review_list": record_review,
+        "reviewer_name_list": reviewer_name_list
     }
     return render_to_response('library/issue_number_detail.html', context_dict, context)
 
@@ -559,106 +563,106 @@ def record_review(request):
 #
 #
 # # leaving function commented out so that the url is accessible only when the data needs to be loaded
-# def load_data(request):
-#     with open("/home/ubuntu/mrr-archive-django/record_collection.json") as f:
-#         json_data = json.load(f)
-#           # creating an empty list so that artists are only loaded once
-#         checked = []
-#         count = 0
-#            # looping through each data set in json_data to join the fields to the corresponding model
-#         for d in json_data:
-#             new_title = RecordTitle()
-#             new_title.record_title = d["record_title"]
-#             new_title.save()
-#             artists = Artist.objects.filter(name=d['artist'])
-#             artists = list(artists)
-#             if not len(artists) == 0:
-#                 artist = artists[0]
-#             else:
-#                 artist = Artist()
-#                 artist.name = d['artist']
-#                 artist.save()
-#             new_title.artists.add(artist)
-#             new_title.save()
-#
-#             try:
-#                 new_artist = Artist.objects.get(name=d["artist"])
-#             except Artist.DoesNotExist:
-#                 new_artist = Artist(name=d["artist"])
-#             try:
-#                 country = Country.objects.get(country=d["country"])
-#             except Country.DoesNotExist:
-#                 country = Country(country=d["country"])
-#                 country.save()
-#             new_artist.country = country
-#             try:
-#                 file_under = FileUnder.objects.get(file_under=d["file_under"])
-#             except FileUnder.DoesNotExist:
-#                 file_under = FileUnder(file_under=d["file_under"])
-#                 file_under.save()
-#             new_artist.file_under = file_under
-#               # save the artist after the models that have a foreign key to it
-#             new_artist.save()
-#             artist_id = new_artist.id
+def load_data(request):
+    with open("/home/ubuntu/mrr-archive-django/record_collection_two.json") as f:
+        json_data = json.load(f)
+          # creating an empty list so that artists are only loaded once
+        checked = []
+        count = 0
+           # looping through each data set in json_data to join the fields to the corresponding model
+        for d in json_data:
+            new_title = RecordTitle()
+            new_title.record_title = d["record_title"]
+            new_title.save()
+            artists = Artist.objects.filter(name=d['artist'])
+            artists = list(artists)
+            if not len(artists) == 0:
+                artist = artists[0]
+            else:
+                artist = Artist()
+                artist.name = d['artist']
+                artist.save()
+            new_title.artists.add(artist)
+            new_title.save()
+
+            try:
+                new_artist = Artist.objects.get(name=d["artist"])
+            except Artist.DoesNotExist:
+                new_artist = Artist(name=d["artist"])
+            try:
+                country = Country.objects.get(country=d["country"])
+            except Country.DoesNotExist:
+                country = Country(country=d["country"])
+                country.save()
+            new_artist.country = country
+            try:
+                file_under = FileUnder.objects.get(file_under=d["file_under"])
+            except FileUnder.DoesNotExist:
+                file_under = FileUnder(file_under=d["file_under"])
+                file_under.save()
+            new_artist.file_under = file_under
+              # save the artist after the models that have a foreign key to it
+            new_artist.save()
+            artist_id = new_artist.id
+              # using sleep to slow rate of the loading data
+            sleep(0.015)
+              # appends an artist if they have not yet been added to the checked list
+            checked.append(new_artist)
+               # using print to monitor the data in the console as it loads
+            print len(checked)
+            try:
+                format_type = FormatType.objects.get(format_type=d["format_type"])
+            except FormatType.DoesNotExist:
+                format_type = FormatType(format_type=d["format_type"])
+                format_type.save()
+            new_title.format_type = format_type
+               # allows the same release year for multiple titles/artists
+            if d["release_year"] is not None:
+                try:
+                    release_year = ReleaseYear.objects.get(release_year=d["release_year"])
+                except ReleaseYear.DoesNotExist:
+                    release_year = ReleaseYear(release_year=d["release_year"])
+                    release_year.save()
+                new_title.release_year = release_year
+            record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
+            record_labels = list(record_labels)
+            if not len(record_labels) == 0:
+                record_label = record_labels[0]
+            else:
+                record_label = RecordLabel()
+                record_label.record_label = d['label_name']
+                record_label.save()
+            new_title.record_labels.add(record_label)
+            new_title.save()
+            catalog_numbers = CatalogNumber.objects.filter(catalog_number=d['catalog_number'])
+            catalog_numbers = list(catalog_numbers)
+            if not len(catalog_numbers) == 0:
+                catalog_number = catalog_numbers[0]
+            else:
+                catalog_number = CatalogNumber()
+                catalog_number.catalog_number = d['catalog_number']
+                catalog_number.save()
+            new_title.catalog_numbers.add(catalog_number)
+            new_title.save()
+            if d["issue_number"] is not None:
+                try:
+                    issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
+                except IssueNumber.DoesNotExist:
+                    issue_number = IssueNumber(issue_number=d["issue_number"])
+                    issue_number.save()
+                new_title.issue_number = issue_number
+                if d["notes"] is not None:
+                    try:
+                        notes = Notes.objects.get(notes=d["notes"])
+                    except Notes.DoesNotExist:
+                        notes = Notes(notes=d["notes"])
+                        notes.save()
+                    new_title.notes = notes
+               # save the titles after the models that have a foreign key to it
+            new_title.save()
 #               # using sleep to slow rate of the loading data
-#             sleep(0.015)
-#               # appends an artist if they have not yet been added to the checked list
-#             checked.append(new_artist)
-#                # using print to monitor the data in the console as it loads
-#             print len(checked)
-#             try:
-#                 format_type = FormatType.objects.get(format_type=d["format_type"])
-#             except FormatType.DoesNotExist:
-#                 format_type = FormatType(format_type=d["format_type"])
-#                 format_type.save()
-#             new_title.format_type = format_type
-#                # allows the same release year for multiple titles/artists
-#             if d["release_year"] is not None:
-#                 try:
-#                     release_year = ReleaseYear.objects.get(release_year=d["release_year"])
-#                 except ReleaseYear.DoesNotExist:
-#                     release_year = ReleaseYear(release_year=d["release_year"])
-#                     release_year.save()
-#                 new_title.release_year = release_year
-#             record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
-#             record_labels = list(record_labels)
-#             if not len(record_labels) == 0:
-#                 record_label = record_labels[0]
-#             else:
-#                 record_label = RecordLabel()
-#                 record_label.record_label = d['label_name']
-#                 record_label.save()
-#             new_title.record_labels.add(record_label)
-#             new_title.save()
-#             catalog_numbers = CatalogNumber.objects.filter(catalog_number=d['catalog_number'])
-#             catalog_numbers = list(catalog_numbers)
-#             if not len(catalog_numbers) == 0:
-#                 catalog_number = catalog_numbers[0]
-#             else:
-#                 catalog_number = CatalogNumber()
-#                 catalog_number.catalog_number = d['catalog_number']
-#                 catalog_number.save()
-#             new_title.catalog_numbers.add(catalog_number)
-#             new_title.save()
-#             if d["issue_number"] is not None:
-#                 try:
-#                     issue_number = IssueNumber.objects.get(issue_number=d["issue_number"])
-#                 except IssueNumber.DoesNotExist:
-#                     issue_number = IssueNumber(issue_number=d["issue_number"])
-#                     issue_number.save()
-#                 new_title.issue_number = issue_number
-#                 if d["notes"] is not None:
-#                     try:
-#                         notes = Notes.objects.get(notes=d["notes"])
-#                     except Notes.DoesNotExist:
-#                         notes = Notes(notes=d["notes"])
-#                         notes.save()
-#                     new_title.notes = notes
-#                # save the titles after the models that have a foreign key to it
-#             new_title.save()
-# #               # using sleep to slow rate of the loading data
-#             sleep(0.015)
-#     return HttpResponse(content_type='application/json')
+            sleep(0.015)
+    return HttpResponse(content_type='application/json')
 
 
 

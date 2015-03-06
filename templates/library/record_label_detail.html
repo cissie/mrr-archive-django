@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-<p class="page_header_label">{{ record_label.record_label }}</p>
+<h4 class="page_header_label">{{ record_label.record_label }}</h4>
     <div class="display_list">
         {% if record_label %}
             <!--Loops through the titles and displays the following fields.-->
@@ -18,7 +18,7 @@
                 {% for catalog_number in record_title.catalog_numbers.all %}
                     <li>Catalog Number: {{ catalog_number.catalog_number }}</li>
                 {% endfor %}
-                <li>Year: {{ record_title.release_year.release_year }}</li>
+                <li>Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year }}</a></li>
             </ul>
             {% endfor %}
         {% else %}
