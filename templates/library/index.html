@@ -20,6 +20,10 @@
                                 <td class="col-sm-12 col-md-4">
                                     Artist: <a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a><br/>
                                     Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></td>
+                                <td class="">
+                                    Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year.release_year }}</a><br/>
+                                    Country: <a href="/library/country_detail/{{ artist.country.id }}">{{ artist.country.country }}</a>
+                                </td>
                             </tr>
                          </table>
                     </div>
