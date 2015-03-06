@@ -116,6 +116,13 @@ nav form {
     font-family: Lato;
 }
 
+.collection_list {
+    margin: 20px 90px 20px 50px;
+    list-style: none;
+    text-align: left;
+    font-family: Lato;
+}
+
 .display_list_labels {
     margin-top: 0;
 }
@@ -158,7 +165,6 @@ nav form {
     max-width: 250px;
     height: auto;
 }
-/*LABEL PAGE*/
 
 
 /*LINKS*/
