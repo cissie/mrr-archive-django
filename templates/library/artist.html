@@ -11,7 +11,7 @@
                 <!--If the artist exists loop through and display the corresponding titles, country, and file under.-->
                 <!--Links allow visitors to drill into the title detail view and country detail view.-->
                 {% for record_title in record_title_list %}
-                <li>Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
+                <li> Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
 
                 {% if forloop.last %}
                 <li>Artist Country: <a href="/library/country_detail/{{ artist.country.id }}">{{ artist.country.country }}</a></li>
