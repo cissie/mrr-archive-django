@@ -617,13 +617,11 @@ def load_data(request):
                 format_type.save()
             new_title.format_type = format_type
                # allows the same release year for multiple titles/artists
-            if d["release_year"] is not None:
-                try:
-                    release_year = ReleaseYear.objects.filter(release_year=d["release_year"])
-                except ReleaseYear.DoesNotExist:
-                    release_year = ReleaseYear(release_year=d["release_year"])
-                    release_year.save()
-                new_title.release_year = release_year
+            try:
+                release_year = ReleaseYear.objects.filter(release_year=d["release_year"])
+            except ReleaseYear.DoesNotExist:
+                release_year = ReleaseYear(release_year=d["release_year"])
+                release_year.save()
             record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
             record_labels = list(record_labels)
             if not len(record_labels) == 0:
