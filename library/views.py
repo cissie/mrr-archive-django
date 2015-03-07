@@ -564,7 +564,7 @@ def record_review(request):
 #
 # # leaving function commented out so that the url is accessible only when the data needs to be loaded
 def load_data(request):
-    with open("/home/ubuntu/mrr-archive-django/record_collection_3.json") as f:
+    with open("/home/ubuntu/mrr-archive-django/record_collection_4.json") as f:
         json_data = json.load(f)
           # creating an empty list so that artists are only loaded once
         checked = []
@@ -622,6 +622,7 @@ def load_data(request):
             except ReleaseYear.DoesNotExist:
                 release_year = ReleaseYear(release_year=d["release_year"])
                 release_year.save()
+            new_title.release_year = release_year
             record_labels = RecordLabel.objects.filter(record_label=d['label_name'])
             record_labels = list(record_labels)
             if not len(record_labels) == 0:
