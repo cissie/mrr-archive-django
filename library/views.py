@@ -370,22 +370,22 @@ def issue_number_detail(request, issue_number_id):
     return render_to_response('library/issue_number_detail.html', context_dict, context)
 
 
-# def year_detail(request, release_year_id):
-#     context = RequestContext(request)
-#     try:
-#         release_year = ReleaseYear.objects.get(id=release_year_id)
-#     except IssueNumber.DoesNotExist:
-#         pass
-#     try:
-#         record_title_list = RecordTitle.objects.filter(release_year=release_year)
-#     except:
-#         pass
-#
-#     context_dict = {
-#         "release_year": release_year,
-#         "record_title_list": record_title_list,
-#     }
-#     return render_to_response('library/year_detail.html', context_dict, context)
+def year_detail(request, release_year_id):
+    context = RequestContext(request)
+    try:
+        release_year = ReleaseYear.objects.get(id=release_year_id)
+    except IssueNumber.DoesNotExist:
+        pass
+    try:
+        record_title_list = RecordTitle.objects.filter(release_year=release_year)
+    except:
+        pass
+
+    context_dict = {
+        "release_year": release_year,
+        "record_title_list": record_title_list,
+    }
+    return render_to_response('library/year_detail.html', context_dict, context)
 
 
 def band_member_detail(request, band_member_id):
@@ -564,7 +564,7 @@ def record_review(request):
 #
 # # leaving function commented out so that the url is accessible only when the data needs to be loaded
 def load_data(request):
-    with open("/home/ubuntu/mrr-archive-django/record_collection_4.json") as f:
+    with open("/home/ubuntu/mrr-archive-django/record_collection_1.json") as f:
         json_data = json.load(f)
           # creating an empty list so that artists are only loaded once
         checked = []
@@ -619,7 +619,7 @@ def load_data(request):
                # allows the same release year for multiple titles/artists
             if d["release_year"] is not None:
                 try:
-                    release_year = ReleaseYear.objects.filter(release_year=d["release_year"])
+                    release_year = ReleaseYear.objects.get(release_year=d["release_year"])
                 except ReleaseYear.DoesNotExist:
                     release_year = ReleaseYear(release_year=d["release_year"])
                     release_year.save()
@@ -651,13 +651,13 @@ def load_data(request):
                     issue_number = IssueNumber(issue_number=d["issue_number"])
                     issue_number.save()
                 new_title.issue_number = issue_number
-                if d["notes"] is not None:
-                    try:
-                        notes = Notes.objects.get(notes=d["notes"])
-                    except Notes.DoesNotExist:
-                        notes = Notes(notes=d["notes"])
-                        notes.save()
-                    new_title.notes = notes
+            if d["notes"] is not None:
+                try:
+                    notes = Notes.objects.get(notes=d["notes"])
+                except Notes.DoesNotExist:
+                    notes = Notes(notes=d["notes"])
+                    notes.save()
+                new_title.notes = notes
                # save the titles after the models that have a foreign key to it
             new_title.save()
 #               # using sleep to slow rate of the loading data
