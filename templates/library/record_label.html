@@ -5,47 +5,47 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-
+    <h4 class="page_header_label">Record Labels Represented:</h4>
 
     {% if record_labels %}
-    <div class="display_list">
-        <ul>
-            <!--Loops through the label id and displays the all of the record labels.-->
-            <!--Label names link to a more detailed view with every release from the label.-->
-            {% for label in record_labels %}
-                    <li><a href="/library/record_label_detail/{{ label.id }}">{{ label.record_label }}</a></li>
-            {{ label.full_name|upper }}<br/>
-            {% endfor %}
-            <!--Pagination-->
-            <div class="pagination">
-                <span class="step-links">
-                    {% if record_labels.has_previous %}
-                        <a href="{{ prev_page_url }}">Previous</a>
-                    {% endif %}
-                    <span class="current">
-                        Page {{ record_labels.number }} of {{ record_labels.paginator.num_pages }}
-                    </span>
-                    {% if record_labels.has_next %}
-                        <a href="{{ next_page_url }}">Next</a>
-                    {% endif %}
-                    <form method="get" id="page_form">
-                        <input type="text" name="page" id="page_input" placeholder="Go to page...">
-                        <!--<select name="labels" id="num_labels">-->
-                            <!--<option value="25">25 labels</option>-->
-                            <!--<option value="100">100 labels</option>-->
-                            <!--<option value="250">250 labels</option>-->
-                        <!--</select>-->
-                        <input type="submit" id="page_input_button" value="Submit"
-                               onclick="submitPaginationForm('page_form')">
-                    </form>
+        <div class="display_list">
+            <ul>
+                <!--Loops through the label id and displays the all of the record labels.-->
+                <!--Label names link to a more detailed view with every release from the label.-->
+                {% for label in record_labels %}
+                        <li><a href="/library/record_label_detail/{{ label.id }}">{{ label.record_label }}</a></li>
+                {{ label.full_name|upper }}<br/>
+                {% endfor %}
+                <!--Pagination-->
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if record_labels.has_previous %}
+                            <a href="{{ prev_page_url }}">Previous</a>
+                        {% endif %}
+                        <span class="current">
+                            Page {{ record_labels.number }} of {{ record_labels.paginator.num_pages }}
+                        </span>
+                        {% if record_labels.has_next %}
+                            <a href="{{ next_page_url }}">Next</a>
+                        {% endif %}
+                        <form method="get" id="page_form">
+                            <input type="text" name="page" id="page_input" placeholder="Go to page...">
+                            <!--<select name="labels" id="num_labels">-->
+                                <!--<option value="25">25 labels</option>-->
+                                <!--<option value="100">100 labels</option>-->
+                                <!--<option value="250">250 labels</option>-->
+                            <!--</select>-->
+                            <input type="submit" id="page_input_button" value="Submit"
+                                   onclick="submitPaginationForm('page_form')">
+                        </form>
 
-                </span>
-            </div>
-        </ul>
-    </div>
-            {% else %}
-                <p>There are no labels present.</p>
-            {% endif %}
+                    </span>
+                </div>
+            </ul>
+                {% else %}
+                    <p>There are no labels present.</p>
+        </div>
+                {% endif %}
 
 
 <script src="{% static 'js/pagination.js' %}"></script>

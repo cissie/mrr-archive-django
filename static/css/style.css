@@ -122,10 +122,6 @@ nav form {
     width: 40%;
 }
 
-.display_list_labels {
-    margin-top: 0;
-}
-
 #add {
     text-align: left;
     margin-left: 20px;
@@ -166,16 +162,6 @@ nav form {
 }
 
 
-/*LINKS*/
-
-nav a:visited {
-    color: #c4d4de;
-}
-
-.selected {
-   color: #3BD6C6;
-}
-
 .search_form {
     margin: 40px;
 }
@@ -185,14 +171,32 @@ nav a:visited {
 }
 
 
-/*FOOTER*/
 
-footer {
-    position: absolute;
-    margin-left: 40px;
-    font-size: 0.75em;
-    text-align: left;
-    clear: both;
-    padding-top: 50px;
-    color: #ccc;
+/*MEDIA QUERIES*/
+
+@media (max-width : 754px) {
+
+	.collection_list {
+        width: 90%;
+        margin: 20px 0 0 0;
+        font-size: 1.25rem;
+    }
+
+    .collection_title {
+        font-size: 1.25rem;
+    }
+
+    nav {
+        font-size: 1.25rem;
+    }
+
+    nav li {
+        padding: 0;
+    }
+
+    #subtitle h3 {
+        margin: 20px 0 0 -20px;
+        font-size: 1.25rem;
+    }
+
 }
