@@ -619,7 +619,7 @@ def load_data(request):
                # allows the same release year for multiple titles/artists
             if d["release_year"] is not None:
                 try:
-                    release_year = ReleaseYear.objects.filter(release_year=d["release_year"])
+                    release_year = ReleaseYear.objects.get_or_create(release_year=d["release_year"])[0]
                 except ReleaseYear.DoesNotExist:
                     release_year = ReleaseYear(release_year=d["release_year"])
                     release_year.save()
