@@ -19,7 +19,7 @@
          {% endif %}
                         <div id="title_detail">
                             <ul>
-                                <li>Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year.release_year }}</a></li>
+                                <!--<li>Year: <a href="/library/year_detail/{{ record_title.release_year.id }}">{{ record_title.release_year.release_year }}</a></li>-->
                                 <li>Format: {{ record_title.format_type.format_type }}</li>
                             {% for record_label in record_title.record_labels.all %}
                                 <li>Record Label: <a href="/library/record_label_detail/{{ record_label.id }}">{{ record_label.record_label }}</a></li>
