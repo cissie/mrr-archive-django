@@ -55,9 +55,13 @@
                             <h4>Review:</h4>
                             <p>{{ record_title.record_review.record_review }}</p>
                         {% for reviewer_name in record_title.reviewer_names.all %}
+                            {% if forloop.first %}
                             <h4>Reviewed by:</h4>
+                            {% endif %}
                             <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
+                            {% if forloop.last %}
                             <p>Maximum Rocknroll: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></p>
+                            {% endif %}
                         {% endfor %}
                         </div>
                         <div id="song_titles">
