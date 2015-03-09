@@ -18,13 +18,11 @@
 
             <h4 class="page_subtitle">Reviewers:</h4>
             {% for record_title in record_title_list %}
-                <!--{% for reviewer_name in record_title.reviewer_names.distinct %}-->
-                {% if forloop.last %}
+                {% for reviewer_name in record_title.reviewer_names.order_by.distinct %}
                 <ul>
                     <li><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></li>
                 </ul>
-                {% endif %}
-                <!--{% endfor %}-->
+                {% endfor %}
             {% endfor %}
 
         {% else %}

@@ -71,6 +71,12 @@ nav a {
     color: #428bca;
 }
 
+#filters {
+    float: right;
+    margin-top: 10px;
+    font-size: 1.5rem;
+}
+
 /*FORM*/
 
 nav form {
@@ -116,10 +122,10 @@ nav form {
     font-family: Lato;
 }
 
-.collection_list {
-    margin: 20px 90px 20px 50px;
+#collection_list {
+    margin: 20px 90px 20px 40px;
     font-family: Lato;
-    width: 40%;
+    width: 60%;
 }
 
 #add {
@@ -176,7 +182,7 @@ nav form {
 
 @media (max-width : 754px) {
 
-	.collection_list {
+	#collection_list {
         width: 90%;
         margin: 20px 0 0 0;
         font-size: 1.25rem;

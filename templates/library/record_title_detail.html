@@ -30,13 +30,14 @@
                             <!--{% for country in record_title.artists.all %}-->
                                 <!--<li>Country: <a href="/library/country_detail/{{ country.id }}">{{ country.country }}</a></li>-->
                             <!--{% endfor %}-->
-                                <li>Notes: {{ record_title.notes.notes }}</li>
                             {% for file_under in record_title.artists.all %}
                                 <li>File Under: {{ file_under.file_under }}</li>
                             {% endfor %}
                                 <li>In Collection:
-                                    {% if record_title.in_collection %} Yes
-                                    {% else %}  No
+                                    {% if record_title.in_collection %}
+                                        Yes
+                                    {% else %}
+                                        No
                                     {% endif %}
                                 </li>
                             </ul>
@@ -53,16 +54,20 @@
                                 <h3><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a> - {{ record_title.record_title }}</h3>
                             {% endfor %}
                             <h4>Review:</h4>
-                            <p>{{ record_title.record_review.record_review }}</p>
-                        {% for reviewer_name in record_title.reviewer_names.all %}
-                            {% if forloop.first %}
-                            <h4>Reviewed by:</h4>
+                            {% if record_title.reviewed %}
+                                <p>{{ record_title.record_review.record_review }}</p>
+                            {% else %}
+                                Not Reviewed
                             {% endif %}
-                            <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
-                            {% if forloop.last %}
-                            <p>Maximum Rocknroll: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></p>
-                            {% endif %}
-                        {% endfor %}
+                            {% for reviewer_name in record_title.reviewer_names.all %}
+                                {% if forloop.first %}
+                                <h4>Reviewed by:</h4>
+                                {% endif %}
+                                <p><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></p>
+                                {% if forloop.last %}
+                                <p>Maximum Rocknroll: <a href="/library/issue_number_detail/{{ record_title.issue_number.id }}">{{ record_title.issue_number.issue_number }}</a></p>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <div id="song_titles">
                             <h4>Song Titles:</h4>

@@ -3,32 +3,35 @@
 {% block title %}{% endblock %}
 
 {% block body_block %}
-    <p class="page_header_label">{{ artist.name }}</p>
-    <div class="display_list">
-        {% if artist %}
+    <div class="container">
+        <div class="row">
+            <p class="page_header_label">{{ artist.name }}</p>
+                <div class="display_list">
+                    {% if artist %}
+                        <ul>
+                            <!--If the artist exists loop through and display the corresponding titles, country, and file under.-->
+                            <!--Links allow visitors to drill into the title detail view and country detail view.-->
+                            {% for record_title in record_title_list %}
+                            <li> Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
 
-            <ul>
-                <!--If the artist exists loop through and display the corresponding titles, country, and file under.-->
-                <!--Links allow visitors to drill into the title detail view and country detail view.-->
-                {% for record_title in record_title_list %}
-                <li> Title: <a href="/library/record_title_detail/{{ record_title.id }}">{{ record_title }}</a></li>
+                            {% if forloop.last %}
+                            <li>Artist Country: <a href="/library/country_detail/{{ artist.country.id }}">{{ artist.country.country }}</a></li>
+                            <li>File Under: {{ artist.file_under.file_under }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
 
-                {% if forloop.last %}
-                <li>Artist Country: <a href="/library/country_detail/{{ artist.country.id }}">{{ artist.country.country }}</a></li>
-                <li>File Under: {{ artist.file_under.file_under }}</li>
-                {% endif %}
-                {% endfor %}
-            </ul>
+                        <!--<div id="band_members">-->
+                            <!--<h4>Band Members:</h4>-->
+                            <!--{% for band_member in artist.band_members.all %}-->
+                                <!--<li><a href="/library/band_member_detail/{{ band_member.id }}">{{ band_member.band_member }}</a></li>-->
+                            <!--{% endfor %}-->
+                        <!--</div>-->
 
-            <!--<div id="band_members">-->
-                <!--<h4>Band Members:</h4>-->
-                <!--{% for band_member in artist.band_members.all %}-->
-                    <!--<li><a href="/library/band_member_detail/{{ band_member.id }}">{{ band_member.band_member }}</a></li>-->
-                <!--{% endfor %}-->
-            <!--</div>-->
-
-        {% else %}
-            The specified artist {{ artist.artist_name }} does not exist!
-        {% endif %}
+                    {% else %}
+                        The specified artist {{ artist.artist_name }} does not exist!
+                    {% endif %}
+                </div>
+        </div>
     </div>
 {% endblock %}

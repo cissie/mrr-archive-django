@@ -358,7 +358,7 @@ def issue_number_detail(request, issue_number_id):
     except:
         pass
     try:
-        reviewer_name_list = ReviewerName.objects.distinct()
+        reviewer_name_list = ReviewerName.objects.values_list('reviewer_name', flat=True).distinct()
     except:
         pass
 
