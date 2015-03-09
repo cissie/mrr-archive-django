@@ -13,6 +13,9 @@ class RecordTitleAdmin(admin.ModelAdmin):
 class RecordLabelAdmin(admin.ModelAdmin):
     search_fields = ["record_label"]
 
+class CatalogNumberAdmin(admin.ModelAdmin):
+    search_fields = ["catalog_number"]
+
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(RecordTitle, RecordTitleAdmin)
 admin.site.register(BandMember)
@@ -20,7 +23,7 @@ admin.site.register(Country)
 admin.site.register(FormatType)
 admin.site.register(ReleaseYear)
 admin.site.register(RecordLabel, RecordLabelAdmin)
-admin.site.register(CatalogNumber)
+admin.site.register(CatalogNumber, CatalogNumberAdmin)
 admin.site.register(IssueNumber)
 admin.site.register(RecordReview)
 admin.site.register(ReviewerName)
