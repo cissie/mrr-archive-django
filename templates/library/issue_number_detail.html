@@ -15,20 +15,8 @@
                 </ul>
                 {% endfor %}
             {% endfor %}
-
-            <h4 class="page_subtitle">Reviewers:</h4>
-            {% for record_title in record_title_list %}
-                {% for reviewer_name in record_title.reviewer_names.order_by.distinct %}
-                <ul>
-                    <li><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></li>
-                </ul>
-                {% endfor %}
-            {% endfor %}
-
         {% else %}
-        <p>The specified reviewer {{ reviewer_name }} does not exist!</p>
-
+        <p>The specified reviewer {{ issue_number }} does not exist!</p>
         {% endif %}
         </div>
-
 {% endblock %}
