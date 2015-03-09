@@ -34,7 +34,11 @@
                             {% for file_under in record_title.artists.all %}
                                 <li>File Under: {{ file_under.file_under }}</li>
                             {% endfor %}
-                                <li>In Collection: {% if record_title.in_collection %}Yes{% endif %}</li>
+                                <li>In Collection:
+                                    {% if record_title.in_collection %} Yes
+                                    {% else %}  No
+                                    {% endif %}
+                                </li>
                             </ul>
                         </div>
                         <!--<div class="cover_art_link">-->
