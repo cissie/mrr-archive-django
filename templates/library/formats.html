@@ -1,0 +1,24 @@
+{% extends 'library/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+    <p class="page_header_label">Formats:</p>
+    <div class="display_list">
+        {% if format_types %}
+            <ul>
+                <!--If format exists loop through and display results.-->
+                <!--Formats link to a more detailed view with every title released in that format.-->
+                {% for format_type in format_types %}
+                    <li><a href="/library/format_detail/{{ format_type.id }}">{{ format_type.format_type }}</a></li>
+                {{ format_type.full_name|upper }}<br/>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no formats present.</strong>
+        {% endif %}
+    </div>
+
+{% endblock %}

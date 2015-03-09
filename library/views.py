@@ -358,6 +358,7 @@ def record_reviewer_detail(request, reviewer_name_id):
     return render_to_response('library/record_reviewer_detail.html', context_dict, context)
 
 
+# Displays a list of all the issues
 def issue_number(request):
     context = RequestContext(request)
     issue_number_list = IssueNumber.objects.all().order_by('issue_number')
@@ -369,6 +370,7 @@ def issue_number(request):
     return render_to_response('library/issue_numbers.html', context_dict, context)
 
 
+# Displays each title reviewed in an issue
 def issue_number_detail(request, issue_number_id):
     context = RequestContext(request)
     try:
@@ -392,6 +394,7 @@ def issue_number_detail(request, issue_number_id):
     return render_to_response('library/issue_number_detail.html', context_dict, context)
 
 
+# Displays list of all years
 def years(request):
     context = RequestContext(request)
     year_list = ReleaseYear.objects.all().order_by('release_year')
@@ -402,6 +405,8 @@ def years(request):
 
     return render_to_response('library/years.html', context_dict, context)
 
+
+# Displays all titles released in a year
 def year_detail(request, release_year_id):
     context = RequestContext(request)
     try:
@@ -418,6 +423,40 @@ def year_detail(request, release_year_id):
         "record_title_list": record_title_list,
     }
     return render_to_response('library/year_detail.html', context_dict, context)
+
+# Displays list of all formats
+def formats(request):
+    context = RequestContext(request)
+    format_list = FormatType.objects.all()
+
+    context_dict = {
+        "format_types": format_list
+    }
+
+    return render_to_response('library/formats.html', context_dict, context)
+
+
+# Displays detailed view of each format
+def format_detail(request, format_type_id):
+    context = RequestContext(request)
+    try:
+        # The .get() method returns one model instance or raises an exception.
+        # Pass format_type_id argument to FormatType model
+        format_type = FormatType.objects.get(id=format_type_id)
+    except FormatType.DoesNotExist:
+        pass
+    try:
+        # filters record title data to corresponding format
+        record_title_list = RecordTitle.objects.filter(format_type__id=format_type_id)
+    except RecordTitle.DoesNotExist:
+        pass
+
+    # The format_detail view will display a format with corresponding titles
+    context_dict = {
+        "format_type": format_type,
+        "record_title_list": record_title_list
+    }
+    return render_to_response('library/format_detail.html', context_dict, context)
 
 
 def band_member_detail(request, band_member_id):
