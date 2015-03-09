@@ -6,7 +6,9 @@
 <p class="page_header_label">{{ format_type.format_type }} Format:</p>
         {% if format_type %}
         <div class="display_list">
+            {% load endless %}
             <!--Display titles corresponding to format-->
+            {% paginate 50 record_title_list %}
             {% for record_title in record_title_list %}
                 {% for artist in record_title.artists.all %}
                 <ul>
@@ -18,4 +20,10 @@
         <p>The specified reviewer {{ issue_number }} does not exist!</p>
         {% endif %}
         </div>
+
+        <ul class="pagination pagination-sm" id="show_pages">
+            <li>
+                {% show_pages %}
+            </li>
+        </ul>
 {% endblock %}
