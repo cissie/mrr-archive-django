@@ -1,0 +1,24 @@
+{% extends 'library/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+    <p class="page_header_label">Maximum Rocknroll Issues:</p>
+    <div class="display_list">
+        {% if issue_numbers %}
+            <ul>
+                <!--If issue exists loop through and display results.-->
+                <!--Issues link to a more detailed view with every title.-->
+                {% for issue_number in issue_numbers %}
+                    <li><a href="/library/issue_number_detail/{{ issue_number.id }}">#{{ issue_number.issue_number }}</a></li>
+                {{ issue_number.full_name|upper }}<br/>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no issues present.</strong>
+        {% endif %}
+    </div>
+
+{% endblock %}

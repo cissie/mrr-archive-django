@@ -290,7 +290,7 @@ def record_label_detail(request, record_label_id):
 # Loads all of the countries and routes them to be listed on the country template.
 def country(request):
     context = RequestContext(request)
-    country_list = Country.objects.all()
+    country_list = Country.objects.all().order_by('country')
 
     context_dict = {
         "countries": country_list
@@ -324,6 +324,17 @@ def country_detail(request, country_id):
     return render_to_response('library/country_detail.html', context_dict, context)
 
 
+def reviewer(request):
+    context = RequestContext(request)
+    reviewer_list = ReviewerName.objects.all()
+
+    context_dict = {
+        "reviewer_names": reviewer_list
+    }
+
+    return render_to_response('library/reviewers.html', context_dict, context)
+
+
 # Displays all the titles that a reviewer has reviewed
 def record_reviewer_detail(request, reviewer_name_id):
     context = RequestContext(request)
@@ -345,6 +356,17 @@ def record_reviewer_detail(request, reviewer_name_id):
         "record_title_list": record_title_list
     }
     return render_to_response('library/record_reviewer_detail.html', context_dict, context)
+
+
+def issue_number(request):
+    context = RequestContext(request)
+    issue_number_list = IssueNumber.objects.all().order_by('issue_number')
+
+    context_dict = {
+        "issue_numbers": issue_number_list
+    }
+
+    return render_to_response('library/issue_numbers.html', context_dict, context)
 
 
 def issue_number_detail(request, issue_number_id):
@@ -369,6 +391,16 @@ def issue_number_detail(request, issue_number_id):
     }
     return render_to_response('library/issue_number_detail.html', context_dict, context)
 
+
+def years(request):
+    context = RequestContext(request)
+    year_list = ReleaseYear.objects.all().order_by('release_year')
+
+    context_dict = {
+        "release_years": year_list
+    }
+
+    return render_to_response('library/years.html', context_dict, context)
 
 def year_detail(request, release_year_id):
     context = RequestContext(request)

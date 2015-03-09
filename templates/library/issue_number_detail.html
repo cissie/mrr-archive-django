@@ -6,7 +6,7 @@
 <p class="page_header_label">Maximum Rocknroll #{{ issue_number.issue_number }}</p>
         {% if issue_number %}
         <div class="display_list">
-            <!--Display titles the reviewer has reviewed-->
+            <!--Display titles reviewed in issue-->
             <h4 class="page_subtitle">Titles Reviewed:</h4>
             {% for record_title in record_title_list %}
                 {% for artist in record_title.artists.all %}

@@ -1,0 +1,24 @@
+{% extends 'library/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+    <h4 class="page_header_label">Reviewers:</h4>
+    <div class="display_list">
+        {% if reviewer_names %}
+            <ul>
+                <!--If reviewer exists loop through and display results.-->
+                <!--Reviewers link to a more detailed view with every title reviewed.-->
+                {% for reviewer_name in reviewer_names %}
+                    <li><a href="/library/record_reviewer_detail/{{ reviewer_name.id }}">{{ reviewer_name.reviewer_name }}</a></li>
+                {{ reviewer_name.full_name|upper }}<br/>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no reviewers present.</strong>
+        {% endif %}
+    </div>
+
+{% endblock %}

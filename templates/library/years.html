@@ -1,0 +1,24 @@
+{% extends 'library/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body_block %}
+    <p class="page_header_label">Years Represented:</p>
+    <div class="display_list">
+        {% if release_years %}
+            <ul>
+                <!--If year exists loop through and display results.-->
+                <!--Years link to a more detailed view with every title released in that year.-->
+                {% for release_year in release_years %}
+                    <li><a href="/library/year_detail/{{ release_year.id }}">{{ release_year.release_year }}</a></li>
+                {{ release_year.full_name|upper }}<br/>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no years present.</strong>
+        {% endif %}
+    </div>
+
+{% endblock %}
