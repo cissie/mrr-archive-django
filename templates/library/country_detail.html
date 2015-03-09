@@ -6,25 +6,28 @@
 
 {% block body_block %}
     <h4 class="page_header_label">Artists From {{ country.country }}:</h4>
-    <div class="display_list">
         {% if country %}
+        <div class="display_list_country">
+            {% load endless %}
             <!--Loop through artists and display all the artists from a particular country.-->
             <!--Links allow visitors to drill into the country detail view which lists all the artists from that country.-->
+            {% paginate 50 artist_list %}
             {% for artist in artist_list %}
-            <ul>
-                <div id="country">
-                <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li>
+                <li><a href="/library/artist/{{ artist.id }}">{{ artist.name }}</a></li><br/>
                     <!--{% for title in artist.recordtitle_set.all %}-->
                         <!--<li>Title: <a href="/library/record_title_detail/{{ title.id }}">{{ title.record_title }}</a></li>-->
                     <!--{% endfor %}-->
-                </div>
-            </ul>
             {% endfor %}
+
         {% else %}
         <p>The specified country {{ country }} does not exist!</p>
 
         {% endif %}
-    </div>
+        </div>
 
-
+    <ul class="pagination pagination-sm" id="show_pages">
+        <li>
+            {% show_pages %}
+        </li>
+    </ul>
 {% endblock %}

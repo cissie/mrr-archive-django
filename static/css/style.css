@@ -77,6 +77,10 @@ nav a {
     font-size: 1.5rem;
 }
 
+#show_pages {
+    margin: 0 10px 10px 90px;
+}
+
 /*FORM*/
 
 nav form {
@@ -113,7 +117,7 @@ nav form {
     width: 250px;
 }
 
-/*IMAGES*/
+/*LISTS*/
 
 .display_list {
     margin: 20px 0 30px 52px;
@@ -122,15 +126,14 @@ nav form {
     font-family: Lato;
 }
 
+.display_list_country {
+    margin: 20px 0 30px 90px;
+}
+
 #collection_list {
     margin: 20px 90px 20px 40px;
     font-family: Lato;
     width: 60%;
-}
-
-#add {
-    text-align: left;
-    margin-left: 20px;
 }
 
 #title_detail {
