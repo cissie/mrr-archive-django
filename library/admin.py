@@ -16,10 +16,14 @@ class RecordLabelAdmin(admin.ModelAdmin):
 class CatalogNumberAdmin(admin.ModelAdmin):
     search_fields = ["catalog_number"]
 
+class CountryAdmin(admin.ModelAdmin):
+    search_fields = ["country"]
+    ordering = ["country"]
+
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(RecordTitle, RecordTitleAdmin)
 admin.site.register(BandMember)
-admin.site.register(Country)
+admin.site.register(Country, CountryAdmin)
 admin.site.register(FormatType)
 admin.site.register(ReleaseYear)
 admin.site.register(RecordLabel, RecordLabelAdmin)
