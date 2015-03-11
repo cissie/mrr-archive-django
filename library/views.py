@@ -121,7 +121,6 @@ def artist(request, artist_id):
         # So the .get() method returns one model instance or raises an exception.
         # Pass artist_id argument to Artist model
         artist = Artist.objects.get(id=artist_id)
-        print artist.name
 
     except Artist.DoesNotExist:
         # We get here if we didn't find the specified artist.
