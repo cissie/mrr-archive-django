@@ -185,7 +185,7 @@ nav form {
 
 @media (max-width : 754px) {
 
-	#collection_list {
+    #collection_list {
         width: 90%;
         margin: 20px 0 0 0;
         font-size: 1.25rem;
@@ -217,5 +217,13 @@ nav form {
         border-top: 0;
         outline: none;
     }
+}
 
+/* Larger than phone */
+@media (min-width : 550px) {
+
+    #filters {
+        float: left;
+        margin: 0 0 20px 0;
+    }
 }
