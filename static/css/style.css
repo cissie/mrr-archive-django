@@ -208,4 +208,14 @@ nav form {
         font-size: 1.25rem;
     }
 
+    #filters {
+        float: left;
+        margin: 0 0 20px 0;
+    }
+
+    #collection_list td {
+        border-top: 0;
+        outline: none;
+    }
+
 }
